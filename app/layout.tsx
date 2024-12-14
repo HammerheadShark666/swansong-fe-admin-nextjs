@@ -9,7 +9,7 @@ export const bellefair = Bellefair({ weight: "400", display: 'swap', subsets: ['
 export const philosopher = Philosopher({ weight: "400", display: 'swap', subsets: ['latin'] }); 
 export const poppins = Poppins({ weight: "400", display: 'swap', subsets: ['latin'] }); 
 export const raleway = Raleway({ weight: "400", display: 'swap', subsets: ['latin'] }); 
-
+ 
 export const metadata: Metadata = {
   title: "Swansong",
   description: "Swansong music website", 
@@ -21,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">  
+    <html lang="en">   
       <body className="w-full flex flex-col min-h-screen">
         <header>
           <Navigation />
