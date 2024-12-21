@@ -1,16 +1,17 @@
-//"use client";
+import { getAlbum } from "@/app/albums/actions/album";
+import { getAlbumLookups, getArtists, getRecordLabels, getStudios } from "@/app/albums/actions/getSelectLookups"; 
+import AlbumDetailsForm from "@/app/albums/components/albumDetailsForm"
 
-import AlbumDetailsForm from "@/app/albums/components/albumDetailsForm"; 
-import { getAlbumLookups } from "../../actions/getSelectLookups";
-
-export default async function AddAlbumPage() {  
-
+export default async function EditAlbumPage({ params }:{ params: Promise<{ id: string }> } ) {      
+  
+  const {id} = await params; 
+  const album = await getAlbum(Number(id)); 
   const lookups = await getAlbumLookups();
 
   return  (    
     <>
       <div className="grid grid-cols-12">
-        <span className="grid-cols-6 col-span-6 text-2xl text-white pt-2 mb-2">Add Album</span>         
+        <span className="grid-cols-6 col-span-6 text-2xl text-white pt-2 mb-2">Edit Album</span>         
         
         <div className="grid-cols-6 col-span-6 m-auto w-full flex justify-end mt-1 mb-1">          
           <button className="text-black py-1.5 px-6 text-sm bg-[#b68d40]  cursor-pointer text-center shadow-xs transition-all duration-500 hover:text-white tooltip" data-tip={'Add Album'}>
@@ -34,12 +35,28 @@ export default async function AddAlbumPage() {
           
           <div className="grid-cols-12 col-span-12 md:grid-cols-7 md:col-span-7 mb-4 ml-3 mr-3 md:mb-0 shadow-md">
             <div className="w-full bg-neutral-700 text-white text-md pl-2">Details</div>
-            <div className="w-full p-4">
-              <AlbumDetailsForm mode="add" artistItems={lookups.artists} studioItems={lookups.studios} recordLabelItems={lookups.recordLabels}  />
+            <div className="w-full p-4">               
+              <AlbumDetailsForm mode="edit" existingData={album} artistItems={lookups.artists} studioItems={lookups.studios} recordLabelItems={lookups.recordLabels} />
             </div>       
-          </div>   
+          </div>    
+
+          <div className="grid grid-cols-12 col-span-12 md:grid-cols-5 md:col-span-5 flex-1 ml-3 mr-3 md:mb-0">
+
+            <div className="w-full grid grid-cols-12 col-span-12 bg-white flex-1">   
+              
+              <div className="grid-cols-12 col-span-12 flex-1 shadow-md">
+                <div className="w-full bg-neutral-700 text-white text-md pl-2">Photo</div>
+                <div className=""> </div>
+              </div>       
+              
+              <div className="grid-cols-12 col-span-12 flex-1 shadow-md mt-5">
+                <div className="w-full bg-neutral-700 text-white text-md pl-2">Tracks</div>
+                <div className=""> </div>
+              </div>
+            </div>     
+          </div>
         </div>    
       </div>             
     </> 
   )
-};
+}; 

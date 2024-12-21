@@ -1,5 +1,5 @@
 export function createUrl(path : string){
-  return process.env.API_URL + path;
+  return process.env.NEXT_PUBLIC_API_URL + path;
 }
   
 export const fetcher = async (url: string) => {
@@ -17,10 +17,18 @@ export default function getUrl(type: string, id:number) {
   switch(type)
   {
     case "albums":
-      return "/albums/album/" + id
+      return "/albums/album/edit/" + id
     case "artists":
       return "/artists/artist/" + id
     default:
       return "/members/member/" + id
   }
+} 
+
+export function getCallType(id: number) {
+
+  if(id == 0)
+    return "POST";
+  else
+    return "PUT";
 }

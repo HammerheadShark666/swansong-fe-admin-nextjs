@@ -1,21 +1,17 @@
-import { Song } from "./song";
+//import { Song } from "./song";
 
 export type Album =
 {
   id: number;
-  name: string;
-  description: string;
-  artistId: number;
-  artistName: string;
-  releaseDate: string;
-  recordedDate: string;
-  labelId: number;
-  labelName: string;
+  name: string; 
+  artistId: number; 
+  releaseDate: string | undefined;
+  recordedDate: string | undefined;
+  labelId: number; 
   studioId: number;
   producers: string;
-  arrangers: string;
-  engineers: string;
+  arrangers: string; 
   artwork: string;
-  photo: string;
-  songs: Song[];
+  // photo: string;
+  // songs: Song[];
 }
