@@ -1,6 +1,7 @@
 import { getAlbum } from "@/app/albums/actions/album";
-import { getAlbumLookups, getArtists, getRecordLabels, getStudios } from "@/app/albums/actions/getSelectLookups"; 
+import { getAlbumLookups } from "@/app/albums/actions/getSelectLookups"; 
 import AlbumDetailsForm from "@/app/albums/components/albumDetailsForm"
+import AlbumPhotoForm from "@/app/albums/components/albumPhotoForm";
 
 export default async function EditAlbumPage({ params }:{ params: Promise<{ id: string }> } ) {      
   
@@ -31,7 +32,7 @@ export default async function EditAlbumPage({ params }:{ params: Promise<{ id: s
       <div className="flex flex-col w-full border border-gray-100 bg-white flex-1 mb-2">
         <div className="w-full bg-neutral-950 h-1"></div>
          
-        <div className="w-full grid grid-cols-12 bg-white flex-1 mb-4 mt-3">   
+        <div className="w-full grid grid-cols-12 bg-white mb-4 mt-3">   
           
           <div className="grid-cols-12 col-span-12 md:grid-cols-7 md:col-span-7 mb-4 ml-3 mr-3 md:mb-0 shadow-md">
             <div className="w-full bg-neutral-700 text-white text-md pl-2">Details</div>
@@ -40,19 +41,39 @@ export default async function EditAlbumPage({ params }:{ params: Promise<{ id: s
             </div>       
           </div>    
 
-          <div className="grid grid-cols-12 col-span-12 md:grid-cols-5 md:col-span-5 flex-1 ml-3 mr-3 md:mb-0">
+          <div className="grid grid-cols-12 col-span-12 md:grid-cols-5 md:col-span-5 ml-3 mr-3 md:mb-0">
+          {/* md:grid-cols-5 md:col-span-5 */}
+            <div className="w-full grid-cols-5 col-span-5  bg-white">   
 
-            <div className="w-full grid grid-cols-12 col-span-12 bg-white flex-1">   
-              
-              <div className="grid-cols-12 col-span-12 flex-1 shadow-md">
+            {/* grid grid-cols-12 col-span-12 */}
+
+            <div className="flex flex-col">
+            
+              <div className="min-h-[100px] w-full shadow-md">
                 <div className="w-full bg-neutral-700 text-white text-md pl-2">Photo</div>
-                <div className=""> </div>
+                <AlbumPhotoForm id={album.id} filename={album.photo}></AlbumPhotoForm> 
+              </div>
+
+            
+              <div className="min-h-[100px] w-full shadow-md mt-5"> 
+              <div className="w-full bg-neutral-700 text-white text-md pl-2">Tracks</div>
+                Second Column (Height: 60)
+              </div>
+            </div>
+
+
+              
+              {/* <div className="grid-cols-12 col-span-12 shadow-md">
+                <div className="w-full bg-neutral-700 text-white text-md pl-2">Photo</div>
+                <div className=""> 
+                   <AlbumPhotoForm id={album.id} filename={album.photo}></AlbumPhotoForm> 
+                </div>
               </div>       
               
-              <div className="grid-cols-12 col-span-12 flex-1 shadow-md mt-5">
+              <div className="grid-cols-12 col-span-12 shadow-md mt-5">
                 <div className="w-full bg-neutral-700 text-white text-md pl-2">Tracks</div>
                 <div className=""> </div>
-              </div>
+              </div> */}
             </div>     
           </div>
         </div>    

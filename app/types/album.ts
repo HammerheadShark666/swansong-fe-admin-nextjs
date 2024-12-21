@@ -12,6 +12,6 @@ export type Album =
   producers: string;
   arrangers: string; 
   artwork: string;
-  // photo: string;
+  photo: string;
   // songs: Song[];
 }
