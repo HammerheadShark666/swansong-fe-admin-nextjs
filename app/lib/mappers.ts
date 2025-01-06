@@ -1,5 +1,7 @@
 import { AlbumDetailsSchema } from "../albums/validation/albumDetailsSchema";
+import { AlbumSongSchema } from "../albums/validation/albumSongSchema";
 import { Album } from "../types/album";
+import { AlbumSong } from "../types/albumSong";
 
 export function mapAlbum(data: AlbumDetailsSchema) {
 
@@ -13,8 +15,27 @@ export function mapAlbum(data: AlbumDetailsSchema) {
     studioId: Number(data.studioId),
     producers: data.producers,
     arrangers: data.arrangers,
-    artwork: data.artwork
+    artwork: data.artwork,
+    photo: "",
+    songs: []
   }; 
 
   return album;
+}
+
+export function mapAlbumSong(data: AlbumSongSchema) {
+
+  const albumSong: AlbumSong = {
+    id: data.id,
+    albumId: data.albumId, 
+    side:  Number(data.side), 
+    order: Number(data.order), 
+    song: {
+      id: data.song.id,
+      title: data.song.title,
+      length: data.song.length
+    }     
+  }; 
+
+  return albumSong;
 }

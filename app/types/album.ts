@@ -1,4 +1,4 @@
-//import { Song } from "./song";
+import { AlbumSong } from "./albumSong";
 
 export type Album =
 {
@@ -13,5 +13,5 @@ export type Album =
   arrangers: string; 
   artwork: string;
   photo: string;
-  // songs: Song[];
+  songs: AlbumSong[];
 }

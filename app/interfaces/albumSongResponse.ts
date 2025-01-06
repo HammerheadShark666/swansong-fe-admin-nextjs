@@ -1,0 +1,1 @@
+export interface AlbumSongResponse {id: number, songId: number}

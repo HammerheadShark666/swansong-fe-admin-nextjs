@@ -1,16 +1,6 @@
 export function createUrl(path : string){
   return process.env.NEXT_PUBLIC_API_URL + path;
 }
-  
-export const fetcher = async (url: string) => {
-  const response = await fetch(url);
-
-  if (!response.ok) {
-    throw new Error('An error occurred while fetching the data.' + response.status);
-  }
-
-  return response.json();
-};
 
 export default function getUrl(type: string, id:number) {
 
@@ -24,11 +14,3 @@ export default function getUrl(type: string, id:number) {
       return "/members/member/" + id
   }
 } 
-
-export function getCallType(id: number) {
-
-  if(id == 0)
-    return "POST";
-  else
-    return "PUT";
-}
