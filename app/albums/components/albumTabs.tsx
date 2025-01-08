@@ -7,15 +7,18 @@ import { Album } from "@/app/types/album";
 import { SelectItem } from "@/app/types/selectItem";
 import AlbumPhotoForm from "./albumPhotoForm";
 import AlbumSongs from "./albumSongs";
+import AlbumDescriptionForm from "./albumDescriptionForm";
+import { AlbumDescription } from "@/app/types/albumDescription";
 
 interface IProps {
   album: Album;
+  albumDescription: AlbumDescription;
   artistItems: SelectItem[];
   studioItems: SelectItem[];
   recordLabelItems: SelectItem[];
 }
 
-export default function  AlbumTabs({album, artistItems, studioItems, recordLabelItems}: IProps) {   
+export default function  AlbumTabs({album, albumDescription, artistItems, studioItems, recordLabelItems}: IProps) {   
 
   const customTheme = 
   { 
@@ -33,14 +36,14 @@ export default function  AlbumTabs({album, artistItems, studioItems, recordLabel
         }
       }
     }   
-  } 
+  }  
 
   return (   
  
     <Tabs aria-label="Tabs with underline" variant="underline" theme={customTheme}>
       <Tabs.Item active title="Details" icon={HiOutlineIdentification}>
         <div className="font-medium text-black w-full">
-          <AlbumDetailsForm mode="edit" existingData={album} artistItems={artistItems} studioItems={studioItems} recordLabelItems={recordLabelItems} />
+          <AlbumDetailsForm action="edit" existingData={album} artistItems={artistItems} studioItems={studioItems} recordLabelItems={recordLabelItems} />
         </div>
       </Tabs.Item>
       <Tabs.Item title="Photo" icon={HiOutlineCamera}>
@@ -53,9 +56,9 @@ export default function  AlbumTabs({album, artistItems, studioItems, recordLabel
           <AlbumSongs songs={album.songs} albumId={album.id}></AlbumSongs>
         </div>
       </Tabs.Item>
-      <Tabs.Item title="History" icon={HiOutlineBookOpen}>
+      <Tabs.Item title="Description" icon={HiOutlineBookOpen}>
         <div className="font-medium text-black">
-            This is History.
+          <AlbumDescriptionForm existingDescription={albumDescription}></AlbumDescriptionForm>
         </div>
       </Tabs.Item> 
     </Tabs> 

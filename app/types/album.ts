@@ -14,4 +14,5 @@ export type Album =
   artwork: string;
   photo: string;
   songs: AlbumSong[];
+  description: string;
 }

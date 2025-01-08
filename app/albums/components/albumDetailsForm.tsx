@@ -9,8 +9,8 @@ import StudioSelect  from "@/app/components/controls/select";
 import DatePicker from "@/app/components/controls/datepicker";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import { saveNewAlbumDetails } from "../actions/album";
-import { saveExistingAlbumDetails } from "../actions/album";
+import { saveNewAlbumDetails } from "@/app/albums/actions/album";
+import { saveExistingAlbumDetails } from "@/app/albums/actions/album";
 import { useRouter } from "next/navigation";
 import Messages from "@/app/components/controls/messages";
 import { Message } from "@/app/types/message";
@@ -20,14 +20,14 @@ import { SelectItem } from "@/app/types/selectItem";
 import { delayAlertRemove } from "@/app/lib/generalHelper";
 
 interface IProps {
-  mode: "add" | "edit";
+  action: "add" | "edit";
   existingData?: Album;
   artistItems: SelectItem[];
   studioItems: SelectItem[];
   recordLabelItems: SelectItem[];
 }
 
-export default function AlbumDetailsForm({mode, existingData, artistItems, studioItems, recordLabelItems}: IProps) {
+export default function AlbumDetailsForm({action, existingData, artistItems, studioItems, recordLabelItems}: IProps) {
  
   const router = useRouter();
   const [messages, setMessages] = useState<Message[]>([]); 
@@ -78,7 +78,7 @@ export default function AlbumDetailsForm({mode, existingData, artistItems, studi
   }
 
   useEffect(() => {    
-    if(mode == "edit" && existingData != null && existingData != undefined)  
+    if(action == "edit" && existingData != null && existingData != undefined)  
       setAlbumValues(existingData);
   });  
 
@@ -90,7 +90,7 @@ export default function AlbumDetailsForm({mode, existingData, artistItems, studi
 
     setMessages([]);
 
-    if(mode === "add")
+    if(action === "add")
     { 
       const response = await saveNewAlbumDetails(data); 
       if(response?.success == true)        
@@ -123,13 +123,13 @@ export default function AlbumDetailsForm({mode, existingData, artistItems, studi
 
       <input {...register("id")} type="hidden" name="id" id="id" />       
  
-      <div className="w-full flex flex-col lg:flex-row gap-4">
+      <div className="w-full flex flex-col lg:flex-row gap-4 space-y-0">
 
         <div className="w-full lg:w-3/6">
           <div className="grid grid-cols-12">
             <label className="grid-cols-12 col-span-12 md:grid-cols-2 md:col-span-3">Name*</label>
             <input {...register("name")} type="text" maxLength={120} className="grid-cols-12 col-span-12 md:grid-cols-9 md:col-span-9" placeholder="name of album" />
-            <p className="error grid-cols-12 col-span-12 md:grid-cols-5 md:col-span-5 md:col-start-4">
+            <p className="error grid-cols-12 col-span-12 md:grid-cols-5 md:col-span-5 md:col-start-4 text-gray-900 mb-2">
               {errors.name && errors.name.message}
             </p>
           </div>
@@ -137,17 +137,17 @@ export default function AlbumDetailsForm({mode, existingData, artistItems, studi
           <div className="grid grid-cols-12">
             <label className="grid-cols-12 col-span-12 md:grid-cols-3 md:col-span-3">Artist*</label>
             <ArtistSelect trigger={trigger} name="artistId" register={register} items={artistItems} error={errors.name?.message} /> 
-            <p className="error grid-cols-12 col-span-12 md:grid-cols-5 md:col-span-5 md:col-start-4">
+            <p className="error grid-cols-12 col-span-12 md:grid-cols-5 md:col-span-5 md:col-start-4 text-gray-900 mb-2">
               {errors.artistId && errors.artistId.message}
             </p>
           </div>  
     
-          <div className="grid grid-cols-12 mb-2 md:mb-0 lg:mb-16">        
+          <div className="grid grid-cols-12 mb-2">        
             <label className="grid-cols-12 col-span-12 md:grid-cols-3 md:col-span-3">Release Date</label> 
             <DatePicker name="releaseDate" control={control} />
           </div> 
 
-          <div className="grid grid-cols-12 mb-2 lg:mb-16">        
+          <div className="grid grid-cols-12">        
             <label className="grid-cols-12 col-span-12 md:grid-cols-3 md:col-span-3">Recorded Date</label> 
             <DatePicker name="recordedDate" control={control} />
           </div>
@@ -157,7 +157,7 @@ export default function AlbumDetailsForm({mode, existingData, artistItems, studi
           <div className="grid grid-cols-12">
             <label className="grid-cols-12 col-span-12 md:grid-cols-3 md:col-span-3">Record Label</label>          
             <RecordLabelSelect trigger={trigger} name="labelId" register={register} items={recordLabelItems} error={errors.name?.message} />   
-            <p className="error grid-cols-12 col-span-12 md:grid-cols-5 md:col-span-5 md:col-start-4">
+            <p className="error grid-cols-12 col-span-12 md:grid-cols-5 md:col-span-5 md:col-start-4 text-gray-900 mb-2">
               {errors.labelId && errors.labelId.message}
             </p>
           </div> 
@@ -165,7 +165,7 @@ export default function AlbumDetailsForm({mode, existingData, artistItems, studi
           <div className="grid grid-cols-12">
             <label className="grid-cols-12 col-span-12 md:grid-cols-3 md:col-span-3">Studio</label>          
             <StudioSelect trigger={trigger} name="studioId" register={register} items={studioItems} error={errors.name?.message} />   
-            <p className="error grid-cols-12 col-span-12 md:grid-cols-5 md:col-span-5 md:col-start-4">
+            <p className="error grid-cols-12 col-span-12 md:grid-cols-5 md:col-span-5 md:col-start-4 text-gray-900 mb-2">
               {errors.studioId && errors.studioId.message}
             </p>
           </div> 
@@ -173,7 +173,7 @@ export default function AlbumDetailsForm({mode, existingData, artistItems, studi
           <div className="grid grid-cols-12">
             <label className="grid-cols-12 col-span-12 md:grid-cols-3 md:col-span-3">Producers</label>
             <input {...register("producers")} type="text" maxLength={250} className="grid-cols-12 col-span-12 md:grid-cols-9 md:col-span-9" placeholder="Producers" />
-            <p className="error grid-cols-12 col-span-12 md:grid-cols-3 md:col-span-5 md:col-start-4">
+            <p className="error grid-cols-12 col-span-12 md:grid-cols-3 md:col-span-5 md:col-start-4 text-gray-900 mb-2">
               {errors.producers && errors.producers.message}
             </p>
           </div>
@@ -181,7 +181,7 @@ export default function AlbumDetailsForm({mode, existingData, artistItems, studi
           <div className="grid grid-cols-12">
             <label className="grid-cols-12 col-span-12 md:grid-cols-2 md:col-span-3">Arrangers</label>
             <input {...register("arrangers")} type="text" maxLength={250} className="grid-cols-12 col-span-12 md:grid-cols-9 md:col-span-9" placeholder="Arrangers" />
-            <p className="error grid-cols-12 col-span-12 md:grid-cols-5 md:col-span-5 md:col-start-4">
+            <p className="error grid-cols-12 col-span-12 md:grid-cols-5 md:col-span-5 md:col-start-4 text-gray-900 mb-2">
               {errors.arrangers && errors.arrangers.message}
             </p>
           </div>
@@ -189,7 +189,7 @@ export default function AlbumDetailsForm({mode, existingData, artistItems, studi
           <div className="grid grid-cols-12">
             <label className="grid-cols-12 col-span-12 md:grid-cols-3 md:col-span-3">Artwork</label>
             <input {...register("artwork")} type="text" maxLength={250} className="grid-cols-12 col-span-12 md:grid-cols-9 md:col-span-9 " placeholder="Artwork" />
-            <p className="error grid-cols-12 col-span-12 md:grid-cols-5 md:col-span-5 md:col-start-4">
+            <p className="error grid-cols-12 col-span-12 md:grid-cols-5 md:col-span-5 md:col-start-4 text-gray-900 mb-2">
               {errors.artwork && errors.artwork.message}
             </p>
           </div> 
@@ -197,7 +197,7 @@ export default function AlbumDetailsForm({mode, existingData, artistItems, studi
       </div>
 
       <div className="grid grid-cols-12">
-        <button disabled={isSubmitting} className="grid-cols-4 col-span-4 col-start-9 md:col-start-10 md:grid-cols-3 md:col-span-3  submit">
+        <button disabled={isSubmitting} className="grid-cols-4 col-span-4 col-start-9 md:col-start-11 md:grid-cols-2 md:col-span-2 submit">
           {isSubmitting ? "Saving" : "Save"}          
         </button> 
       </div> 

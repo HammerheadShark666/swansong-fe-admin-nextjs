@@ -17,3 +17,29 @@ export function getMessagesBySeverity(messages: Message[], severity: string) {
                   ? messages.filter(i => i.severity === severity)
                   : [];
 }
+
+export function getModeLabel(mode: string)
+{
+  switch (mode){
+    case "album" : 
+      return "Album";
+    case "artist" : 
+      return "Artist";
+    case "member" : 
+      return "Member";
+    default:
+      return "Unknow Mode"
+  }
+}
+
+export function getActionLabel(action: string)
+{
+  switch (action){
+    case "add" : 
+      return "Add";
+    case "edit" : 
+      return "Edit"; 
+    default:
+      return "Unknown Action"
+  }
+}

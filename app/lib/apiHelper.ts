@@ -36,3 +36,37 @@ export async function apiCall<T>(path: string, method: Method, body: string | nu
     throw new Error('Error occurred making api call.');
   }
 }
+
+
+
+export async function apiGetCall<T>(path: string): Promise<T> {
+ 
+  try
+  {
+    const response = await fetch(createUrl(path), {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+
+    //const data: T = {} as T;
+
+    if(response.status == 200) {
+       
+        const dataResponse: T = await response.json();
+        return dataResponse;
+       
+    }      
+    else
+    {
+      throw new Error();
+    }      
+
+    //return data; 
+  }
+  catch(error){
+    console.log(error);
+    throw new Error('Error occurred making api call.');
+  }
+}

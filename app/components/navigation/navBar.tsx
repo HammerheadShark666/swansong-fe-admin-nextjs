@@ -25,10 +25,10 @@ return(
         <div className="col-span-10 grid-cols-10">
         <Logo/>
         </div>
-        <div className="col-span-2 grid-cols-2 col-start-11 pt-1 md:pt-0 px-0">
+        <div className="col-span-2 grid-cols-2 col-start-11">
           <button
             type="button"
-            className="inline-flex items-center md:hidden"
+            className="inline-flex items-center md:hidden h-full"
             onClick={toggle}
           >
             <svg
@@ -36,7 +36,7 @@ return(
               xmlns="http://www.w3.org/2000/svg"
               width="40"
               height="40"
-              viewBox="0 0 24 24"
+              viewBox="0 0 24 21"
             >
               <path
                 fill="#fff"
@@ -48,7 +48,7 @@ return(
       </div>
 
       <div className="lg:col-span-7 lg:grid-cols-7 md:col-span-5 md:grid-cols-5 sm:col-span-6 sm:grid-cols-6 flex items-center justify-center h-full">
-        <ul className="hidden md:flex gap-x-6 text-white ">
+        <ul className="hidden md:flex gap-x-6 text-white">
           <li>
             <Link href="/albums/album/add">
               <p>Albums</p>

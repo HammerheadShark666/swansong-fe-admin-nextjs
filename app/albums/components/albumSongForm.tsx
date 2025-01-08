@@ -211,15 +211,15 @@ export default function SongForm({albumSong, albumId, mode, setSelectedRow, setM
         <div className="grid grid-cols-12">
           <label className="grid-cols-12 col-span-12 md:grid-cols-2 md:col-span-3">Title*</label>
           <input {...register("song.title")} type="text" maxLength={150} className="grid-cols-12 col-span-12 md:grid-cols-9 md:col-span-9"  placeholder="title of song" />
-          <p className="error grid-cols-12 col-span-12 md:grid-cols-5 md:col-span-9 md:col-start-4">
+          <p className="error grid-cols-12 col-span-12 md:grid-cols-5 md:col-span-9 md:col-start-4 text-gray-900 mb-2">
             {errors.song && errors.song.title && errors.song.title.message}
           </p>
         </div> 
 
         <div className="grid grid-cols-12">
-          <label className="grid-cols-12 col-span-12 md:grid-cols-2 md:col-span-3">Length (MM:SS)</label>
-          <input {...register("song.length")} type="text" maxLength={5} className="grid-cols-12 col-span-12 md:grid-cols-3 md:col-span-3" placeholder="length" />
-          <p className="error grid-cols-12 col-span-12 md:grid-cols-5 md:col-span-9 md:col-start-4">
+          <label className="grid-cols-12 col-span-12 md:grid-cols-2 md:col-span-3">Length</label>
+          <input {...register("song.length")} type="text" maxLength={5} className="grid-cols-12 col-span-12 md:grid-cols-3 md:col-span-3" placeholder="MM:SS" />
+          <p className="error grid-cols-12 col-span-12 md:grid-cols-5 md:col-span-9 md:col-start-4 text-gray-900 mb-2">
             {errors.song && errors.song.length && errors.song.length.message}
           </p>
         </div> 
@@ -227,7 +227,7 @@ export default function SongForm({albumSong, albumId, mode, setSelectedRow, setM
         <div className="grid grid-cols-12">
           <label className="grid-cols-12 col-span-12 md:grid-cols-2 md:col-span-3">Side</label>
           <input {...register("side", { valueAsNumber: true })} type="number" min={0} maxLength={2} className="grid-cols-4 col-span-4 md:grid-cols-2 md:col-span-2" placeholder="side of album song is on" />
-          <p className="error grid-cols-12 col-span-12 md:grid-cols-5 md:col-span-9 md:col-start-4">
+          <p className="error grid-cols-12 col-span-12 md:grid-cols-5 md:col-span-9 md:col-start-4 text-gray-900 mb-2">
             {errors.side && errors.side.message}
           </p>
         </div>  
@@ -235,7 +235,7 @@ export default function SongForm({albumSong, albumId, mode, setSelectedRow, setM
         <div className="grid grid-cols-12">
           <label className="grid-cols-12 col-span-12 md:grid-cols-2 md:col-span-3">Order</label>
           <input {...register("order", { valueAsNumber: true })} type="number" min={0} maxLength={2} className="grid-cols-4 col-span-4 md:grid-cols-2 md:col-span-2" placeholder="order of song" />
-          <p className="error grid-cols-12 col-span-12 md:grid-cols-5 md:col-span-9 md:col-start-4">
+          <p className="error grid-cols-12 col-span-12 md:grid-cols-5 md:col-span-9 md:col-start-4 text-gray-900 mb-2">
             {errors.order && errors.order.message}
           </p>
         </div>  

@@ -58,13 +58,9 @@ export default function AlbumPhotoForm({id, filename}: IProps) {
  
         <div className="grid-cols-12 col-span-12 md:grid-cols-4 md:col-span-4 lg:grid-cols-3 lg:col-span-3">
           {preview && ( 
-            <div className="relative h-48 w-48 md:h-48 md:w-48">
-            <Image
-              src={preview}
-              alt="Upload album photo"
-              layout="fill"
-              objectFit="cover"
-            />
+            <div className="relative h-48 w-48 md:h-48 md:w-48">           
+            <Image alt="Upload album photo"
+                  src={preview} width={200} height={200} style={{ height: 'auto', objectFit: 'cover', position: 'relative' }}/>
           </div>
           )}
           <input ref={hiddenFileInputRef} hidden type="file" onChange={handleFileChange} /> 

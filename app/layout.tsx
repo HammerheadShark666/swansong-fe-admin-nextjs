@@ -10,10 +10,10 @@ export const philosopher = Philosopher({ weight: "400", display: 'swap', subsets
 export const poppins = Poppins({ weight: "400", display: 'swap', subsets: ['latin'] }); 
 export const raleway = Raleway({ weight: "400", display: 'swap', subsets: ['latin'] }); 
  
-export const metadata: Metadata = {
-  title: "Swansong",
-  description: "Swansong music website", 
-}; 
+// export const metadata: Metadata = {
+//   title: "Swansong",
+//   description: "Swansong music website", 
+// }; 
  
 export default function RootLayout({
   children,
