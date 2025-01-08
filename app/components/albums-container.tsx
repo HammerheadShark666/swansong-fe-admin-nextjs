@@ -5,7 +5,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation"; 
 import AlbumImage from "./albumImage";
 
-
 async function getAlbums(): Promise<AlbumLookup[]> {
  
   const res = await fetch(createUrl('albums/random'), { cache: 'no-store' });
@@ -25,12 +24,9 @@ export default async function AlbumsContainer() {
     <>
       {albums && (          
         <div className="max-w-7xl mx-auto grid grid-cols-12">
-          <div className="col-span-12">    
-            <div className="grid-cols-12 pt-5 pl-5"> 
-              <span className="text-lg">Albums</span>
-            </div>         
+          <div className="col-span-12">
             {albums && (
-              <div className="grid grid-cols-2 gap-4 mb-4 md:grid-cols-6 p-5"> 
+              <div className="grid grid-cols-2 gap-x-4 gap-y-2 md:grid-cols-6 pt-4"> 
                 {albums.map((album: AlbumLookup) => (     
                   <Link key={album.id} href={`${getUrl("albums", album.id)}`}>
                     <div className="tooltip object-fill w-full" data-tip={getToolTip(album)}>

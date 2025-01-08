@@ -1,9 +1,14 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
+const nextConfig: NextConfig = { 
   reactStrictMode: true,
   distDir: 'build',
   output: 'standalone',
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '1mb'
+    }
+  },
   images: { 
     remotePatterns: [
       {

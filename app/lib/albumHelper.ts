@@ -1,18 +1,20 @@
-export default function getAlbumSongsTotalLength(tracks: Song[]) { 
-    
+import { AlbumSong } from "../types/albumSong";
+
+export function getAlbumSongsTotalLength(albumSongs: AlbumSong[]) {  
+  
   let sum = "";
 
-  if(tracks.length > 0) {
+  if(albumSongs.length > 0) {
 
       let minutes = 0;
       let seconds = 0;
 
-      tracks.forEach((column, index: number) => {
+      albumSongs.forEach((column, index) => {
 
-          const length = tracks[index].song.length;
-          const hoursMinutes = length.split(":")
+          const length = albumSongs[index].song.length;
+          const hoursMinutes = length && length.split(":")
 
-          if(hoursMinutes.length == 2)
+          if(hoursMinutes && hoursMinutes.length == 2)
           {
               minutes = minutes + Number(hoursMinutes[0]);
               seconds = seconds + Number(hoursMinutes[1]);

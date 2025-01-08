@@ -1,20 +1,20 @@
 'use client';
 
-import { useRouter } from "next/navigation";
-import { KeyboardEvent } from 'react';
+// import { useRouter } from "next/navigation";
+// import { KeyboardEvent } from 'react';
 import Link from "next/link";
 import Logo from "./logo";
 
 export default function NavigationBar({ toggle }: { toggle: () => void }) { 
 
-  const router = useRouter();
+ // const router = useRouter();
 
-  const handleOnKeyDown = (e : KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      router.push("/search?criteria=" + e.currentTarget.value);
-      e.currentTarget.value = "";
-    }
-  }
+  // const handleOnKeyDown = (e : KeyboardEvent<HTMLInputElement>) => {
+  //   if (e.key === "Enter") {
+  //     router.push("/search?criteria=" + e.currentTarget.value);
+  //     e.currentTarget.value = "";
+  //   }
+  // }
 
 return(
   <nav className="flex items-center justify-between p-3 pr-4 bg-black border-b-2 border-white shadow-[rgba(0,0,15,0.3)_0px_3px_4px_0px]">
@@ -25,17 +25,18 @@ return(
         <div className="col-span-10 grid-cols-10">
         <Logo/>
         </div>
-        <div className="col-span-2 grid-cols-2 pt-1 md:pt-0">
+        <div className="col-span-2 grid-cols-2 col-start-11">
           <button
             type="button"
-            className="inline-flex items-center md:hidden"
+            className="inline-flex items-center md:hidden h-full"
             onClick={toggle}
           >
             <svg
+              className="absolute left-2 top-0"
               xmlns="http://www.w3.org/2000/svg"
               width="40"
               height="40"
-              viewBox="0 0 24 24"
+              viewBox="0 0 24 21"
             >
               <path
                 fill="#fff"
@@ -47,7 +48,7 @@ return(
       </div>
 
       <div className="lg:col-span-7 lg:grid-cols-7 md:col-span-5 md:grid-cols-5 sm:col-span-6 sm:grid-cols-6 flex items-center justify-center h-full">
-        <ul className="hidden md:flex gap-x-6 text-white ">
+        <ul className="hidden md:flex gap-x-6 text-white">
           <li>
             <Link href="/albums/album/add">
               <p>Albums</p>
