@@ -1,7 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react';
-import ReactQuill from 'react-quill-new';
+import React, { useEffect, useState } from 'react'; 
 import 'react-quill-new/dist/quill.snow.css';
 import { albumDescriptionSchema, AlbumDescriptionSchema } from '../validation/albumDescriptionSchema';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
@@ -11,6 +10,12 @@ import { Message } from '@/app/types/message';
 import Messages from '@/app/components/controls/messages';
 import { saveExistingAlbumDescriptionDetails } from '@/app/albums/actions/album';
 import { delayAlertRemove } from '@/app/lib/generalHelper';
+import dynamic from 'next/dynamic'; 
+
+const ReactQuill = dynamic(() => import('react-quill-new'), {
+  ssr: false,
+  loading: () => <p>Loading ...</p>,
+});
 
 interface IProps { 
   existingDescription?: AlbumDescription; 

@@ -10,10 +10,11 @@ interface IProps {
   searchResults: AlbumSearchItem[] | undefined;
   showNoResultsFound: boolean;
   showSearchResults: boolean;
+  criteria: string;
   mode: string;
 }
 
-export default function LetterPicker({mode, searchResults, showNoResultsFound, showSearchResults}: IProps) { 
+export default function LetterPicker({mode, searchResults, showNoResultsFound, showSearchResults, criteria}: IProps) { 
 
   const [messages, setMessages] = useState<Message[]>([]);  
   const router = useRouter();
@@ -34,7 +35,7 @@ export default function LetterPicker({mode, searchResults, showNoResultsFound, s
   };
 
   useEffect(() => {    
-    setMessages([{ severity: "info", text: "No " + mode + "s found."}]);      
+    setMessages([{ severity: "info", text: "No " + mode + "s found."}]);   
   }, [mode]);
 
   const handleClearMessages = () => {
@@ -42,7 +43,10 @@ export default function LetterPicker({mode, searchResults, showNoResultsFound, s
   };  
 
   return (
-    <div id="search-results" className="w-full grid-cols-12 col-span-12 mt-4">
+    <div id="search-results" className="w-full grid-cols-12 col-span-12"> 
+
+      {(showSearchResults || showNoResultsFound) ? (<p className="mb-4 font-semibold">Results for &apos;{criteria}&apos;....</p>) : (<></>)}
+
     {(showSearchResults) ? (
     
       searchResults?.map((album: AlbumSearchItem ) => (      

@@ -102,3 +102,6 @@ export async function getAlbum(id: number): Promise<Album> {
   export async function getAlbumsByText(text: string): Promise<AlbumSearchItem[]> {  
     return await apiGetCall<AlbumSearchItem[]>("albums/search/" + text);
   }
+
+
+  //change to apiGetCall 
