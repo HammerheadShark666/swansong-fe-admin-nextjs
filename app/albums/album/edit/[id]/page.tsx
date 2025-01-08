@@ -4,6 +4,12 @@ import AlbumTabs from "@/app/albums/components/albumTabs";
 import PageNavigationBar from "@/app/components/navigation/pageNavBar"; 
 import { Album } from "@/app/types/album";
 import { AlbumDescription } from "@/app/types/albumDescription";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Swansong - Edit Album",
+  description: "Swansong music admin site"
+}
 
 export default async function EditAlbumPage({ params }:{ params: Promise<{ id: string }> } ) {      
   

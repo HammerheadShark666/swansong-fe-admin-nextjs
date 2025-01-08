@@ -26,11 +26,12 @@ export default function AlbumSearchDrawer({mode}: IProps) {
   const [searchResults, setSearchResults] = useState<AlbumSearchItem[]>();
   const [isSearching, setIsSearching] = useState(false);
   const [showNoResultsFound, setShowNoResultsFound] = useState(false);
-  const [showSearchResults, setShowSearchResults] = useState(false);
+  const [showSearchResults, setShowSearchResults] = useState(false); 
+  const [searchCriteria, setSearchCriteria] = useState(""); 
  
   const modeLabel = getModeLabel(mode);
 
-  async function search(criteria: string, searchBy: "letter" | "text") {
+  async function search(searchBy: "letter" | "text", criteria: string) {
 
     switch(mode)
     {
@@ -61,23 +62,22 @@ export default function AlbumSearchDrawer({mode}: IProps) {
   }
 
   function preSearchInitialization() 
-  {
-    setShowSearchResults(false); 
+  { 
     setIsSearching(true); 
     setShowNoResultsFound(false);
     setShowSearchResults(false);
-    setSearchResults([]); 
+    setSearchResults([]);  
   }
 
-  function postSearchSettings() 
+  function postSearchSettings(results:AlbumSearchItem[]) 
   {
-    if(searchResults && searchResults.length > 0)
+    if((results && results.length > 0))
       setShowSearchResults(true);
     else
       setShowNoResultsFound(true); 
-    
-    setIsSearching(false);  
-  }
+     
+    setIsSearching(false); 
+  } 
 
   const handleSearchClick = async (criteria: string, searchBy: "letter" | "text") => { 
 
@@ -89,9 +89,11 @@ export default function AlbumSearchDrawer({mode}: IProps) {
         return;
       }
 
+      setSearchCriteria(criteria); 
       preSearchInitialization();
-      setSearchResults(await search(criteria, searchBy));
-      postSearchSettings();
+      const results = await search(searchBy, criteria);
+      setSearchResults(results);
+      postSearchSettings(results);
     } 
     catch(error)
     {
@@ -132,7 +134,7 @@ export default function AlbumSearchDrawer({mode}: IProps) {
             <Messages messages={messages} onClearMessages={handleClearMessages}></Messages>  
           </div>
           <SearchSpinner isSearching={isSearching}></SearchSpinner>     
-          <SearchResults mode={mode} searchResults={searchResults} showNoResultsFound={showNoResultsFound} showSearchResults={showSearchResults}></SearchResults>
+          <SearchResults mode={mode} searchResults={searchResults} showNoResultsFound={showNoResultsFound} showSearchResults={showSearchResults} criteria={searchCriteria}></SearchResults>
         </div>
       </div>
 

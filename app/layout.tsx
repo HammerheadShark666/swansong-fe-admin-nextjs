@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import "./globals.css";
 import Footer from "./components/footer"
 import { Ibarra_Real_Nova, Bellefair, Philosopher, Poppins, Raleway } from 'next/font/google'
@@ -10,11 +9,6 @@ export const philosopher = Philosopher({ weight: "400", display: 'swap', subsets
 export const poppins = Poppins({ weight: "400", display: 'swap', subsets: ['latin'] }); 
 export const raleway = Raleway({ weight: "400", display: 'swap', subsets: ['latin'] }); 
  
-// export const metadata: Metadata = {
-//   title: "Swansong",
-//   description: "Swansong music website", 
-// }; 
- 
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -22,7 +16,7 @@ export default function RootLayout({
 }>) { 
 
   return (
-    <html lang="en">
+    <html lang="en"> 
       <body className="w-full flex flex-col min-h-screen"> 
         <header>
           <Navigation />

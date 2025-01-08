@@ -1,14 +1,19 @@
 import AlbumDetailsForm from "@/app/albums/components/albumDetailsForm"; 
 import { getAlbumLookups } from "../../actions/getSelectLookups"; 
 import PageNavigationBar from "@/app/components/navigation/pageNavBar";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Swansong - Add Album",
+  description: "Swansong music admin site"
+}
 
 export default async function AddAlbumPage() {  
 
   const lookups = await getAlbumLookups();
 
   return  (    
-    <>
-    
+    <>    
       <PageNavigationBar action="add" mode="album" addUrl="/albums/album/add"></PageNavigationBar>
  
       <div className="flex flex-col w-full border border-gray-100 bg-white flex-1 mb-2">
