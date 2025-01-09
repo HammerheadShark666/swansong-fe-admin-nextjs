@@ -1,13 +1,11 @@
 import { ApiResponse, ErrorResponse } from "../interfaces/apiResponse"; 
-import { createUrl } from "./http";
-
-type Method = 'GET' | 'POST' | 'PUT' | 'DELETE';
-
-export async function apiCall<T>(path: string, method: Method, body: string | null): Promise<ApiResponse<T>> {
+import { API_METHOD } from "./enums"; 
+ 
+export async function apiCall<T>(path: string, method: API_METHOD, body: string | null): Promise<ApiResponse<T>> {
  
   try
   {
-    const response = await fetch(createUrl(path), {
+    const response = await fetch(path, {
       method: method,
       headers: {
         'Content-Type': 'application/json',
@@ -18,7 +16,7 @@ export async function apiCall<T>(path: string, method: Method, body: string | nu
     let data: ApiResponse<T> = { status: response.status, data: {} as T };
 
     if(response.status == 200) {
-      if(method === 'GET' || method === 'POST' || method === 'PUT') {      
+      if(method === 'POST' || method === 'PUT') {      
         const dataResponse: T = await response.json();
         data = { status: response.status, data: dataResponse };   
       }
@@ -41,7 +39,7 @@ export async function apiGetCall<T>(path: string): Promise<T> {
  
   try
   {
-    const response = await fetch(createUrl(path), {
+    const response = await fetch(path, {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',
@@ -56,6 +54,44 @@ export async function apiGetCall<T>(path: string): Promise<T> {
     {
       throw new Error();
     }  
+  }
+  catch(error){
+    console.log(error);
+    throw new Error('Error occurred making api call.');
+  }
+}
+ 
+export async function apiPhotoCall<T>(path: string, method: API_METHOD, file: File | null | undefined): Promise<ApiResponse<T>> {
+ 
+  try
+  {
+    if(file == null)
+      throw new Error("Upload image is null.");
+
+    const body = new FormData();
+    body.set('file', file); 
+
+    const response = await fetch(path, {
+      method: method,
+      headers: {},
+      body: body
+    });
+
+    let data: ApiResponse<T> = { status: response.status, data: {} as T };
+
+    if(response.status == 200) {
+      if(method === 'POST' || method === 'PUT') {      
+        const dataResponse: T = await response.json();
+        data = { status: response.status, data: dataResponse };   
+      }
+    }      
+    else
+    {
+      const errorResponse: ErrorResponse = await response.json();
+      data = { status: response.status, data: errorResponse };  
+    }      
+
+    return data; 
   }
   catch(error){
     console.log(error);

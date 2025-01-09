@@ -18,19 +18,22 @@ import { Album } from "@/app/types/album";
 import { selectKeyNumberToString } from "@/app/lib/stringHelper"; 
 import { SelectItem } from "@/app/types/selectItem";
 import { delayAlertRemove } from "@/app/lib/generalHelper";
+import { ErrorResponse } from "@/app/interfaces/apiResponse";
+import { AlbumResponse } from "@/app/interfaces/albumResponse";  
 
 interface IProps {
   action: "add" | "edit";
   existingData?: Album;
   artistItems: SelectItem[];
   studioItems: SelectItem[];
-  recordLabelItems: SelectItem[];
+  recordLabelItems: SelectItem[]; 
+  setShowSpinner: (show: boolean) => void;
 }
 
-export default function AlbumDetailsForm({action, existingData, artistItems, studioItems, recordLabelItems}: IProps) {
+export default function AlbumDetailsForm({action, existingData, artistItems, studioItems, recordLabelItems, setShowSpinner}: IProps) {
  
   const router = useRouter();
-  const [messages, setMessages] = useState<Message[]>([]); 
+  const [messages, setMessages] = useState<Message[]>([]);  
  
   const { trigger, control, register, handleSubmit, setValue, formState: { errors, isSubmitting } } = useForm<AlbumDetailsSchema>({
     mode: 'onChange',
@@ -78,8 +81,9 @@ export default function AlbumDetailsForm({action, existingData, artistItems, stu
   }
 
   useEffect(() => {    
-    if(action == "edit" && existingData != null && existingData != undefined)  
+    if(action == "edit" && existingData != null && existingData != undefined)  {
       setAlbumValues(existingData);
+    }      
   });  
 
   const handleClearMessages = () => {
@@ -88,22 +92,26 @@ export default function AlbumDetailsForm({action, existingData, artistItems, stu
 
   const onSubmitForm: SubmitHandler<AlbumDetailsSchema> = async (data) => { 
 
-    setMessages([]);
+    setShowSpinner(true);
+    setMessages([]); 
 
     if(action === "add")
     { 
       const response = await saveNewAlbumDetails(data); 
-      if(response?.success == true)        
-        router.push("/albums/album/edit/" + response.data.id.toString());        
+      if(response?.status == 200)        
+        router.push("/albums/album/edit/" + (response.data as AlbumResponse).id.toString());        
       else 
-        setMessages(response.messages.messages);      
+      {
+        if(response.data)        
+          setMessages((response.data as ErrorResponse).messages);    
+      }     
     } 
     else
     {
       updatingExistingData(data);  
 
       const response = await saveExistingAlbumDetails(data); 
-      if(response?.success == true)     
+      if(response?.status == 200)     
       {
         setMessages([{ severity: "info", text: "Album saved."}]);   
         delayAlertRemove().then(function() {
@@ -111,8 +119,13 @@ export default function AlbumDetailsForm({action, existingData, artistItems, stu
         });
       }      
       else
-        setMessages(response.messages.messages);
+      {
+        if(response.data)        
+          setMessages((response.data as ErrorResponse).messages);    
+      }             
     }
+
+    setShowSpinner(false);
   }
  
   return (

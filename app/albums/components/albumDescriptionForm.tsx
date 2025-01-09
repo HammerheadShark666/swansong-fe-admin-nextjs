@@ -11,6 +11,7 @@ import Messages from '@/app/components/controls/messages';
 import { saveExistingAlbumDescriptionDetails } from '@/app/albums/actions/album';
 import { delayAlertRemove } from '@/app/lib/generalHelper';
 import dynamic from 'next/dynamic'; 
+import { ErrorResponse } from '@/app/interfaces/apiResponse';
 
 const ReactQuill = dynamic(() => import('react-quill-new'), {
   ssr: false,
@@ -61,7 +62,7 @@ export default function AlbumDescriptionForm({existingDescription} : IProps) {
     updatingAlbumDescriptionData(data);  
 
     const response = await saveExistingAlbumDescriptionDetails(data); 
-    if(response?.success == true)     
+    if(response?.status == 200)     
     {
       setMessages([{ severity: "info", text: "Album description saved."}]);   
       delayAlertRemove().then(function() {
@@ -69,7 +70,8 @@ export default function AlbumDescriptionForm({existingDescription} : IProps) {
       });
     }      
     else
-      setMessages(response.messages.messages);      
+      if(response.data)        
+        setMessages((response.data as ErrorResponse).messages);        
   } 
 
   return (

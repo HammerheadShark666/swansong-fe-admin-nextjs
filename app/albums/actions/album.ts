@@ -1,107 +1,35 @@
 import { Album } from "@/app/types/album";
-import { AlbumDetailsSchema } from "@/app/albums/validation/albumDetailsSchema";
-import { createUrl } from "@/app/lib/http";
+import { AlbumDetailsSchema } from "@/app/albums/validation/albumDetailsSchema"; 
 import { mapAlbum, mapAlbumDescription } from "@/app/lib/mappers";
 import { AlbumDescriptionSchema } from "@/app/albums/validation/albumDescriptionSchema";
-import { apiGetCall } from "@/app/lib/apiHelper"; 
+import { apiCall, apiGetCall } from "@/app/lib/apiHelper"; 
 import { AlbumSearchItem } from "@/app/interfaces/albumSearchItem";
+import { ALBUM_ADD, ALBUM_UPDATE, ALBUM_UPDATE_DESCRIPTION, GET_ALBUM, SEARCH_ALBUMS_BY_LETTER, SEARCH_ALBUMS_BY_TEXT } from "@/app/lib/urls";
+import { formatString } from "@/app/lib/stringHelper";
+import { AlbumResponse } from "@/app/interfaces/albumResponse";
+import { ApiResponse } from "@/app/interfaces/apiResponse";
+import { API_METHOD } from "@/app/lib/enums";
 
-export async function saveNewAlbumDetails(data: AlbumDetailsSchema) {     
-
-    try {  
-  
-      const album = mapAlbum(data);
-  
-      const response = await fetch(createUrl("albums/album/add"), {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(album)
-      });
-  
-      const callResponse = await response.json();
-   
-      return response.status != 200 
-              ? { success: false, messages: callResponse }
-              : { success: true, data: callResponse };
-    }
-    catch (error) { 
-      return { success: false, message: error };
-    }
-  }
-
-export async function saveExistingAlbumDetails(data: AlbumDetailsSchema) {     
-
-  try {  
-
-    const album = mapAlbum(data);
-
-    const response = await fetch(createUrl("albums/album/update"), {
-      method: "PUT",
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(album)
-    });
-
-    const callResponse = await response.json(); 
- 
-    return response.status != 200 
-            ? { success: false, messages: callResponse }
-            : { success: true, data: callResponse };
-  }
-  catch (error) { 
-    return { success: false, message: error };
-  }
+export async function  saveNewAlbumDetails(data: AlbumDetailsSchema): Promise<ApiResponse<AlbumResponse>> {  
+  return await apiCall<AlbumResponse>(ALBUM_ADD, API_METHOD.POST, JSON.stringify(mapAlbum(data)));
 } 
 
-export async function saveExistingAlbumDescriptionDetails(data: AlbumDescriptionSchema) {     
+export async function saveExistingAlbumDetails(data: AlbumDetailsSchema): Promise<ApiResponse<AlbumResponse>> {  
+  return await apiCall<AlbumResponse>(ALBUM_UPDATE, API_METHOD.PUT, JSON.stringify(mapAlbum(data)));
+}  
 
-  try {  
+export async function saveExistingAlbumDescriptionDetails(data: AlbumDescriptionSchema): Promise<ApiResponse<AlbumResponse>> {  
+  return await apiCall<AlbumResponse>(ALBUM_UPDATE_DESCRIPTION, API_METHOD.PUT, JSON.stringify(mapAlbumDescription(data)));
+}
 
-    const albumDescription = mapAlbumDescription(data);
-
-    const response = await fetch(createUrl("albums/album/description/update"), {
-      method: "PUT",
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(albumDescription)
-    });
-
-    const callResponse = await response.json(); 
- 
-    return response.status != 200 
-            ? { success: false, messages: callResponse }
-            : { success: true, data: callResponse };
-  }
-  catch (error) { 
-    return { success: false, message: error };
-  }
+export async function getAlbum(id: number): Promise<Album> { 
+  return await apiGetCall<Album>(formatString(GET_ALBUM, id));
 } 
 
-export async function getAlbum(id: number): Promise<Album> {
-  
-    const res = await fetch(createUrl("albums/album/" + id), { 
-      cache: 'no-store'
-    });
-  
-    if (!res.ok) {
-      //notFound();
-    }
-  
-    const data: Album = await res.json();
-    return data; 
-  }
- 
-  export async function getAlbumsByLetter(letter: string): Promise<AlbumSearchItem[]> {  
-    return await apiGetCall<AlbumSearchItem[]>("albums/search-by-letter/" + letter);
-  }
+export async function getAlbumsByLetter(letter: string): Promise<AlbumSearchItem[]> {  
+  return await apiGetCall<AlbumSearchItem[]>(formatString(SEARCH_ALBUMS_BY_LETTER, letter));
+}
 
-  export async function getAlbumsByText(text: string): Promise<AlbumSearchItem[]> {  
-    return await apiGetCall<AlbumSearchItem[]>("albums/search/" + text);
-  }
-
-
-  //change to apiGetCall 
+export async function getAlbumsByText(text: string): Promise<AlbumSearchItem[]> {  
+  return await apiGetCall<AlbumSearchItem[]>(formatString(SEARCH_ALBUMS_BY_TEXT, text));
+} 

@@ -1,34 +1,12 @@
 "use server";
 
-import { createUrl } from "@/app/lib/http";
+import { AlbumPhotoResponse } from "@/app/interfaces/albumPhotoResponse";
+import { ApiResponse } from "@/app/interfaces/apiResponse";
+import { apiPhotoCall } from "@/app/lib/apiHelper";
+import { API_METHOD } from "@/app/lib/enums";
+import { formatString } from "@/app/lib/stringHelper";
+import { ALBUM_UPDATE_PHOTO } from "@/app/lib/urls";
 
-export async function saveAlbumPhoto(file: File | null | undefined, id: number) {
-  
-  try {
-
-    if(file == null)
-      throw new Error("Upload image is null.");
-    
-    const body = new FormData();
-    body.set('file', file);
-
-    const response = await fetch(createUrl('albums/album/upload-photo/' + id), {
-      method: "POST",
-      headers: {},
-      body: body
-    });
-
-    const callResponse = await response.json();
-
-    if(response.status != 200)
-    {       
-       return { success: false, messages: callResponse }; 
-    }
-
-    return { success: true, filename: callResponse.filename };
-  } 
-  catch (error) { 
-    console.log(error)
-    return { success: false, messages: [{ severity: "error", text: "Error saving album photo."}] };
-  }
+export async function saveAlbumPhoto(file: File | null | undefined, id: number) : Promise<ApiResponse<AlbumPhotoResponse>> { 
+  return await apiPhotoCall<AlbumPhotoResponse>(formatString(ALBUM_UPDATE_PHOTO, id), API_METHOD.POST, file);
 }
