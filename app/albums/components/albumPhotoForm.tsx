@@ -5,9 +5,10 @@ import Image from "next/image";
 import { saveAlbumPhoto } from "@/app/albums/actions/albumPhoto";
 import { getAlbumImageUrl, getDefaultAlbumImageUrl } from "@/app/lib/imageHelper";
 import Messages from "@/app/components/controls/messages";
-import { Message } from "@/app/types/message";
-import { displayMessage } from "@/app/lib/messageHelper";
-
+import { Message } from "@/app/types/message"; 
+import { delayAlertRemove } from "@/app/lib/generalHelper";
+import { ErrorResponse } from "@/app/interfaces/apiResponse";
+import { AlbumPhotoResponse } from "@/app/interfaces/albumPhotoResponse";
 
 interface IProps {
   id: number;
@@ -20,7 +21,7 @@ export default function AlbumPhotoForm({id, filename}: IProps) {
 
   let photoUrl = getDefaultAlbumImageUrl();
 
-  if(filename != null)
+  if(filename != null && filename != "")
     photoUrl = getAlbumImageUrl(filename);
 
   const hiddenFileInputRef = useRef<HTMLInputElement | null>(null);
@@ -36,19 +37,38 @@ export default function AlbumPhotoForm({id, filename}: IProps) {
     setMessages([]);
 
     const file = event.target.files?.[0]; 
-    const response = await saveAlbumPhoto(file, id);
+    const response = await saveAlbumPhoto(file, id); 
 
-    if(response?.success == true)
+    if(response?.status == 200)     
     {
-      const url = getAlbumImageUrl(response.filename);
-
+      const filename = (response.data as AlbumPhotoResponse).filename;
+      const url = getAlbumImageUrl(filename);
       setPreview(url);
-      displayMessage("info", "Album photo saved.", setMessages);     
-    } 
-    else 
+
+      setMessages([{ severity: "info", text: "Album photo saved."}]);   
+      delayAlertRemove().then(function() {
+        setMessages([]);   
+      });
+    }      
+    else
     {
-      setMessages(response.messages.messages);  
-    }   
+      if(response.data)        
+        setMessages((response.data as ErrorResponse).messages);    
+    }      
+
+
+
+    // if(response?.success == true)
+    // {
+    //   const url = getAlbumImageUrl(response.filename);
+
+    //   setPreview(url);
+    //   displayMessage("info", "Album photo saved.", setMessages);     
+    // } 
+    // else 
+    // {
+    //   setMessages(response.messages.messages);  
+    // }   
   } 
 
   return (  
@@ -59,9 +79,9 @@ export default function AlbumPhotoForm({id, filename}: IProps) {
         <div className="grid-cols-12 col-span-12 md:grid-cols-4 md:col-span-4 lg:grid-cols-3 lg:col-span-3">
           {preview && ( 
             <div className="relative h-48 w-48 md:h-48 md:w-48">           
-            <Image alt="Upload album photo"
+              <Image alt="Upload album photo"
                   src={preview} width={200} height={200} style={{ height: 'auto', objectFit: 'cover', position: 'relative' }}/>
-          </div>
+            </div>
           )}
           <input ref={hiddenFileInputRef} hidden type="file" onChange={handleFileChange} /> 
         </div>

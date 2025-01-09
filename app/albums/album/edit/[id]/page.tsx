@@ -1,6 +1,6 @@
 import { getAlbum } from "@/app/albums/actions/album";
 import { getAlbumLookups } from "@/app/albums/actions/getSelectLookups"; 
-import AlbumTabs from "@/app/albums/components/albumTabs";
+import EditAlbumTabs from "@/app/albums/components/editAlbumTabs";
 import PageNavigationBar from "@/app/components/navigation/pageNavBar"; 
 import { Album } from "@/app/types/album";
 import { AlbumDescription } from "@/app/types/albumDescription";
@@ -31,7 +31,7 @@ function getAlbumDescription(album: Album){
     <>
       <PageNavigationBar action="edit" mode="album" addUrl="/albums/album/add"></PageNavigationBar>   
       <div className="flex flex-col w-full border-gray-100 bg-white flex-1 p-4 mb-4">
-        <AlbumTabs album={album} albumDescription={albumDescription} artistItems={lookups.artists} studioItems={lookups.studios} recordLabelItems={lookups.recordLabels}></AlbumTabs>
+        <EditAlbumTabs album={album} albumDescription={albumDescription} artistItems={lookups.artists} studioItems={lookups.studios} recordLabelItems={lookups.recordLabels}></EditAlbumTabs>
       </div>      
     </> 
   )}; 
