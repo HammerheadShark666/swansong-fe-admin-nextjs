@@ -56,8 +56,9 @@ export default function AlbumPhotoForm({id, filename, setShowSpinner}: IProps) {
     {
       if(response.data)        
         setMessages((response.data as ErrorResponse).messages);    
-    }  
-    setShowSpinner(false);    
+    }   
+ 
+    setShowSpinner(false);   
   } 
 
   return (  
