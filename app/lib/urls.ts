@@ -1,6 +1,7 @@
 export const SEARCH_ALBUMS_BY_LETTER = `${process.env.NEXT_PUBLIC_API_URL}albums/search-by-letter/{0}`;
 export const SEARCH_ALBUMS_BY_TEXT = `${process.env.NEXT_PUBLIC_API_URL}albums/search/{0}`;
  
+export const ALBUM_LOOKUPS = `${process.env.NEXT_PUBLIC_API_URL}albums/lookups`;   
 export const GET_RANDOM_ALBUMS = `${process.env.NEXT_PUBLIC_API_URL}albums/random`;
 export const GET_ALBUM = `${process.env.NEXT_PUBLIC_API_URL}albums/album/{0}`;
 export const ALBUM_ADD = `${process.env.NEXT_PUBLIC_API_URL}albums/album/add`;
