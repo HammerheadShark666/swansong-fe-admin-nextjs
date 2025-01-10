@@ -81,7 +81,10 @@ export default function AlbumSearchDrawer({mode}: IProps) {
 
   const handleSearchClick = async (criteria: string, searchBy: "letter" | "text") => { 
 
-    try {
+    try 
+    {
+
+      setMessages([]);
  
       if(criteria == '')
       {

@@ -1,7 +1,7 @@
-import { getAlbumLookups } from "../../actions/lookups"; 
+import { getAlbumLookups } from "@/app/albums/actions/lookups"; 
 import PageNavigationBar from "@/app/components/navigation/pageNavBar";
 import { Metadata } from "next";
-import AddAlbumTabs from "../../components/addAlbumTabs";
+import AddAlbumTabs from "@/app/albums/components/tabs/addAlbumTabs";
 
 export const metadata: Metadata = {
   title: "Swansong - Add Album",

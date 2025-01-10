@@ -13,9 +13,10 @@ import { AlbumPhotoResponse } from "@/app/interfaces/albumPhotoResponse";
 interface IProps {
   id: number;
   filename: string;
+  setShowSpinner: (show: boolean) => void;
 }
 
-export default function AlbumPhotoForm({id, filename}: IProps) {
+export default function AlbumPhotoForm({id, filename, setShowSpinner}: IProps) {
 
   const [messages, setMessages] = useState<Message[]>([]); 
 
@@ -34,6 +35,7 @@ export default function AlbumPhotoForm({id, filename}: IProps) {
   
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>)  => {
     
+    setShowSpinner(true);
     setMessages([]);
 
     const file = event.target.files?.[0]; 
@@ -54,7 +56,8 @@ export default function AlbumPhotoForm({id, filename}: IProps) {
     {
       if(response.data)        
         setMessages((response.data as ErrorResponse).messages);    
-    }
+    }  
+    setShowSpinner(false);    
   } 
 
   return (  
