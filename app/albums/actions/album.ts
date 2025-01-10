@@ -8,12 +8,12 @@ import { ALBUM_ADD, ALBUM_UPDATE, ALBUM_UPDATE_DESCRIPTION, GET_ALBUM, GET_RANDO
 import { formatString } from "@/app/lib/stringHelper";
 import { AlbumResponse } from "@/app/interfaces/albumResponse";
 import { ApiResponse } from "@/app/interfaces/apiResponse";
-import { API_METHOD } from "@/app/lib/enums";
+import { API_METHOD, CACHE_TYPE } from "@/app/lib/enums";
 import { AlbumLookup } from "@/app/types/albumLookup";
 
 
 export async function getRandomAlbums(): Promise<AlbumLookup[]> { 
-  return await apiGetCall<AlbumLookup[]>(GET_RANDOM_ALBUMS);
+  return await apiGetCall<AlbumLookup[]>(GET_RANDOM_ALBUMS, CACHE_TYPE.NO_CACHE);
 } 
 
 export async function  saveNewAlbumDetails(data: AlbumDetailsSchema): Promise<ApiResponse<AlbumResponse>> {  
@@ -29,13 +29,13 @@ export async function saveExistingAlbumDescriptionDetails(data: AlbumDescription
 }
 
 export async function getAlbum(id: number): Promise<Album> { 
-  return await apiGetCall<Album>(formatString(GET_ALBUM, id));
+  return await apiGetCall<Album>(formatString(GET_ALBUM, id), CACHE_TYPE.NO_CACHE);
 } 
 
 export async function getAlbumsByLetter(letter: string): Promise<AlbumSearchItem[]> {  
-  return await apiGetCall<AlbumSearchItem[]>(formatString(SEARCH_ALBUMS_BY_LETTER, letter));
+  return await apiGetCall<AlbumSearchItem[]>(formatString(SEARCH_ALBUMS_BY_LETTER, letter), CACHE_TYPE.NO_CACHE);
 }
 
 export async function getAlbumsByText(text: string): Promise<AlbumSearchItem[]> {  
-  return await apiGetCall<AlbumSearchItem[]>(formatString(SEARCH_ALBUMS_BY_TEXT, text));
+  return await apiGetCall<AlbumSearchItem[]>(formatString(SEARCH_ALBUMS_BY_TEXT, text), CACHE_TYPE.NO_CACHE);
 } 

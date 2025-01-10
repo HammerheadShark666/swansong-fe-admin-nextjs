@@ -1,5 +1,5 @@
 import { ApiResponse, ErrorResponse } from "../interfaces/apiResponse"; 
-import { API_METHOD } from "./enums"; 
+import { API_METHOD, CACHE_TYPE } from "./enums";  
  
 export async function apiCall<T>(path: string, method: API_METHOD, body: string | null): Promise<ApiResponse<T>> {
  
@@ -35,7 +35,7 @@ export async function apiCall<T>(path: string, method: API_METHOD, body: string 
   }
 }
  
-export async function apiGetCall<T>(path: string): Promise<T> {
+export async function apiGetCall<T>(path: string, cacheType: CACHE_TYPE): Promise<T> {
  
   try
   {
@@ -44,7 +44,7 @@ export async function apiGetCall<T>(path: string): Promise<T> {
       headers: {
         'Content-Type': 'application/json',
       },
-      cache: 'no-store'
+      cache: cacheType
     }); 
 
     if(response.status == 200) {       
