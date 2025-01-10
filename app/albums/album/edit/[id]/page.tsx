@@ -1,6 +1,6 @@
 import { getAlbum } from "@/app/albums/actions/album";
 import { getAlbumLookups } from "@/app/albums/actions/lookups"; 
-import EditAlbumTabs from "@/app/albums/components/editAlbumTabs";
+import EditAlbumTabs from "@/app/albums/components/tabs/editAlbumTabs";
 import PageNavigationBar from "@/app/components/navigation/pageNavBar"; 
 import { Album } from "@/app/types/album";
 import { AlbumDescription } from "@/app/types/albumDescription";

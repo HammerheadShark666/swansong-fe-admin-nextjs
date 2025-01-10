@@ -8,6 +8,7 @@ import { getAlbumSongsTotalLength } from "@/app/lib/albumHelper";
 interface IProps {
   songs: AlbumSong[];
   albumId: number;
+  setShowSpinner: (show: boolean) => void;
 }
 
 function sortAlbumSongs(albumSongs: AlbumSong[]) 
@@ -22,7 +23,7 @@ function sortAlbumSongs(albumSongs: AlbumSong[])
   return sortedAlbumSongs;
 }
   
-export default function AlbumSongs({songs, albumId}: IProps) {
+export default function AlbumSongs({songs, albumId, setShowSpinner}: IProps) {
    
   const [albumSongs, setAlbumSongs] = useState<AlbumSong[]>(songs);
   const [albumSong, setAlbumSong] = useState<AlbumSong>(); 
@@ -93,7 +94,7 @@ export default function AlbumSongs({songs, albumId}: IProps) {
           </table>
         </div>
         <div className="grid-cols-12 col-span-12 md:grid-cols-7 md:col-span-7 p-2 md:p-4 md:pl-6 bg-stone-50 md:ml-4"> 
-          <AlbumSongForm albumId={albumId} albumSong={albumSong} mode={mode} setMode={setMode} setSelectedRow={setSelectedRow} 
+          <AlbumSongForm setShowSpinner={setShowSpinner} albumId={albumId} albumSong={albumSong} mode={mode} setMode={setMode} setSelectedRow={setSelectedRow} 
                   addSongToAlbumSongList={addSongToAlbumSongList} updateSongInAlbumSongList={updateSongInAlbumSongList} removeSongFromList={removeSongFromList}></AlbumSongForm>
         </div>
       </div>  

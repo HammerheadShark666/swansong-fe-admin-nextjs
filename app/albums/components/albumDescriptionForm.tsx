@@ -19,10 +19,11 @@ const ReactQuill = dynamic(() => import('react-quill-new'), {
 });
 
 interface IProps { 
-  existingDescription?: AlbumDescription; 
+  existingDescription?: AlbumDescription;
+  setShowSpinner: (show: boolean) => void;
 }
 
-export default function AlbumDescriptionForm({existingDescription} : IProps) {
+export default function AlbumDescriptionForm({existingDescription, setShowSpinner} : IProps) {
 
   const [messages, setMessages] = useState<Message[]>([]);  
 
@@ -58,6 +59,7 @@ export default function AlbumDescriptionForm({existingDescription} : IProps) {
   
   const onSubmitForm: SubmitHandler<AlbumDescriptionSchema> = async (data) => { 
   
+    setShowSpinner(true);
     setMessages([]);          
     updatingAlbumDescriptionData(data);  
 
@@ -71,7 +73,9 @@ export default function AlbumDescriptionForm({existingDescription} : IProps) {
     }      
     else
       if(response.data)        
-        setMessages((response.data as ErrorResponse).messages);        
+        setMessages((response.data as ErrorResponse).messages);  
+      
+    setShowSpinner(false);
   } 
 
   return (

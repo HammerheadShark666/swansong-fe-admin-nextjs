@@ -2,12 +2,12 @@
      
 import { HiOutlineBookOpen, HiMusicNote, HiOutlineIdentification, HiOutlineCamera } from "react-icons/hi"; 
 import { Tabs } from "flowbite-react";  
-import AlbumDetailsForm from "./albumDetailsForm";
+import AlbumDetailsForm from "@/app/albums/components/albumDetailsForm";
 import { Album } from "@/app/types/album";
 import { SelectItem } from "@/app/types/selectItem";
-import AlbumPhotoForm from "./albumPhotoForm";
-import AlbumSongs from "./albumSongs";
-import AlbumDescriptionForm from "./albumDescriptionForm";
+import AlbumPhotoForm from "@/app/albums/components/albumPhotoForm";
+import AlbumSongs from "@/app/albums/components/albumSongs";
+import AlbumDescriptionForm from "@/app/albums/components/albumDescriptionForm";
 import { AlbumDescription } from "@/app/types/albumDescription";
 import Spinner from "@/app/components/spinner";
 import { useState } from "react";
@@ -54,17 +54,17 @@ export default function  EditAlbumTabs({album, albumDescription, artistItems, st
         </Tabs.Item>
         <Tabs.Item title="Photo" icon={HiOutlineCamera}>
           <div className="font-medium text-black">
-            <AlbumPhotoForm id={album.id} filename={album.photo}></AlbumPhotoForm> 
+            <AlbumPhotoForm setShowSpinner={setShowSpinner} id={album.id} filename={album.photo}></AlbumPhotoForm> 
           </div>
         </Tabs.Item>
         <Tabs.Item title="Songs" icon={HiMusicNote}>
           <div className="font-medium text-black">
-            <AlbumSongs songs={album.songs} albumId={album.id}></AlbumSongs>
+            <AlbumSongs setShowSpinner={setShowSpinner} songs={album.songs} albumId={album.id}></AlbumSongs>
           </div>
         </Tabs.Item>
         <Tabs.Item title="Description" icon={HiOutlineBookOpen}>
           <div className="font-medium text-black">
-            <AlbumDescriptionForm existingDescription={albumDescription}></AlbumDescriptionForm>
+            <AlbumDescriptionForm setShowSpinner={setShowSpinner} existingDescription={albumDescription}></AlbumDescriptionForm>
           </div>
         </Tabs.Item> 
       </Tabs>  

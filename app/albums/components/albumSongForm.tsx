@@ -18,6 +18,7 @@ interface IProps {
   albumSong?: AlbumSong;
   albumId: number;
   mode: string;
+  setShowSpinner: (show: boolean) => void;
   setSelectedRow: (row: number | null) => void;
   setMode: (mode: string) => void;
   addSongToAlbumSongList: (albumSong: AlbumSong) => void;
@@ -45,7 +46,8 @@ function createAlbumSong(id: number, songId: number, data: AlbumSongSchema)
   return albumSong;
 }
 
-export default function SongForm({albumSong, albumId, mode, setSelectedRow, setMode, addSongToAlbumSongList, updateSongInAlbumSongList, removeSongFromList}: IProps) {
+export default function SongForm({albumSong, albumId, mode, setSelectedRow, setMode, addSongToAlbumSongList, 
+                                        updateSongInAlbumSongList, removeSongFromList, setShowSpinner}: IProps) {
   
   const [messages, setMessages] = useState<Message[]>([]);   
   const [isDialogOpen, setDialogOpen] = useState(false);
@@ -118,6 +120,7 @@ export default function SongForm({albumSong, albumId, mode, setSelectedRow, setM
 
     try
     {
+      setShowSpinner(true);
       setMessages([]);    
 
       const response = await saveAlbumSong(data);
@@ -147,6 +150,8 @@ export default function SongForm({albumSong, albumId, mode, setSelectedRow, setM
     {
       setErrorMessagesValue(error, setMessages); 
     } 
+
+    setShowSpinner(false);
   }  
 
   const handleClearMessages = () => {
@@ -162,6 +167,8 @@ export default function SongForm({albumSong, albumId, mode, setSelectedRow, setM
 
     try
     {
+      setDialogOpen(false);
+      setShowSpinner(true);
       setMessages([]);    
 
       if(albumSong && albumSong.id ) {        
@@ -178,7 +185,7 @@ export default function SongForm({albumSong, albumId, mode, setSelectedRow, setM
       setErrorMessagesValue(error, setMessages); 
     } 
 
-    setDialogOpen(false);
+    setShowSpinner(false);    
   };
 
   const handleCancel = () => { 
