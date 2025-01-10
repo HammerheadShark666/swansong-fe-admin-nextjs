@@ -1,4 +1,4 @@
-import { getAlbumLookups } from "../../actions/getSelectLookups"; 
+import { getAlbumLookups } from "../../actions/lookups"; 
 import PageNavigationBar from "@/app/components/navigation/pageNavBar";
 import { Metadata } from "next";
 import AddAlbumTabs from "../../components/addAlbumTabs";
