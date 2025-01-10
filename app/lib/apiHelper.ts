@@ -43,12 +43,13 @@ export async function apiGetCall<T>(path: string): Promise<T> {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',
-      }
+      },
+      cache: 'no-store'
     }); 
 
     if(response.status == 200) {       
-        const dataResponse: T = await response.json();
-        return dataResponse;       
+      const dataResponse: T = await response.json();
+      return dataResponse;       
     }      
     else
     {

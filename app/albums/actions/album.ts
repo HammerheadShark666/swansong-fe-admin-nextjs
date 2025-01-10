@@ -4,11 +4,17 @@ import { mapAlbum, mapAlbumDescription } from "@/app/lib/mappers";
 import { AlbumDescriptionSchema } from "@/app/albums/validation/albumDescriptionSchema";
 import { apiCall, apiGetCall } from "@/app/lib/apiHelper"; 
 import { AlbumSearchItem } from "@/app/interfaces/albumSearchItem";
-import { ALBUM_ADD, ALBUM_UPDATE, ALBUM_UPDATE_DESCRIPTION, GET_ALBUM, SEARCH_ALBUMS_BY_LETTER, SEARCH_ALBUMS_BY_TEXT } from "@/app/lib/urls";
+import { ALBUM_ADD, ALBUM_UPDATE, ALBUM_UPDATE_DESCRIPTION, GET_ALBUM, GET_RANDOM_ALBUMS, SEARCH_ALBUMS_BY_LETTER, SEARCH_ALBUMS_BY_TEXT } from "@/app/lib/urls";
 import { formatString } from "@/app/lib/stringHelper";
 import { AlbumResponse } from "@/app/interfaces/albumResponse";
 import { ApiResponse } from "@/app/interfaces/apiResponse";
 import { API_METHOD } from "@/app/lib/enums";
+import { AlbumLookup } from "@/app/types/albumLookup";
+
+
+export async function getRandomAlbums(): Promise<AlbumLookup[]> { 
+  return await apiGetCall<AlbumLookup[]>(GET_RANDOM_ALBUMS);
+} 
 
 export async function  saveNewAlbumDetails(data: AlbumDetailsSchema): Promise<ApiResponse<AlbumResponse>> {  
   return await apiCall<AlbumResponse>(ALBUM_ADD, API_METHOD.POST, JSON.stringify(mapAlbum(data)));
