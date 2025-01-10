@@ -1,20 +1,23 @@
-import getUrl, { createUrl } from "../lib/http"; 
+import getUrl from "../lib/http"; //, { createUrl }
 import getToolTip from "../lib/tooltip";
 import { AlbumLookup } from "../types/albumLookup";
 import Link from "next/link";
 import { notFound } from "next/navigation"; 
 import AlbumImage from "./albumImage";
+import { getRandomAlbums } from "../albums/actions/album"; 
+import { getPhoto } from "../lib/imageHelper";
 
 async function getAlbums(): Promise<AlbumLookup[]> {
- 
-  const res = await fetch(createUrl('albums/random'), { cache: 'no-store' });
-  if (!res.ok) {
-    if(res.status == 404)
-      notFound(); 
-  }
-
-  return res.json();
-} 
+  
+  try
+  {
+    return await getRandomAlbums();
+  } 
+  catch(error)
+  { console.log(error);
+    notFound(); 
+  }   
+}  
 
 export default async function AlbumsContainer() {
 
@@ -30,7 +33,7 @@ export default async function AlbumsContainer() {
                 {albums.map((album: AlbumLookup) => (     
                   <Link key={album.id} href={`${getUrl("albums", album.id)}`}>
                     <div className="tooltip object-fill w-full" data-tip={getToolTip(album)}>
-                      <AlbumImage id={album.id} name={album.name} photoSrc={`${process.env.NEXT_PUBLIC_AZURE_STORAGE_URL}albums/${album.photo}`}/>
+                      <AlbumImage id={album.id} name={album.name} photoSrc={`${process.env.NEXT_PUBLIC_AZURE_STORAGE_URL}albums/${getPhoto(album.photo)}`}/>
                     </div>
                   </Link>              
                 ))}

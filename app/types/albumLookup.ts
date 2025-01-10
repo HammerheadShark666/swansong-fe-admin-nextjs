@@ -1,10 +1,7 @@
 export type AlbumLookup = 
 {
   id: number;
-  name: string;
-  releaseDate: string;
+  name: string; 
   artistName: string;
   photo: string;
-  length: string;
-  tracks: string;
 }
