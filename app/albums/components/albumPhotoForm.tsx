@@ -54,21 +54,7 @@ export default function AlbumPhotoForm({id, filename}: IProps) {
     {
       if(response.data)        
         setMessages((response.data as ErrorResponse).messages);    
-    }      
-
-
-
-    // if(response?.success == true)
-    // {
-    //   const url = getAlbumImageUrl(response.filename);
-
-    //   setPreview(url);
-    //   displayMessage("info", "Album photo saved.", setMessages);     
-    // } 
-    // else 
-    // {
-    //   setMessages(response.messages.messages);  
-    // }   
+    }
   } 
 
   return (  
