@@ -16,7 +16,7 @@ export async function apiCall<T>(path: string, method: API_METHOD, body: string 
     let data: ApiResponse<T> = { status: response.status, data: {} as T };
 
     if(response.status == 200) {
-      if(method === 'POST' || method === 'PUT') {      
+      if(method === API_METHOD.POST || method === API_METHOD.PUT) {      
         const dataResponse: T = await response.json();
         data = { status: response.status, data: dataResponse };   
       }
@@ -81,7 +81,7 @@ export async function apiPhotoCall<T>(path: string, method: API_METHOD, file: Fi
     let data: ApiResponse<T> = { status: response.status, data: {} as T };
 
     if(response.status == 200) {
-      if(method === 'POST' || method === 'PUT') {      
+      if(method === API_METHOD.POST || method === API_METHOD.PUT) {      
         const dataResponse: T = await response.json();
         data = { status: response.status, data: dataResponse };   
       }
