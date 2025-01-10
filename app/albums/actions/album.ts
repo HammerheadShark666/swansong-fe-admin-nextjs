@@ -11,7 +11,6 @@ import { ApiResponse } from "@/app/interfaces/apiResponse";
 import { API_METHOD, CACHE_TYPE } from "@/app/lib/enums";
 import { AlbumLookup } from "@/app/types/albumLookup";
 
-
 export async function getRandomAlbums(): Promise<AlbumLookup[]> { 
   return await apiGetCall<AlbumLookup[]>(GET_RANDOM_ALBUMS, CACHE_TYPE.NO_CACHE);
 } 
