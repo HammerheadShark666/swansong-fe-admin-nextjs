@@ -43,33 +43,33 @@ export default function LetterPicker({mode, searchResults, showNoResultsFound, s
   };  
 
   return (
-    <div id="search-results" className="w-full grid-cols-12 col-span-12"> 
+    <div id="search-results" className="w-full h-[calc(100vh-250px)] grid-cols-12 col-span-12 overflow-y-scroll"> 
 
       {(showSearchResults || showNoResultsFound) ? (<p className="mb-4 font-semibold">Results for &apos;{criteria}&apos;....</p>) : (<></>)}
 
-    {(showSearchResults) ? (
-    
-      searchResults?.map((album: AlbumSearchItem ) => (      
+      {(showSearchResults) ? (
+      
+        searchResults?.map((album: AlbumSearchItem ) => (      
           <div key={album.id} className="grid grid-cols-12 hover:bg-stone-300 hover:cursor-pointer" onClick={() => handleSearchResultClick(album.id)}>
-          <div className="grid-cols-2 col-span-2 p-1">
-              <Image className='hover:cursor-pointer' key={1} alt={"Album Photo"} 
-                                  src={`${process.env.NEXT_PUBLIC_AZURE_STORAGE_URL}albums/${album.photo}`} width={50} height={50} style={{
-                    width: '100%',
-                    height: '100%',
-                  }}/>
-            </div>
-            <div className="grid-cols-10 col-span-10 flex items-center">
-              <div>
-                <p className={`${raleway.className} font-bold`}>{album.name}</p>
-                <p className={`${poppins.className}`}>{album.artistName}</p>
+            <div className="grid-cols-2 col-span-2 p-1">
+                <Image className='hover:cursor-pointer' key={1} alt={"Album Photo"} 
+                                    src={`${process.env.NEXT_PUBLIC_AZURE_STORAGE_URL}albums/${album.photo}`} width={50} height={50} style={{
+                      width: '100%',
+                      height: '100%',
+                    }}/>
               </div>
-            </div>     
-        </div>        
-        ))            
-      ) : ((showNoResultsFound) ? (
-        <Messages messages={messages} onClearMessages={handleClearMessages}></Messages>            
-      ) : (<></>)
-      )}   
+              <div className="grid-cols-10 col-span-10 flex items-center">
+                <div>
+                  <p className={`${raleway.className} font-bold`}>{album.name}</p>
+                  <p className={`${poppins.className}`}>{album.artistName}</p>
+                </div>
+              </div>     
+          </div>        
+          ))            
+        ) : ((showNoResultsFound) ? (
+          <Messages messages={messages} onClearMessages={handleClearMessages}></Messages>            
+        ) : (<></>)
+        )}   
     </div>
   )
 }
