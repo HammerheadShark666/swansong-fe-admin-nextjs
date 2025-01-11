@@ -1,6 +1,6 @@
 import getUrl from "../lib/http"; //, { createUrl }
 import getToolTip from "../lib/tooltip";
-import { AlbumLookup } from "../types/albumLookup";
+import { AlbumLookup } from "../types/album/albumLookup";
 import Link from "next/link";
 import { notFound } from "next/navigation"; 
 import AlbumImage from "./albumImage";

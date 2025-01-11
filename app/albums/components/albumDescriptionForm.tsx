@@ -5,7 +5,7 @@ import 'react-quill-new/dist/quill.snow.css';
 import { albumDescriptionSchema, AlbumDescriptionSchema } from '../validation/albumDescriptionSchema';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { AlbumDescription } from '@/app/types/albumDescription';
+import { AlbumDescription } from '@/app/types/album/albumDescription';
 import { Message } from '@/app/types/message';
 import Messages from '@/app/components/controls/messages';
 import { saveExistingAlbumDescriptionDetails } from '@/app/albums/actions/album';

@@ -1,4 +1,4 @@
-import { AlbumSong } from "./albumSong";
+import { AlbumSong } from "@/app/types/album/albumSong";
 
 export type Album =
 {
