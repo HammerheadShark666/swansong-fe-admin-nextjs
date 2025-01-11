@@ -11,10 +11,11 @@ import { AlbumSearchItem } from "@/app/interfaces/albumSearchItem";
 import SearchResults from "./searchResults";
 import SearchSpinner from "./searchSpinner";
 import TextSearch from "./textSearch";
+import { ACTION, MODE } from "@/app/lib/enums";
 
 interface IProps { 
-  mode: "album" | "artist" | "member"; 
-  action: "add" | "edit";
+  mode: MODE; 
+  action: ACTION;
 }
 
 export default function AlbumSearchDrawer({mode}: IProps) { 

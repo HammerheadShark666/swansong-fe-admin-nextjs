@@ -12,3 +12,6 @@ export const ALBUM_UPDATE_PHOTO = `${process.env.NEXT_PUBLIC_API_URL}albums/albu
 export const ALBUM_SONG_ADD = `${process.env.NEXT_PUBLIC_API_URL}album/songs/song/add`;
 export const ALBUM_SONG_UPDATE = `${process.env.NEXT_PUBLIC_API_URL}album/songs/song/update`;
 export const ALBUM_SONG_DELETE = `${process.env.NEXT_PUBLIC_API_URL}album/songs/song/{0}`;
+
+export const ARTIST_ADD = `${process.env.NEXT_PUBLIC_API_URL}artists/artist/add`;
+export const MEMBER_ADD = `${process.env.NEXT_PUBLIC_API_URL}members/member/add`;

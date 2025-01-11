@@ -20,9 +20,10 @@ import { SelectItem } from "@/app/types/selectItem";
 import { delayAlertRemove } from "@/app/lib/generalHelper";
 import { ErrorResponse } from "@/app/interfaces/apiResponse";
 import { AlbumResponse } from "@/app/interfaces/albumResponse";  
+import { ACTION } from "@/app/lib/enums";
 
 interface IProps {
-  action: "add" | "edit";
+  action: ACTION;
   existingData?: Album;
   artistItems: SelectItem[];
   studioItems: SelectItem[];
@@ -81,7 +82,7 @@ export default function AlbumDetailsForm({action, existingData, artistItems, stu
   }
 
   useEffect(() => {    
-    if(action == "edit" && existingData != null && existingData != undefined)  {
+    if(action === ACTION.EDIT && existingData != null && existingData != undefined)  {
       setAlbumValues(existingData);
     }      
   });  
@@ -95,7 +96,7 @@ export default function AlbumDetailsForm({action, existingData, artistItems, stu
     setShowSpinner(true);
     setMessages([]); 
 
-    if(action === "add")
+    if(action === ACTION.ADD)
     { 
       const response = await saveNewAlbumDetails(data); 
       if(response?.status == 200)        

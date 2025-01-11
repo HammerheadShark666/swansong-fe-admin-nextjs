@@ -2,6 +2,7 @@ import { getAlbum } from "@/app/albums/actions/album";
 import { getAlbumLookups } from "@/app/albums/actions/lookups"; 
 import EditAlbumTabs from "@/app/albums/components/tabs/editAlbumTabs";
 import PageNavigationBar from "@/app/components/navigation/pageNavBar"; 
+import { ACTION, MODE } from "@/app/lib/enums";
 import { Album } from "@/app/types/album";
 import { AlbumDescription } from "@/app/types/albumDescription";
 import { Metadata } from "next";
@@ -29,7 +30,7 @@ function getAlbumDescription(album: Album){
  
   return  (    
     <>
-      <PageNavigationBar action="edit" mode="album" addUrl="/albums/album/add"></PageNavigationBar>   
+      <PageNavigationBar action={ACTION.EDIT} mode={MODE.ALBUM}></PageNavigationBar>   
       <div className="flex flex-col w-full border-gray-100 bg-white flex-1 p-4 mb-4">
         <EditAlbumTabs album={album} albumDescription={albumDescription} artistItems={lookups.artists} studioItems={lookups.studios} recordLabelItems={lookups.recordLabels}></EditAlbumTabs>
       </div>      

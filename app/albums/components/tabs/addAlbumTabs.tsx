@@ -2,10 +2,11 @@
      
 import { HiOutlineIdentification } from "react-icons/hi";
 import { Tabs } from "flowbite-react";  
-import AlbumDetailsForm from "./albumDetailsForm";
+import AlbumDetailsForm from "@/app/albums/components/albumDetailsForm";
 import { SelectItem } from "@/app/types/selectItem"; 
 import Spinner from "@/app/components/spinner";
 import { useState } from "react";
+import { ACTION } from "@/app/lib/enums";
 
 interface IProps {
   artistItems: SelectItem[];
@@ -41,7 +42,7 @@ export default function  AddAlbumTabs({artistItems, studioItems, recordLabelItem
       <Tabs aria-label="Tabs with underline" variant="underline" theme={customTheme}>
         <Tabs.Item active title="Details" icon={HiOutlineIdentification}>
           <div className="font-medium text-black w-full relative">
-            <AlbumDetailsForm setShowSpinner={setShowSpinner} action="add" artistItems={artistItems} studioItems={studioItems} recordLabelItems={recordLabelItems} />
+            <AlbumDetailsForm setShowSpinner={setShowSpinner} action={ACTION.ADD} artistItems={artistItems} studioItems={studioItems} recordLabelItems={recordLabelItems} />
           </div>
         </Tabs.Item> 
       </Tabs>  
