@@ -118,7 +118,7 @@ export default function AlbumSearchDrawer({mode}: IProps) {
         </div>
       </Link>  
       <div
-        className={`fixed top-0 right-0 h-full w-full md:w-1/2 lg:w-1/4 bg-white shadow-lg transform ${
+        className={`fixed top-0 right-0 h-screen w-full md:w-1/2 lg:w-1/4 bg-white shadow-lg transform ${
           isOpen ? "translate-x-0" : "translate-x-full"
         } transition-transform duration-300 z-40`}
       >
@@ -134,7 +134,7 @@ export default function AlbumSearchDrawer({mode}: IProps) {
         <div className="p-4 grid grid-cols-12">           
           <LetterPicker handleSearchClick={handleSearchClick}></LetterPicker>
           <TextSearch handleSearchClick={handleSearchClick}></TextSearch>
-          <div id="search-results" className="w-full grid-cols-12 col-span-12 mt-4">
+          <div id="search-results-messages" className="w-full grid-cols-12 col-span-12 mt-4">
             <Messages messages={messages} onClearMessages={handleClearMessages}></Messages>  
           </div>
           <SearchSpinner isSearching={isSearching}></SearchSpinner>     
