@@ -1,5 +1,5 @@
-import { AlbumLookup } from "./albumLookup";
-import { Member } from "./member";
+import { AlbumLookup } from "../album/albumLookup";
+import { Member } from "../member/member";
 
 export type Artist = 
 {

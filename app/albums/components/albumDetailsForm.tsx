@@ -14,7 +14,7 @@ import { saveExistingAlbumDetails } from "@/app/albums/actions/album";
 import { useRouter } from "next/navigation";
 import Messages from "@/app/components/controls/messages";
 import { Message } from "@/app/types/message";
-import { Album } from "@/app/types/album";
+import { Album } from "@/app/types/album/album";
 import { selectKeyNumberToString } from "@/app/lib/stringHelper"; 
 import { SelectItem } from "@/app/types/selectItem";
 import { delayAlertRemove } from "@/app/lib/generalHelper";

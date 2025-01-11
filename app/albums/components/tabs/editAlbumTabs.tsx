@@ -3,12 +3,12 @@
 import { HiOutlineBookOpen, HiMusicNote, HiOutlineIdentification, HiOutlineCamera } from "react-icons/hi"; 
 import { Tabs } from "flowbite-react";  
 import AlbumDetailsForm from "@/app/albums/components/albumDetailsForm";
-import { Album } from "@/app/types/album";
+import { Album } from "@/app/types/album/album";
 import { SelectItem } from "@/app/types/selectItem";
 import AlbumPhotoForm from "@/app/albums/components/albumPhotoForm";
 import AlbumSongs from "@/app/albums/components/albumSongs";
 import AlbumDescriptionForm from "@/app/albums/components/albumDescriptionForm";
-import { AlbumDescription } from "@/app/types/albumDescription";
+import { AlbumDescription } from "@/app/types/album/albumDescription";
 import Spinner from "@/app/components/spinner";
 import { useState } from "react";
 import { ACTION } from "@/app/lib/enums";

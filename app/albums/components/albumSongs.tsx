@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import AlbumSongForm from "./albumSongForm";
-import { AlbumSong } from "@/app/types/albumSong";
+import { AlbumSong } from "@/app/types/album/albumSong";
 import { getAlbumSongsTotalLength } from "@/app/lib/albumHelper";
 import { ACTION } from "@/app/lib/enums";
 

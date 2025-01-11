@@ -3,8 +3,8 @@ import { getAlbumLookups } from "@/app/albums/actions/lookups";
 import EditAlbumTabs from "@/app/albums/components/tabs/editAlbumTabs";
 import PageNavigationBar from "@/app/components/navigation/pageNavBar"; 
 import { ACTION, MODE } from "@/app/lib/enums";
-import { Album } from "@/app/types/album";
-import { AlbumDescription } from "@/app/types/albumDescription";
+import { Album } from "@/app/types/album/album";
+import { AlbumDescription } from "@/app/types/album/albumDescription";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

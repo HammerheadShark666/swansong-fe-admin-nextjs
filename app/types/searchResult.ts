@@ -1,6 +1,6 @@
-import { AlbumLookup } from "./albumLookup";
-import { ArtistLookup } from "./artistLookup";
-import { MemberLookup } from "./memberLookup";
+import { AlbumLookup } from "./album/albumLookup";
+import { ArtistLookup } from "./artist/artistLookup";
+import { MemberLookup } from "./member/memberLookup";
 
 export type SearchResults = 
 {

@@ -1,4 +1,4 @@
-import { SelectItem } from "./selectItem";
+import { SelectItem } from "../selectItem";
 
 export type AlbumLookups = 
 {

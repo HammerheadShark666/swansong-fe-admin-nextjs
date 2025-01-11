@@ -280,7 +280,7 @@ import { saveExistingAlbumSong, saveNewAlbumSong, deleteAlbumSong } from "../act
 import Messages from "@/app/components/controls/messages";
 import { Message } from "@/app/types/message"; 
 import { albumSongSchema, AlbumSongSchema } from "../validation/albumSongSchema";
-import { AlbumSong } from "@/app/types/albumSong";   
+import { AlbumSong } from "@/app/types/album/albumSong";   
 import { AlbumSongResponse } from "@/app/interfaces/albumSongResponse"; 
 import ConfirmationDialog from '@/app/components/dialogs/confirmationDialog'; 
 import React from "react";

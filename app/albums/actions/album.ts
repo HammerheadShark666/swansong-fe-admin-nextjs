@@ -1,4 +1,4 @@
-import { Album } from "@/app/types/album";
+import { Album } from "@/app/types/album/album";
 import { AlbumDetailsSchema } from "@/app/albums/validation/albumDetailsSchema"; 
 import { mapAlbum, mapAlbumDescription } from "@/app/lib/mappers";
 import { AlbumDescriptionSchema } from "@/app/albums/validation/albumDescriptionSchema";
@@ -9,7 +9,7 @@ import { formatString } from "@/app/lib/stringHelper";
 import { AlbumResponse } from "@/app/interfaces/albumResponse";
 import { ApiResponse } from "@/app/interfaces/apiResponse";
 import { API_METHOD, CACHE_TYPE } from "@/app/lib/enums";
-import { AlbumLookup } from "@/app/types/albumLookup";
+import { AlbumLookup } from "@/app/types/album/albumLookup";
 
 export async function getRandomAlbums(): Promise<AlbumLookup[]> { 
   return await apiGetCall<AlbumLookup[]>(GET_RANDOM_ALBUMS, CACHE_TYPE.NO_CACHE);
