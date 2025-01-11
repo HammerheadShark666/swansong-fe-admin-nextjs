@@ -1,4 +1,5 @@
 import { Message } from "../types/message";
+import { ACTION } from "./enums";
 
 export const ALERT_DELAY_REMOVE_TIME = 5000;
 
@@ -32,12 +33,12 @@ export function getModeLabel(mode: string)
   }
 }
 
-export function getActionLabel(action: string)
+export function getActionLabel(action: ACTION)
 {
   switch (action){
-    case "add" : 
+    case ACTION.ADD : 
       return "Add";
-    case "edit" : 
+    case ACTION.EDIT : 
       return "Edit"; 
     default:
       return "Unknown Action"

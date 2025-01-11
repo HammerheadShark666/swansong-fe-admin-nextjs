@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import AlbumSongForm from "./albumSongForm";
 import { AlbumSong } from "@/app/types/albumSong";
 import { getAlbumSongsTotalLength } from "@/app/lib/albumHelper";
+import { ACTION } from "@/app/lib/enums";
 
 interface IProps {
   songs: AlbumSong[];
@@ -27,8 +28,9 @@ export default function AlbumSongs({songs, albumId, setShowSpinner}: IProps) {
    
   const [albumSongs, setAlbumSongs] = useState<AlbumSong[]>(songs);
   const [albumSong, setAlbumSong] = useState<AlbumSong>(); 
-  const [mode, setMode] = useState<string>("add");
+  const [mode, setMode] = useState<string>(ACTION.ADD);
   const [selectedRow, setSelectedRow] = useState<number | null>(null);  
+  const [clearMessages, setClearMessages] = useState<boolean>(false);
    
   useEffect(() => { 
  
@@ -60,9 +62,10 @@ export default function AlbumSongs({songs, albumId, setShowSpinner}: IProps) {
   }
 
   const handleRowClick = (albumSong: AlbumSong) => {
-     setAlbumSong(albumSong);
-     setMode("edit");
+     setAlbumSong(structuredClone(albumSong));
+     setMode(ACTION.EDIT);
      setSelectedRow(albumSong.id);
+     setClearMessages(true);
   }; 
 
   return(
@@ -95,6 +98,7 @@ export default function AlbumSongs({songs, albumId, setShowSpinner}: IProps) {
         </div>
         <div className="grid-cols-12 col-span-12 md:grid-cols-7 md:col-span-7 p-2 md:p-4 md:pl-6 bg-stone-50 md:ml-4"> 
           <AlbumSongForm setShowSpinner={setShowSpinner} albumId={albumId} albumSong={albumSong} mode={mode} setMode={setMode} setSelectedRow={setSelectedRow} 
+                   setClearMessages={setClearMessages} clearMessages={clearMessages}
                   addSongToAlbumSongList={addSongToAlbumSongList} updateSongInAlbumSongList={updateSongInAlbumSongList} removeSongFromList={removeSongFromList}></AlbumSongForm>
         </div>
       </div>  

@@ -11,6 +11,7 @@ import AlbumDescriptionForm from "@/app/albums/components/albumDescriptionForm";
 import { AlbumDescription } from "@/app/types/albumDescription";
 import Spinner from "@/app/components/spinner";
 import { useState } from "react";
+import { ACTION } from "@/app/lib/enums";
 
 interface IProps {
   album: Album;
@@ -49,7 +50,7 @@ export default function  EditAlbumTabs({album, albumDescription, artistItems, st
       <Tabs aria-label="Tabs with underline" variant="underline" theme={customTheme}>
         <Tabs.Item active title="Details" icon={HiOutlineIdentification}>
           <div className="font-medium text-black w-full relative">
-            <AlbumDetailsForm setShowSpinner={setShowSpinner} action="edit" existingData={album} artistItems={artistItems} studioItems={studioItems} recordLabelItems={recordLabelItems} />
+            <AlbumDetailsForm setShowSpinner={setShowSpinner} action={ACTION.EDIT} existingData={album} artistItems={artistItems} studioItems={studioItems} recordLabelItems={recordLabelItems} />
           </div>
         </Tabs.Item>
         <Tabs.Item title="Photo" icon={HiOutlineCamera}>
