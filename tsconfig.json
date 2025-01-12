@@ -34,7 +34,7 @@
     ".next/types/**/*.ts",
     "next-env.d.ts",
     "build/types/**/*.ts"
-, "app/types"  ],
+, "app/types", "__tests__/page.test.jsx"  ],
   "exclude": [
     "node_modules"
   ]
