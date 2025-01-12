@@ -19,7 +19,7 @@ import { selectKeyNumberToString } from "@/app/lib/stringHelper";
 import { SelectItem } from "@/app/types/selectItem";
 import { delayAlertRemove } from "@/app/lib/generalHelper";
 import { ErrorResponse } from "@/app/interfaces/apiResponse";
-import { AlbumResponse } from "@/app/interfaces/albumResponse";  
+import { AlbumResponse } from "@/app/interfaces/AddEditActionResponse";  
 import { ACTION } from "@/app/lib/enums";
 
 interface IProps {

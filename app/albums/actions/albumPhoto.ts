@@ -1,6 +1,6 @@
 "use server";
 
-import { AlbumPhotoResponse } from "@/app/interfaces/albumPhotoResponse";
+import { AlbumPhotoResponse } from "@/app/interfaces/AddPhotoResponse";
 import { ApiResponse } from "@/app/interfaces/apiResponse";
 import { apiPhotoCall } from "@/app/lib/apiHelper";
 import { API_METHOD } from "@/app/lib/enums";
