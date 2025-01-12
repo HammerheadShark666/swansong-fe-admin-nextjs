@@ -4,7 +4,7 @@ import { z } from "zod";
 const MAX_FILE_SIZE = 0.5 * 1024 * 1024; // 2MB in bytes
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png"];
 
-export const photoSchema = z.object({  
+export const artistPhotoSchema = z.object({  
   image: z
     .instanceof(File)
     .refine(
@@ -21,4 +21,4 @@ export const photoSchema = z.object({
     .nullable(),
 });
 
-export type PhotoSchema = z.infer<typeof photoSchema>;
+export type ArtistPhotoSchema = z.infer<typeof artistPhotoSchema>;
