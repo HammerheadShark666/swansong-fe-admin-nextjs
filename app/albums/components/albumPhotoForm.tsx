@@ -8,7 +8,7 @@ import Messages from "@/app/components/controls/messages";
 import { Message } from "@/app/types/message"; 
 import { delayAlertRemove } from "@/app/lib/generalHelper";
 import { ErrorResponse } from "@/app/interfaces/apiResponse";
-import { AlbumPhotoResponse } from "@/app/interfaces/albumPhotoResponse";
+import { AlbumPhotoResponse } from "@/app/interfaces/AddPhotoResponse";
 
 interface IProps {
   id: number;
