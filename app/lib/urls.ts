@@ -12,6 +12,19 @@ export const ALBUM_UPDATE_PHOTO = `${process.env.NEXT_PUBLIC_API_URL}albums/albu
 export const ALBUM_SONG_ADD = `${process.env.NEXT_PUBLIC_API_URL}album/songs/song/add`;
 export const ALBUM_SONG_UPDATE = `${process.env.NEXT_PUBLIC_API_URL}album/songs/song/update`;
 export const ALBUM_SONG_DELETE = `${process.env.NEXT_PUBLIC_API_URL}album/songs/song/{0}`;
+ 
 
+export const SEARCH_ARTISTS_BY_LETTER = `${process.env.NEXT_PUBLIC_API_URL}artists/search-by-letter/{0}`;
+export const SEARCH_ARTISTS_BY_TEXT = `${process.env.NEXT_PUBLIC_API_URL}artists/search/{0}`;
+
+export const ARTIST_LOOKUPS = `${process.env.NEXT_PUBLIC_API_URL}artists/lookups`;   
+export const GET_RANDOM_ARTISTS = `${process.env.NEXT_PUBLIC_API_URL}artists/random`;
+export const GET_ARTIST = `${process.env.NEXT_PUBLIC_API_URL}artists/artist/{0}`;
 export const ARTIST_ADD = `${process.env.NEXT_PUBLIC_API_URL}artists/artist/add`;
+export const ARTIST_UPDATE_DESCRIPTION = `${process.env.NEXT_PUBLIC_API_URL}artists/artist/description/update`;
+export const ARTIST_UPDATE = `${process.env.NEXT_PUBLIC_API_URL}artists/artist/update`;
+export const ARTIST_UPDATE_PHOTO = `${process.env.NEXT_PUBLIC_API_URL}artists/artist/upload-photo/{0}`;
+
+
+
 export const MEMBER_ADD = `${process.env.NEXT_PUBLIC_API_URL}members/member/add`;
