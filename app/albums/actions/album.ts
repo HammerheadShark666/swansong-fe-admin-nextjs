@@ -1,12 +1,12 @@
 import { Album } from "@/app/types/album/album";
 import { AlbumDetailsSchema } from "@/app/albums/validation/albumDetailsSchema"; 
-import { mapAlbum, mapAlbumDescription } from "@/app/lib/mappers";
+import { mapAlbum, mapAlbumDescription } from "@/app/lib/mappers/albumMapper";
 import { AlbumDescriptionSchema } from "@/app/albums/validation/albumDescriptionSchema";
 import { apiCall, apiGetCall } from "@/app/lib/apiHelper"; 
 import { AlbumSearchItem } from "@/app/interfaces/albumSearchItem";
 import { ALBUM_ADD, ALBUM_UPDATE, ALBUM_UPDATE_DESCRIPTION, GET_ALBUM, GET_RANDOM_ALBUMS, SEARCH_ALBUMS_BY_LETTER, SEARCH_ALBUMS_BY_TEXT } from "@/app/lib/urls";
 import { formatString } from "@/app/lib/stringHelper";
-import { AlbumResponse } from "@/app/interfaces/AddEditActionResponse";
+import { AlbumResponse } from "@/app/interfaces/addEditActionResponse";
 import { ApiResponse } from "@/app/interfaces/apiResponse";
 import { API_METHOD, CACHE_TYPE } from "@/app/lib/enums";
 import { AlbumLookup } from "@/app/types/album/albumLookup";

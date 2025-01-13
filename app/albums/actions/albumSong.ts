@@ -1,4 +1,4 @@
-import { mapAlbumSong } from "@/app/lib/mappers";
+import { mapAlbumSong } from "@/app/lib/mappers/albumMapper";
 import { AlbumSongSchema } from "../validation/albumSongSchema";  
 import { AlbumSongResponse } from "@/app/interfaces/albumSongResponse"; 
 import { ApiResponse } from "@/app/interfaces/apiResponse";  

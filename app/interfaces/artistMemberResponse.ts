@@ -1,0 +1,1 @@
+export interface ArtistMemberResponse {id: number, memberId: number}

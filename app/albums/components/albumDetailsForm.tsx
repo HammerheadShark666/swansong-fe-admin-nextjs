@@ -19,7 +19,7 @@ import { selectKeyNumberToString } from "@/app/lib/stringHelper";
 import { SelectItem } from "@/app/types/selectItem";
 import { delayAlertRemove } from "@/app/lib/generalHelper";
 import { ErrorResponse } from "@/app/interfaces/apiResponse";
-import { AlbumResponse } from "@/app/interfaces/AddEditActionResponse";  
+import { AddEditActionResponse } from "@/app/interfaces/addEditActionResponse";  
 import { ACTION } from "@/app/lib/enums";
 
 interface IProps {
@@ -100,7 +100,7 @@ export default function AlbumDetailsForm({action, albumData, artistItems, studio
     { 
       const response = await saveNewAlbumDetails(data); 
       if(response?.status == 200)        
-        router.push("/albums/album/edit/" + (response.data as AlbumResponse).id.toString());        
+        router.push("/albums/album/edit/" + (response.data as AddEditActionResponse).id.toString());        
       else 
       {
         if(response.data)        
