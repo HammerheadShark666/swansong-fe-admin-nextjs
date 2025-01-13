@@ -24,14 +24,14 @@ import { ACTION } from "@/app/lib/enums";
 
 interface IProps {
   action: ACTION;
-  existingData?: Album;
+  albumData?: Album;
   artistItems: SelectItem[];
   studioItems: SelectItem[];
   recordLabelItems: SelectItem[]; 
   setShowSpinner: (show: boolean) => void;
 }
 
-export default function AlbumDetailsForm({action, existingData, artistItems, studioItems, recordLabelItems, setShowSpinner}: IProps) {
+export default function AlbumDetailsForm({action, albumData, artistItems, studioItems, recordLabelItems, setShowSpinner}: IProps) {
  
   const router = useRouter();
   const [messages, setMessages] = useState<Message[]>([]);  
@@ -68,22 +68,22 @@ export default function AlbumDetailsForm({action, existingData, artistItems, stu
 
   function updatingExistingData(data: AlbumDetailsSchema)
   {
-    if(existingData != null) {
-      existingData.releaseDate = data.releaseDate;
-      existingData.recordedDate = data.recordedDate;
-      existingData.name = data.name;
-      existingData.artistId = Number(data.artistId);
-      existingData.labelId = Number(data.labelId === null ? "" : data.labelId);
-      existingData.studioId = Number(data.studioId);
-      existingData.producers = data.producers;
-      existingData.artwork = data.artwork;    
-      existingData.arrangers = data.arrangers;   
+    if(albumData != null) {
+      albumData.releaseDate = data.releaseDate;
+      albumData.recordedDate = data.recordedDate;
+      albumData.name = data.name;
+      albumData.artistId = Number(data.artistId);
+      albumData.labelId = Number(data.labelId === null ? "" : data.labelId);
+      albumData.studioId = Number(data.studioId);
+      albumData.producers = data.producers;
+      albumData.artwork = data.artwork;    
+      albumData.arrangers = data.arrangers;   
     }
   }
 
   useEffect(() => {    
-    if(action === ACTION.EDIT && existingData != null && existingData != undefined)  {
-      setAlbumValues(existingData);
+    if(action === ACTION.EDIT && albumData != null && albumData != undefined)  {
+      setAlbumValues(albumData);
     }      
   });  
 

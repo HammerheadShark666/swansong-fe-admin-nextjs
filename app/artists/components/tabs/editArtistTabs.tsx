@@ -2,26 +2,24 @@
      
 import { HiOutlineBookOpen, HiMusicNote, HiOutlineIdentification, HiOutlineCamera } from "react-icons/hi"; 
 import { Tabs } from "flowbite-react";  
-import AlbumDetailsForm from "@/app/albums/components/albumDetailsForm";
-import { Album } from "@/app/types/album/album";
+import ArtistDetailsForm from "@/app/artists/components/artistDetailsForm";
+import { Artist } from "@/app/types/artist/artist";
 import { SelectItem } from "@/app/types/selectItem";
-import AlbumPhotoForm from "@/app/albums/components/albumPhotoForm";
-import AlbumSongs from "@/app/albums/components/albumSongs";
-import AlbumDescriptionForm from "@/app/albums/components/albumDescriptionForm";
-import { AlbumDescription } from "@/app/types/album/albumDescription";
+import ArtistPhotoForm from "@/app/artists/components/artistPhotoForm";
+import ArtistSongs from "@/app/artists/components/artistSongs";
+import ArtistDescriptionForm from "@/app/artists/components/artistDescriptionForm";
+import { ArtistDescription } from "@/app/types/artist/artistDescription";
 import Spinner from "@/app/components/spinner";
 import { useState } from "react";
 import { ACTION } from "@/app/lib/enums";
 
 interface IProps {
-  album: Album;
-  albumDescription: AlbumDescription;
-  artistItems: SelectItem[];
-  studioItems: SelectItem[];
-  recordLabelItems: SelectItem[];
+  artist: Artist;
+  artistDescription: ArtistDescription;
+  countryItems: SelectItem[];
 }
 
-export default function  EditAlbumTabs({album, albumDescription, artistItems, studioItems, recordLabelItems}: IProps) {   
+export default function  EditArtistTabs({artist, artistDescription, countryItems}: IProps) {   
 
   const [showSpinner, setShowSpinner] = useState<boolean>(false);
 
@@ -50,22 +48,22 @@ export default function  EditAlbumTabs({album, albumDescription, artistItems, st
       <Tabs aria-label="Tabs with underline" variant="underline" theme={customTheme}>
         <Tabs.Item active title="Details" icon={HiOutlineIdentification}>
           <div className="font-medium text-black w-full relative">
-            <AlbumDetailsForm setShowSpinner={setShowSpinner} action={ACTION.EDIT} albumData={album} artistItems={artistItems} studioItems={studioItems} recordLabelItems={recordLabelItems} />
+            <ArtistDetailsForm setShowSpinner={setShowSpinner} action={ACTION.EDIT} albumData={artist} countryItems={countryItems} />
           </div>
         </Tabs.Item>
         <Tabs.Item title="Photo" icon={HiOutlineCamera}>
           <div className="font-medium text-black">
-            <AlbumPhotoForm setShowSpinner={setShowSpinner} id={album.id} filename={album.photo}></AlbumPhotoForm> 
+            <ArtistPhotoForm setShowSpinner={setShowSpinner} id={artist.id} filename={artist.photo}></ArtistPhotoForm> 
           </div>
         </Tabs.Item>
-        <Tabs.Item title="Songs" icon={HiMusicNote}>
+        <Tabs.Item title="Member" icon={HiMusicNote}>
           <div className="font-medium text-black">
-            <AlbumSongs setShowSpinner={setShowSpinner} songs={album.songs} albumId={album.id}></AlbumSongs>
+            <ArtistSongs setShowSpinner={setShowSpinner} songs={artist.members} artistId={artist.id}></ArtistSongs>
           </div>
         </Tabs.Item>
         <Tabs.Item title="Description" icon={HiOutlineBookOpen}>
           <div className="font-medium text-black">
-            <AlbumDescriptionForm setShowSpinner={setShowSpinner} albumDescription={albumDescription}></AlbumDescriptionForm>
+            <ArtistDescriptionForm setShowSpinner={setShowSpinner} albumDescription={artistDescription}></ArtistDescriptionForm>
           </div>
         </Tabs.Item> 
       </Tabs>  
