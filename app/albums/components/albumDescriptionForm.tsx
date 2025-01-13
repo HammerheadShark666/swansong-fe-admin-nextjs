@@ -19,11 +19,11 @@ const ReactQuill = dynamic(() => import('react-quill-new'), {
 });
 
 interface IProps { 
-  existingDescription?: AlbumDescription;
+  albumDescription?: AlbumDescription;
   setShowSpinner: (show: boolean) => void;
 }
 
-export default function AlbumDescriptionForm({existingDescription, setShowSpinner} : IProps) {
+export default function AlbumDescriptionForm({albumDescription, setShowSpinner} : IProps) {
 
   const [messages, setMessages] = useState<Message[]>([]);  
 
@@ -43,14 +43,14 @@ export default function AlbumDescriptionForm({existingDescription, setShowSpinne
 
   function updatingAlbumDescriptionData(data: AlbumDescriptionSchema)
   {
-    if(existingDescription != null) { 
-      existingDescription.description = data.description;         
+    if(albumDescription != null) { 
+      albumDescription.description = data.description;         
     }
   }
 
   useEffect(() => {    
-    if(existingDescription != null && existingDescription != undefined)  
-      setAlbumDescriptionValues(existingDescription);
+    if(albumDescription != null && albumDescription != undefined)  
+      setAlbumDescriptionValues(albumDescription);
   });  
   
   const handleClearMessages = () => {
