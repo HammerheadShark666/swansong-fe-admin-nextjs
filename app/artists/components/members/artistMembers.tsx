@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from "react"; 
+import { useState } from "react"; 
 import { ArtistMember } from "@/app/types/artist/artistMember";  
 import LetterPicker from "@/app/components/searchDrawer/letterPicker";
 import TextSearch from "@/app/components/searchDrawer/textSearch";
@@ -9,9 +9,10 @@ import SearchSpinner from "@/app/components/searchDrawer/searchSpinner";
 import { getMembersByLetter, getMembersByText } from "@/app/members/actions/member";
 import { Message } from "@/app/types/message";
 import { MemberSearchItem } from "@/app/interfaces/memberSearchItem"; 
-import { poppins } from "@/app/layout"; 
-import Image from "next/image"; 
 import { DROP_MODE } from "@/app/lib/enums";
+import { UpdateArtistMembersRequest } from "@/app/interfaces/updateArtistMembersRequest";
+import MembersSource from "./membersSource";
+import MembersDestination from "./membersDestination";
 
 interface IProps {
   members: ArtistMember[];
@@ -21,30 +22,17 @@ interface IProps {
  
 export default function ArtistMembers({members, artistId, setShowSpinner}: IProps) {
    
-  const [artistMembers, setArtistMembers] = useState<ArtistMember[]>(members);
   const [originalArtistMembers] = useState<ArtistMember[]>(structuredClone(members));
-  // const [artistMember, setArtistMember] = useState<ArtistMember>(); 
-  //const [mode, setMode] = useState<MODE>(MODE.MEMBER);
-  // const [selectedRow, setSelectedRow] = useState<number | null>(null);  
-  // const [clearMessages, setClearMessages] = useState<boolean>(false);
-   const [messages, setMessages] = useState<Message[]>([]);  
+  const [messages, setMessages] = useState<Message[]>([]);  
   const [searchResults, setSearchResults] = useState<MemberSearchItem[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [showNoResultsFound, setShowNoResultsFound] = useState(false);
   const [showSearchResults, setShowSearchResults] = useState(false); 
   const [searchCriteria, setSearchCriteria] = useState(""); 
   const [destinationItems, setDestinationItems] = useState<MemberSearchItem[]>(members);
-
   const [membersToAdd, setMembersToAdd] = useState<MemberSearchItem[]>([]);
   const [membersToRemove, setMembersToRemove] = useState<MemberSearchItem[]>([]);
- 
-  useEffect(() => { 
- 
-     
-    
-  }, [artistMembers]);   
- 
- 
+  
   async function searchMembers(searchBy: string, criteria: string) {
 
     switch(searchBy) {    
@@ -107,7 +95,6 @@ export default function ArtistMembers({members, artistId, setShowSpinner}: IProp
       return members.sort((a, b) => a.stageName.localeCompare(b.stageName));
   }
 
-
   const handleSearchClick = async (criteria: string, searchBy: "letter" | "text") => { 
 
     try 
@@ -132,8 +119,10 @@ export default function ArtistMembers({members, artistId, setShowSpinner}: IProp
       //KEEP any artist in source that were in target before search
       results = addMembersRemovedFromDestinationIntoNewResults( originalArtistMembers, searchResults, results);
 
-     
- 
+      results = results.filter(
+        (item, index, self) => self.findIndex(i => i.id === item.id) === index
+      ); 
+
       setSearchResults(sortMembers(results));
       postSearchSettings(results);
     } 
@@ -147,76 +136,10 @@ export default function ArtistMembers({members, artistId, setShowSpinner}: IProp
   const handleClearMessages = () => {
     setMessages([]);
   };   
-
-  
+ 
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>, item: MemberSearchItem) => {
     e.dataTransfer.setData("application/json", JSON.stringify(item));
-  };
-  
-  // const handleDrop = (
-  //   e: React.DragEvent<HTMLDivElement>,
-  //   setTargetItems: React.Dispatch<React.SetStateAction<MemberSearchItem[]>>,
-  //   targetItems: MemberSearchItem[],
-  //   setSourceItems: React.Dispatch<React.SetStateAction<MemberSearchItem[]>>,
-  //   sourceItems: MemberSearchItem[]
-  // ) => {
-  //   e.preventDefault();
-
-  //   const itemData = e.dataTransfer.getData("application/json");
-  //   const droppedItem: MemberSearchItem = JSON.parse(itemData);
-
-  //   if (!targetItems.some((item) => item.id === droppedItem.id)) {
-  //     setTargetItems([...targetItems, droppedItem]);
-  //     setSourceItems(sourceItems.filter((item) => item.id !== droppedItem.id)); 
-  //   }  
-  // };
-
-
-  // const handleDropMemberToSearchResults = (
-  //   e: React.DragEvent<HTMLDivElement>,
-  //   setTargetItems: React.Dispatch<React.SetStateAction<MemberSearchItem[]>>,
-  //   targetItems: MemberSearchItem[],
-  //   setSourceItems: React.Dispatch<React.SetStateAction<MemberSearchItem[]>>,
-  //   sourceItems: MemberSearchItem[]
-  // ) => {
-  //   e.preventDefault();
-
-  //   const itemData = e.dataTransfer.getData("application/json");
-  //   const droppedItem: MemberSearchItem = JSON.parse(itemData);
-
-  //   if (!targetItems.some((item) => item.id === droppedItem.id)) {
-  //     setTargetItems([...targetItems, droppedItem]);
-  //     setSourceItems(sourceItems.filter((item) => item.id !== droppedItem.id)); 
-  //   }  
-
-  //   //if item is in original list
-  //   membersToRemove.push(droppedItem)
-  //   setMembersToRemove(membersToRemove);
-  // };
-
-
-  // const handleDropSearchResultToMembers = (
-  //   e: React.DragEvent<HTMLDivElement>,
-  //   setTargetItems: React.Dispatch<React.SetStateAction<MemberSearchItem[]>>,
-  //   targetItems: MemberSearchItem[],
-  //   setSourceItems: React.Dispatch<React.SetStateAction<MemberSearchItem[]>>,
-  //   sourceItems: MemberSearchItem[]
-  // ) => {
-  //   e.preventDefault();
-
-  //   const itemData = e.dataTransfer.getData("application/json");
-  //   const droppedItem: MemberSearchItem = JSON.parse(itemData);
-
-  //   if (!targetItems.some((item) => item.id === droppedItem.id)) {
-  //     setTargetItems([...targetItems, droppedItem]);
-  //     setSourceItems(sourceItems.filter((item) => item.id !== droppedItem.id)); 
-  //   }  
-
-  //   //if item not in original list
-  //   membersToAdd.push(droppedItem)
-  //   setMembersToAdd(membersToAdd);
-  // };
-
+  }; 
 
   const handleDrop = (
     e: React.DragEvent<HTMLDivElement>,
@@ -243,10 +166,7 @@ export default function ArtistMembers({members, artistId, setShowSpinner}: IProp
       membersToRemove.push(droppedItem)
       setMembersToRemove(membersToRemove);
     }
-  };
-
-
-
+  }; 
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault(); 
@@ -256,11 +176,23 @@ export default function ArtistMembers({members, artistId, setShowSpinner}: IProp
     console.log(membersToAdd);
     console.log(membersToRemove);
 
+
+    const membersToAddIds: number[] = membersToAdd.map(member => member.id);
+    const membersToRemoveIds: number[] = membersToRemove.map(member => member.id);
+
+    const updateArtistMembersRequest : UpdateArtistMembersRequest  = {
+      artistId: artistId,
+      membersToAdd: membersToAddIds,
+      membersToRemove: membersToRemoveIds
+    };
+
+    console.log(updateArtistMembersRequest);
+
   };
 
   return(
     <> 
-       <div className="grid grid-cols-12">
+      <div className="grid grid-cols-12">
         <div className="grid grid-cols-12 col-span-12 min-h-10">  
 
           <div className="grid grid-cols-12 col-span-12 min-h-10">  
@@ -276,86 +208,15 @@ export default function ArtistMembers({members, artistId, setShowSpinner}: IProp
             </div>
           </div>
           
+          <MembersSource showSearchResults={showSearchResults} showNoResultsFound={showNoResultsFound} searchResults={searchResults} searchCriteria={searchCriteria} 
+                                              setSearchResults={setSearchResults} setDestinationItems={setDestinationItems} destinationItems={destinationItems} 
+                                                handleDrop={handleDrop} handleDragOver={handleDragOver} handleDragStart={handleDragStart}></MembersSource>
+
+          <MembersDestination searchResults={searchResults} setSearchResults={setSearchResults} setDestinationItems={setDestinationItems} destinationItems={destinationItems} 
+                      handleDrop={handleDrop} handleDragOver={handleDragOver} handleDragStart={handleDragStart} handleSaveArtistMembersClick={handleSaveArtistMembersClick}></MembersDestination>
           
-        <div className="grid grid-cols-12 col-span-12"> 
-        
-          
-          <div className="grid-cols-12 col-span-12 md:grid-cols-6 md:col-span-6 mt-4">  
-
-          {(showSearchResults || showNoResultsFound) ? (<p className="grid-cols-12 col-span-12 font-semibold mb-4">Results for &apos;{searchCriteria}&apos;....</p>) : (<></>)}
-        
-          <div onDragOver={handleDragOver} onDrop={(e) => handleDrop(e, setSearchResults, searchResults, setDestinationItems, destinationItems, DROP_MODE.REMOVE)}>
-          {searchResults?.map((item: MemberSearchItem) => (      
-            <div key={item.id} draggable onDragStart={(e) => handleDragStart(e, item)} className="grid grid-cols-12 hover:bg-stone-300 hover:cursor-pointer cursor-move">
-              <div className="grid-cols-2 col-span-2 p-1">
-                  <Image className='hover:cursor-pointer' key={1} alt={"Album Photo"} 
-                            src={`${process.env.NEXT_PUBLIC_AZURE_STORAGE_URL}members/${item.photo}`} width={50} height={50} style={{
-                        width: '100%',
-                        height: '100%',
-                      }}/>
-                </div>
-                <div className="grid-cols-10 col-span-10 flex items-center"> 
-                  <div>                  
-                    <p className={`${poppins.className} font-bold`}>{item.stageName as string}</p>    
-                  </div>
-                </div>     
-            </div>        
-        ))}     
         </div>
-          </div>
-
-          <div className="grid-cols-12 col-span-12 md:grid-cols-6 md:col-span-6 mt-4">  
-
-
-          <p className="grid-cols-12 col-span-12 font-semibold mb-4">Artist Members</p>
-          <div onDragOver={handleDragOver} onDrop={(e) => handleDrop(e, setDestinationItems, destinationItems, setSearchResults, searchResults, DROP_MODE.ADD)}>
-       
-       {destinationItems.map((item: MemberSearchItem) => (       
-
-         <div key={item.id} draggable onDragStart={(e) => handleDragStart(e, item)} className="grid grid-cols-12 hover:bg-stone-300 hover:cursor-pointer cursor-move">
-         <div className="grid-cols-2 col-span-2 p-1">
-           <Image className='hover:cursor-pointer' key={1} alt={"Album Photo"} 
-                     src={`${process.env.NEXT_PUBLIC_AZURE_STORAGE_URL}members/${item.photo}`} width={50} height={50} style={{
-             width: '100%',
-             height: '100%',
-           }}/>
-         </div>
-           <div className="grid-cols-10 col-span-10 flex items-center"> 
-             <div>                  
-               <p className={`${poppins.className} font-bold`}>{item.stageName as string}</p>    
-             </div>
-           </div>     
-         </div>  
-       ))}
-     </div>
-
-
-
-        
-     <div className="grid grid-cols-12">
-        <button onClick={handleSaveArtistMembersClick}  className="grid-cols-4 col-span-4 col-start-9 md:col-start-10 md:grid-cols-3 md:col-span-3 submit">
-           Save          
-        </button> 
-        </div> 
-
-
-
-
-          </div>
-
-
-
-
-        </div>
-
-        
-
-
-        </div>
-      </div>
-
- 
- 
-  </>
+      </div> 
+    </>
   )   
 } 

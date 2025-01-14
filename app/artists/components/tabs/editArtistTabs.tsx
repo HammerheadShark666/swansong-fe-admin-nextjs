@@ -6,7 +6,7 @@ import ArtistDetailsForm from "@/app/artists/components/artistDetailsForm";
 import { Artist } from "@/app/types/artist/artist";
 import { SelectItem } from "@/app/types/selectItem";
 import ArtistPhotoForm from "@/app/artists/components/artistPhotoForm";
-import ArtistMembers from "@/app/artists/components/artistMembers";
+import ArtistMembers from "@/app/artists/components/members/artistMembers";
 import ArtistDescriptionForm from "@/app/artists/components/artistDescriptionForm";
 import { ArtistDescription } from "@/app/types/artist/artistDescription";
 import Spinner from "@/app/components/spinner";
