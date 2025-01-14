@@ -1,17 +1,18 @@
 "use client";  
      
-import { HiOutlineBookOpen, HiMusicNote, HiOutlineIdentification, HiOutlineCamera } from "react-icons/hi"; 
+import { HiOutlineBookOpen, HiMusicNote, HiOutlineIdentification, HiOutlineCamera, HiOutlineMusicNote } from "react-icons/hi"; 
 import { Tabs } from "flowbite-react";  
 import ArtistDetailsForm from "@/app/artists/components/artistDetailsForm";
 import { Artist } from "@/app/types/artist/artist";
 import { SelectItem } from "@/app/types/selectItem";
 import ArtistPhotoForm from "@/app/artists/components/artistPhotoForm";
-import ArtistSongs from "@/app/artists/components/artistSongs";
+import ArtistMembers from "@/app/artists/components/artistMembers";
 import ArtistDescriptionForm from "@/app/artists/components/artistDescriptionForm";
 import { ArtistDescription } from "@/app/types/artist/artistDescription";
 import Spinner from "@/app/components/spinner";
 import { useState } from "react";
 import { ACTION } from "@/app/lib/enums";
+import ArtistAlbums from "../artistAlbums";
 
 interface IProps {
   artist: Artist;
@@ -48,7 +49,7 @@ export default function  EditArtistTabs({artist, artistDescription, countryItems
       <Tabs aria-label="Tabs with underline" variant="underline" theme={customTheme}>
         <Tabs.Item active title="Details" icon={HiOutlineIdentification}>
           <div className="font-medium text-black w-full relative">
-            <ArtistDetailsForm setShowSpinner={setShowSpinner} action={ACTION.EDIT} albumData={artist} countryItems={countryItems} />
+            <ArtistDetailsForm setShowSpinner={setShowSpinner} action={ACTION.EDIT} artistData={artist} countryItems={countryItems} />
           </div>
         </Tabs.Item>
         <Tabs.Item title="Photo" icon={HiOutlineCamera}>
@@ -58,12 +59,17 @@ export default function  EditArtistTabs({artist, artistDescription, countryItems
         </Tabs.Item>
         <Tabs.Item title="Member" icon={HiMusicNote}>
           <div className="font-medium text-black">
-            <ArtistSongs setShowSpinner={setShowSpinner} songs={artist.members} artistId={artist.id}></ArtistSongs>
+            <ArtistMembers setShowSpinner={setShowSpinner} members={artist.members} artistId={artist.id}></ArtistMembers>
           </div>
         </Tabs.Item>
         <Tabs.Item title="Description" icon={HiOutlineBookOpen}>
           <div className="font-medium text-black">
-            <ArtistDescriptionForm setShowSpinner={setShowSpinner} albumDescription={artistDescription}></ArtistDescriptionForm>
+            <ArtistDescriptionForm setShowSpinner={setShowSpinner} artistDescription={artistDescription}></ArtistDescriptionForm>
+          </div>
+        </Tabs.Item> 
+        <Tabs.Item title="Albums" icon={HiOutlineMusicNote}>
+          <div className="font-medium text-black">
+            <ArtistAlbums albums={artist.albums}></ArtistAlbums>
           </div>
         </Tabs.Item> 
       </Tabs>  

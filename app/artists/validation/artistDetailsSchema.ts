@@ -8,13 +8,13 @@ export const artistDetailsSchema = z.object({
     .min(1, { message: "Artist name is required" })
     .max(100, "Artist name should be at most 100 characters"),
   countryId: z
-    .string()
-    .min(1, "Please select an country"), 
+    .string() 
+    .optional(),
   formationYear: z
-    .number()
+    .string()
     .optional(),
   disbandYear: z
-    .number()
+    .string()
     .optional()  
 });
 

@@ -1,5 +1,5 @@
 import { getArtist } from "@/app/artists/actions/artist";
-import { getArtistLookups } from "@/app/artists/actions/lookups"; 
+import { getArtistLookupsForm } from "@/app/artists/actions/lookups"; 
 import EditArtistTabs from "@/app/artists/components/tabs/editArtistTabs";
 import PageNavigationBar from "@/app/components/navigation/pageNavBar"; 
 import { ACTION, MODE } from "@/app/lib/enums";
@@ -17,10 +17,9 @@ export default async function EditArtistPage({ params }:{ params: Promise<{ id: 
   const {id} = await params; 
   const artist = await getArtist(Number(id)); 
   const artistDescription = getArtistDescription(artist);
-  const lookups = await getArtistLookups();
+  const lookups = await getArtistLookupsForm();  
 
-
-function getArtistDescription(artist: Artist){
+  function getArtistDescription(artist: Artist){
     const artistDescription: ArtistDescription = {
       id: artist.id,
       description: artist.description

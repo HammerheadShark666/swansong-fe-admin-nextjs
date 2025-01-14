@@ -12,6 +12,8 @@ import SearchResults from "./searchResults";
 import SearchSpinner from "./searchSpinner";
 import TextSearch from "./textSearch";
 import { ACTION, MODE } from "@/app/lib/enums";
+import { getArtistsByLetter, getArtistsByText } from "@/app/artists/actions/artist"; 
+import { ArtistSearchItem } from "@/app/interfaces/artistSearchItem";
 
 interface IProps { 
   mode: MODE; 
@@ -24,7 +26,7 @@ export default function AlbumSearchDrawer({mode}: IProps) {
   const [isOpen, setIsOpen] = useState(false); 
   const [messages, setMessages] = useState<Message[]>([]);  
 
-  const [searchResults, setSearchResults] = useState<AlbumSearchItem[]>();
+  const [searchResults, setSearchResults] = useState<AlbumSearchItem[] | ArtistSearchItem[]>();
   const [isSearching, setIsSearching] = useState(false);
   const [showNoResultsFound, setShowNoResultsFound] = useState(false);
   const [showSearchResults, setShowSearchResults] = useState(false); 
@@ -36,17 +38,17 @@ export default function AlbumSearchDrawer({mode}: IProps) {
 
     switch(mode)
     {
-      case "album": {
+      case MODE.ALBUM: {
         return searchAlbums(searchBy, criteria);
       }
-      // case "artist": {
-      //   return searchArtists(searchBy, criteria);
-      // }
-      // case "member": {
+      case MODE.ARTIST: {
+        return searchArtists(searchBy, criteria);
+      }
+      // case MODE.MEMBER: {
       //   return searchMembers(searchBy, criteria);
       // }       
       default:
-            return [];
+        return [];
     } 
   }
 
@@ -62,6 +64,18 @@ export default function AlbumSearchDrawer({mode}: IProps) {
     }
   }
 
+  async function searchArtists(searchBy: string, criteria: string) {
+
+    switch(searchBy) {    
+      case "letter":     
+        return await getArtistsByLetter(criteria);
+      case "text":
+        return await getArtistsByText(criteria);      
+      default:
+        return [];    
+    }
+  }
+
   function preSearchInitialization() 
   { 
     setIsSearching(true); 
@@ -70,7 +84,7 @@ export default function AlbumSearchDrawer({mode}: IProps) {
     setSearchResults([]);  
   }
 
-  function postSearchSettings(results:AlbumSearchItem[]) 
+  function postSearchSettings(results: AlbumSearchItem[] | ArtistSearchItem[]) 
   {
     if((results && results.length > 0))
       setShowSearchResults(true);
@@ -84,7 +98,6 @@ export default function AlbumSearchDrawer({mode}: IProps) {
 
     try 
     {
-
       setMessages([]);
  
       if(criteria == '')

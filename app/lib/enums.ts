@@ -22,3 +22,9 @@ export enum ACTION
    ADD = "add",
    EDIT = "edit"
 }
+
+export enum DROP_MODE 
+{
+  ADD = "add",
+  REMOVE = "remove"
+}
