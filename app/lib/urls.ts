@@ -29,6 +29,6 @@ export const ARTIST_EDIT = `/artists/artist/edit/{0}`;
 
 
 export const MEMBER_ADD = `${process.env.NEXT_PUBLIC_API_URL}members/member/add`;
-
+export const MEMBERS_UPDATE_ARTISTS = `${process.env.NEXT_PUBLIC_API_URL}members/update/artist/assigned-to`;
 export const SEARCH_MEMBERS_BY_LETTER = `${process.env.NEXT_PUBLIC_API_URL}members/search-by-letter/{0}`;
 export const SEARCH_MEMBERS_BY_TEXT = `${process.env.NEXT_PUBLIC_API_URL}members/search/{0}`;

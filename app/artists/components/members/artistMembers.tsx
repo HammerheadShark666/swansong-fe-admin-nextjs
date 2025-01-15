@@ -13,6 +13,9 @@ import { DROP_MODE } from "@/app/lib/enums";
 import { UpdateArtistMembersRequest } from "@/app/interfaces/updateArtistMembersRequest";
 import MembersSource from "./membersSource";
 import MembersDestination from "./membersDestination";
+import { updateMemberArtistId } from "../../actions/artistMember";
+import { delayAlertRemove } from "@/app/lib/generalHelper";
+import { ErrorResponse } from "@/app/interfaces/apiResponse";
 
 interface IProps {
   members: ArtistMember[];
@@ -22,7 +25,7 @@ interface IProps {
  
 export default function ArtistMembers({members, artistId, setShowSpinner}: IProps) {
    
-  const [originalArtistMembers] = useState<ArtistMember[]>(structuredClone(members));
+  const [originalArtistMembers, setOriginalArtistMembers] = useState<ArtistMember[]>(structuredClone(members));
   const [messages, setMessages] = useState<Message[]>([]);  
   const [searchResults, setSearchResults] = useState<MemberSearchItem[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -95,7 +98,28 @@ export default function ArtistMembers({members, artistId, setShowSpinner}: IProp
       return members.sort((a, b) => a.stageName.localeCompare(b.stageName));
   }
 
-  const handleSearchClick = async (criteria: string, searchBy: "letter" | "text") => { 
+  async function search(criteria: string, searchBy: "letter" | "text")
+  {
+    setSearchCriteria(criteria); 
+    preSearchInitialization();
+
+    let results = await searchMembers(searchBy, criteria); 
+
+    //Remove artists currently in the target
+    results = filterResults(results);
+
+    //Keep any artist in source that were in target before search
+    results = addMembersRemovedFromDestinationIntoNewResults( originalArtistMembers, searchResults, results);
+
+    results = results.filter(
+      (item, index, self) => self.findIndex(i => i.id === item.id) === index
+    ); 
+
+    setSearchResults(sortMembers(results));
+    postSearchSettings(results);
+  }
+
+  async function handleSearchClick (criteria: string, searchBy: "letter" | "text") { 
 
     try 
     { 
@@ -107,24 +131,8 @@ export default function ArtistMembers({members, artistId, setShowSpinner}: IProp
         setMessages([{ severity: "error", text: "Select letter or enter text."}]); 
         return;
       }
-
-      setSearchCriteria(criteria); 
-      preSearchInitialization();
-
-      let results = await searchMembers(searchBy, criteria); 
-
-      //REMOVE artists currently in the target
-      results = filterResults(results);
-
-      //KEEP any artist in source that were in target before search
-      results = addMembersRemovedFromDestinationIntoNewResults( originalArtistMembers, searchResults, results);
-
-      results = results.filter(
-        (item, index, self) => self.findIndex(i => i.id === item.id) === index
-      ); 
-
-      setSearchResults(sortMembers(results));
-      postSearchSettings(results);
+ 
+      await search(criteria, searchBy); 
     } 
     catch(error)
     {
@@ -141,56 +149,131 @@ export default function ArtistMembers({members, artistId, setShowSpinner}: IProp
     e.dataTransfer.setData("application/json", JSON.stringify(item));
   }; 
 
-  const handleDrop = (
+  async function handleDrop( 
     e: React.DragEvent<HTMLDivElement>,
     setTargetItems: React.Dispatch<React.SetStateAction<MemberSearchItem[]>>,
     targetItems: MemberSearchItem[],
     setSourceItems: React.Dispatch<React.SetStateAction<MemberSearchItem[]>>,
     sourceItems: MemberSearchItem[],
     mode: DROP_MODE 
-  ) => {
-    e.preventDefault();
+  )   {
 
-    const itemData = e.dataTransfer.getData("application/json");
-    const droppedItem: MemberSearchItem = JSON.parse(itemData);
+    try {
+      e.preventDefault();
 
-    if (!targetItems.some((item) => item.id === droppedItem.id)) {
-      setTargetItems([...targetItems, droppedItem]);
-      setSourceItems(sourceItems.filter((item) => item.id !== droppedItem.id)); 
-    }  
+      const itemData = e.dataTransfer.getData("application/json");
+      const droppedItem: MemberSearchItem = JSON.parse(itemData);
 
-    if(mode == DROP_MODE.ADD){
-      membersToAdd.push(droppedItem)
-      setMembersToAdd(membersToAdd);
-    } else if(mode == DROP_MODE.REMOVE){
-      membersToRemove.push(droppedItem)
-      setMembersToRemove(membersToRemove);
-    }
+      if (!targetItems.some((item) => item.id === droppedItem.id)) {
+        setTargetItems([...targetItems, droppedItem]);
+        setSourceItems(sourceItems.filter((item) => item.id !== droppedItem.id)); 
+      }  
+
+      addRemoveMovedMember(droppedItem, mode); 
+    } 
+    catch(error)
+    {
+      setIsSearching(false);
+      setMessages([{ severity: "error", text: "Error doing search. ("  + error + ")"}]);   
+    }    
   }; 
+
+  function addRemoveMovedMember(droppedItem: MemberSearchItem, mode: DROP_MODE) {
+
+    const memberIsInOrigianlResults = originalArtistMembers.some(result => result.id === droppedItem.id);
+
+    if(mode == DROP_MODE.ADD)
+    {
+      if(!memberIsInOrigianlResults)       
+          addMemberToList(droppedItem, membersToAdd, setMembersToAdd);     
+        else      
+          removeMemberFromList(droppedItem.id, membersToRemove, setMembersToRemove);
+    } 
+    else if(mode == DROP_MODE.REMOVE) 
+    {      
+      if(memberIsInOrigianlResults)      
+        addMemberToList(droppedItem, membersToRemove, setMembersToRemove);
+      else
+        removeMemberFromList(droppedItem.id, membersToAdd, setMembersToAdd);        
+    }
+  }
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault(); 
   };
 
-  const handleSaveArtistMembersClick = () => {    
-    console.log(membersToAdd);
-    console.log(membersToRemove);
+  function removeMemberFromList(id: number, list: MemberSearchItem[], setList: React.Dispatch<React.SetStateAction<MemberSearchItem[]>>){
+    const indexToRemove = list.findIndex(member => member.id === id);  
+    if (indexToRemove !== -1)
+      list.splice(indexToRemove, 1);  
+    setList(list);      
+  }
 
+  function addMemberToList(member: MemberSearchItem, list: MemberSearchItem[], setList: React.Dispatch<React.SetStateAction<MemberSearchItem[]>>){
+    list.push(member)
+    setList(list);
+  } 
 
-    const membersToAddIds: number[] = membersToAdd.map(member => member.id);
-    const membersToRemoveIds: number[] = membersToRemove.map(member => member.id);
+  function resetMemberLists()
+  {
+    membersToRemove.map((memberToRemove) => {
+      const indexToRemove = originalArtistMembers.findIndex(member => member.id === memberToRemove.id);
+      if (indexToRemove !== -1)
+        originalArtistMembers.splice(indexToRemove, 1);
+    });
 
-    const updateArtistMembersRequest : UpdateArtistMembersRequest  = {
-      artistId: artistId,
-      membersToAdd: membersToAddIds,
-      membersToRemove: membersToRemoveIds
-    };
+    membersToAdd.map((memberToAdd) => {
+      const artistMember: ArtistMember = {id: memberToAdd.id, artistId: artistId, stageName: memberToAdd.stageName, photo: memberToAdd.photo };
+      originalArtistMembers.push(artistMember);
+    });
+   
+    membersToAdd.length = 0;
+    membersToRemove.length = 0;
 
-    console.log(updateArtistMembersRequest);
+    setOriginalArtistMembers(originalArtistMembers);
+    setDestinationItems(originalArtistMembers);
+  }
 
-  };
+  async function handleSaveArtistMembersClick() {    
+     
+    try 
+    {
+      setMessages([]);
+      setShowSpinner(true);
 
-  return(
+      const membersToAddIds: number[] = membersToAdd.map(member => member.id);
+      const membersToRemoveIds: number[] = membersToRemove.map(member => member.id);
+
+      const updateArtistMembersRequest : UpdateArtistMembersRequest  = {
+        artistId: artistId,
+        membersToAdd: membersToAddIds,
+        membersToRemove: membersToRemoveIds
+      };
+
+      const response = await updateMemberArtistId(updateArtistMembersRequest);
+
+      if(response?.status == 200)     
+      { 
+        resetMemberLists();
+        setMessages([{ severity: "info", text: "Artist members saved."}]);   
+        delayAlertRemove().then(function() {
+          setMessages([]);   
+        });
+      }      
+      else
+        if(response.data)        
+          setMessages((response.data as ErrorResponse).messages);  
+    } 
+    catch(error)
+    {
+      setIsSearching(false);
+      setMessages([{ severity: "error", text: "Error doing search. ("  + error + ")"}]);   
+    }  
+          
+    setShowSpinner(false);
+  }
+ 
+  return (
     <> 
       <div className="grid grid-cols-12">
         <div className="grid grid-cols-12 col-span-12 min-h-10">  
@@ -208,13 +291,13 @@ export default function ArtistMembers({members, artistId, setShowSpinner}: IProp
             </div>
           </div>
           
-          <MembersSource showSearchResults={showSearchResults} showNoResultsFound={showNoResultsFound} searchResults={searchResults} searchCriteria={searchCriteria} 
-                                              setSearchResults={setSearchResults} setDestinationItems={setDestinationItems} destinationItems={destinationItems} 
-                                                handleDrop={handleDrop} handleDragOver={handleDragOver} handleDragStart={handleDragStart}></MembersSource>
+          <MembersSource showSearchResults={showSearchResults} showNoResultsFound={showNoResultsFound} searchResults={searchResults} 
+                          searchCriteria={searchCriteria} setSearchResults={setSearchResults} setDestinationItems={setDestinationItems} 
+                            destinationItems={destinationItems} handleDrop={handleDrop} handleDragOver={handleDragOver} handleDragStart={handleDragStart}></MembersSource>
 
-          <MembersDestination searchResults={searchResults} setSearchResults={setSearchResults} setDestinationItems={setDestinationItems} destinationItems={destinationItems} 
-                      handleDrop={handleDrop} handleDragOver={handleDragOver} handleDragStart={handleDragStart} handleSaveArtistMembersClick={handleSaveArtistMembersClick}></MembersDestination>
-          
+          <MembersDestination searchResults={searchResults} setSearchResults={setSearchResults} setDestinationItems={setDestinationItems} 
+                                destinationItems={destinationItems} handleDrop={handleDrop} handleDragOver={handleDragOver} handleDragStart={handleDragStart} 
+                                  handleSaveArtistMembersClick={handleSaveArtistMembersClick}></MembersDestination>          
         </div>
       </div> 
     </>

@@ -1,6 +1,7 @@
 import { MemberSearchItem } from "@/app/interfaces/memberSearchItem";
 import { poppins } from "@/app/layout";
-import { DROP_MODE } from "@/app/lib/enums";
+import { DROP_MODE } from "@/app/lib/enums"; 
+import { getMemberPhoto } from "@/app/lib/memberHelper";
 import Image from "next/image"; 
 
 interface IProps {
@@ -18,7 +19,7 @@ interface IProps {
       sourceItems: MemberSearchItem[],
       mode: DROP_MODE ) => void;
 }
-
+ 
 export default function  MembersSource({searchResults, setSearchResults, setDestinationItems, destinationItems, 
                                           handleDrop, handleDragOver, handleDragStart, handleSaveArtistMembersClick}: IProps) {    
 
@@ -32,7 +33,7 @@ export default function  MembersSource({searchResults, setSearchResults, setDest
           <div key={item.id} draggable onDragStart={(e) => handleDragStart(e, item)} className="grid grid-cols-12 hover:bg-stone-300 hover:cursor-pointer cursor-move">
             <div className="grid-cols-2 col-span-2 p-1">
               <Image className='hover:cursor-pointer' key={1} alt={"Album Photo"} 
-                        src={`${process.env.NEXT_PUBLIC_AZURE_STORAGE_URL}members/${item.photo}`} width={50} height={50} style={{
+                        src={`${getMemberPhoto(item)}`} width={50} height={50} style={{
                 width: '100%',
                 height: '100%',
               }}/>
