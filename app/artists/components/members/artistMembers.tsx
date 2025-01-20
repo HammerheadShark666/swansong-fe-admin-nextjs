@@ -1,21 +1,18 @@
 'use client'
 
 import { useState } from "react"; 
-import { ArtistMember } from "@/app/types/artist/artistMember";  
-import LetterPicker from "@/app/components/searchDrawer/letterPicker";
-import TextSearch from "@/app/components/searchDrawer/textSearch";
-import Messages from "@/app/components/controls/messages";
-import SearchSpinner from "@/app/components/searchDrawer/searchSpinner"; 
+import { ArtistMember } from "@/app/types/artist/artistMember";    
 import { getMembersByLetter, getMembersByText } from "@/app/members/actions/member";
 import { Message } from "@/app/types/message";
 import { MemberSearchItem } from "@/app/interfaces/memberSearchItem"; 
-import { DROP_MODE } from "@/app/lib/enums";
+import { DROP_MODE, SEARCH_MODE } from "@/app/lib/enums";
 import { UpdateArtistMembersRequest } from "@/app/interfaces/updateArtistMembersRequest";
 import MembersSource from "./membersSource";
 import MembersDestination from "./membersDestination";
 import { updateMemberArtistId } from "../../actions/artistMember";
 import { delayAlertRemove } from "@/app/lib/generalHelper";
 import { ErrorResponse } from "@/app/interfaces/apiResponse";
+import LetterPicker from "./letterPicker"; 
 
 interface IProps {
   members: ArtistMember[];
@@ -35,13 +32,14 @@ export default function ArtistMembers({members, artistId, setShowSpinner}: IProp
   const [destinationItems, setDestinationItems] = useState<MemberSearchItem[]>(members);
   const [membersToAdd, setMembersToAdd] = useState<MemberSearchItem[]>([]);
   const [membersToRemove, setMembersToRemove] = useState<MemberSearchItem[]>([]);
+  const [selectedLetter, setSelectedLetter] = useState(""); 
   
-  async function searchMembers(searchBy: string, criteria: string) {
+  async function searchMembers(searchMode: SEARCH_MODE, criteria: string) {
 
-    switch(searchBy) {    
-      case "letter":     
+    switch(searchMode) {    
+      case SEARCH_MODE.LETTER:     
         return await getMembersByLetter(criteria);
-      case "text":
+      case SEARCH_MODE.TEXT:
         return await getMembersByText(criteria);      
       default:
         return [];    
@@ -98,12 +96,12 @@ export default function ArtistMembers({members, artistId, setShowSpinner}: IProp
       return members.sort((a, b) => a.stageName.localeCompare(b.stageName));
   }
 
-  async function search(criteria: string, searchBy: "letter" | "text")
+  async function search(criteria: string, searchMode: SEARCH_MODE)
   {
     setSearchCriteria(criteria); 
     preSearchInitialization();
 
-    let results = await searchMembers(searchBy, criteria); 
+    let results = await searchMembers(searchMode, criteria); 
 
     //Remove artists currently in the target
     results = filterResults(results);
@@ -119,7 +117,7 @@ export default function ArtistMembers({members, artistId, setShowSpinner}: IProp
     postSearchSettings(results);
   }
 
-  async function handleSearchClick (criteria: string, searchBy: "letter" | "text") { 
+  async function handleSearchClick (criteria: string, searchMode: SEARCH_MODE) { 
 
     try 
     { 
@@ -132,7 +130,8 @@ export default function ArtistMembers({members, artistId, setShowSpinner}: IProp
         return;
       }
  
-      await search(criteria, searchBy); 
+      setSelectedLetter(criteria);
+      await search(criteria, searchMode); 
     } 
     catch(error)
     {
@@ -214,24 +213,67 @@ export default function ArtistMembers({members, artistId, setShowSpinner}: IProp
     setList(list);
   } 
 
-  function resetMemberLists()
+  function updateMemberLists()
   {
+    
+    //remove members who have been removed from artist from original members
     membersToRemove.map((memberToRemove) => {
       const indexToRemove = originalArtistMembers.findIndex(member => member.id === memberToRemove.id);
       if (indexToRemove !== -1)
         originalArtistMembers.splice(indexToRemove, 1);
     });
 
+    //add members to original members that have been added to artist
     membersToAdd.map((memberToAdd) => {
       const artistMember: ArtistMember = {id: memberToAdd.id, artistId: artistId, stageName: memberToAdd.stageName, photo: memberToAdd.photo };
       originalArtistMembers.push(artistMember);
     });
-   
+
+    //remove any original members from search results
+    originalArtistMembers.map((originalMember) => {
+      const indexToRemove = searchResults.findIndex(member => member.id === originalMember.id);
+      if (indexToRemove !== -1)
+        searchResults.splice(indexToRemove, 1);
+    });
+
+ 
     membersToAdd.length = 0;
     membersToRemove.length = 0;
 
     setOriginalArtistMembers(originalArtistMembers);
     setDestinationItems(originalArtistMembers);
+  }
+
+  function resetToOriginal() 
+  {
+    originalArtistMembers.map((originalMember) => {
+    
+      //remove original members from members to remove
+      let indexToRemove = membersToRemove.findIndex(member => member.id === originalMember.id);
+      if (indexToRemove !== -1)
+        membersToRemove.splice(indexToRemove, 1); 
+
+      //remove original members from search results
+      indexToRemove = searchResults.findIndex(member => member.id === originalMember.id);
+      if (indexToRemove !== -1)
+        searchResults.splice(indexToRemove, 1); 
+    });
+
+    destinationItems.map((destinationItem) => {
+
+      //put none original members back into search results
+      const indexToRemove = originalArtistMembers.findIndex(member => member.id === destinationItem.id);
+      if (indexToRemove == -1)
+        searchResults.push(destinationItem); 
+    });
+  
+    setMembersToRemove(membersToRemove);
+    setSearchResults(searchResults);
+    setDestinationItems(originalArtistMembers);
+  }
+
+  async function handleResetArtistMembersClick() {        
+    resetToOriginal();
   }
 
   async function handleSaveArtistMembersClick() {    
@@ -254,7 +296,7 @@ export default function ArtistMembers({members, artistId, setShowSpinner}: IProp
 
       if(response?.status == 200)     
       { 
-        resetMemberLists();
+        updateMemberLists();        
         setMessages([{ severity: "info", text: "Artist members saved."}]);   
         delayAlertRemove().then(function() {
           setMessages([]);   
@@ -271,35 +313,22 @@ export default function ArtistMembers({members, artistId, setShowSpinner}: IProp
     }  
           
     setShowSpinner(false);
-  }
- 
+  } 
+  
   return (
-    <> 
-      <div className="grid grid-cols-12">
-        <div className="grid grid-cols-12 col-span-12 min-h-10">  
-
-          <div className="grid grid-cols-12 col-span-12 min-h-10">  
-            <div className="grid-cols-12 col-span-12 md:grid-cols-5 md:col-span-5">  
-              <LetterPicker handleSearchClick={handleSearchClick}></LetterPicker>
-            </div>
-            <div className="grid-cols-12 col-span-12 md:grid-cols-7 md:col-span-7 pl-10">  
-              <TextSearch handleSearchClick={handleSearchClick}></TextSearch>
-              <div id="search-results-messages" className="w-full grid-cols-12 col-span-12 mt-4">
-                <Messages messages={messages} onClearMessages={handleClearMessages}></Messages>  
-              </div>
-              <SearchSpinner isSearching={isSearching}></SearchSpinner>     
-            </div>
-          </div>
-          
-          <MembersSource showSearchResults={showSearchResults} showNoResultsFound={showNoResultsFound} searchResults={searchResults} 
+    <>      
+      <div className="flex flex-col md:flex-row flex-1 h-full w-full">    
+        <LetterPicker selectedLetter={selectedLetter} handleSearchClick={handleSearchClick}></LetterPicker> 
+              
+        <MembersSource showSearchResults={showSearchResults} showNoResultsFound={showNoResultsFound} searchResults={searchResults} 
                           searchCriteria={searchCriteria} setSearchResults={setSearchResults} setDestinationItems={setDestinationItems} 
-                            destinationItems={destinationItems} handleDrop={handleDrop} handleDragOver={handleDragOver} handleDragStart={handleDragStart}></MembersSource>
+                            destinationItems={destinationItems} handleDrop={handleDrop} handleDragOver={handleDragOver} 
+                              handleDragStart={handleDragStart} isSearching={isSearching}></MembersSource>   
 
-          <MembersDestination searchResults={searchResults} setSearchResults={setSearchResults} setDestinationItems={setDestinationItems} 
+        <MembersDestination searchResults={searchResults} setSearchResults={setSearchResults} setDestinationItems={setDestinationItems} 
                                 destinationItems={destinationItems} handleDrop={handleDrop} handleDragOver={handleDragOver} handleDragStart={handleDragStart} 
-                                  handleSaveArtistMembersClick={handleSaveArtistMembersClick}></MembersDestination>          
-        </div>
-      </div> 
+                                handleClearMessages={handleClearMessages} messages={messages} handleSaveArtistMembersClick={handleSaveArtistMembersClick} handleResetArtistMembersClick={handleResetArtistMembersClick}></MembersDestination>      
+      </div>
     </>
   )   
 } 

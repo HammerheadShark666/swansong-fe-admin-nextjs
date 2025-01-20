@@ -68,20 +68,7 @@ export default function SongForm({albumSong, albumId, mode, setSelectedRow, setM
       side: 0,
       order: 0
     },    
-  });  
-
-  // function setAlbumSongValues(data: AlbumSong) {
-
-  //   if(mode == ACTION.EDIT) {
-  //     setValue("id", data.id);
-  //     setValue("albumId", data.albumId);
-  //     setValue("song.id", data.song.id)
-  //     setValue("song.title", data.song.title);
-  //     setValue("song.length", data.song.length);
-  //     setValue("side", data.side);
-  //     setValue("order", data.order);
-  //   }
-  // }  
+  }); 
 
   function updatingAlbumSong(data: AlbumSongSchema)
   {
@@ -269,17 +256,17 @@ export default function SongForm({albumSong, albumId, mode, setSelectedRow, setM
           </p>
         </div>  
 
-        <div className="grid grid-cols-12"> 
-          <button type="button" onClick={() => handleAddSongClick()} className="mr-1 grid-cols-4 col-span-4 col-start-1 md:col-start-1 md:grid-cols-3 md:col-span-3">
+        <div className="flex flex-row"> 
+          <button type="button" onClick={() => handleAddSongClick()} className="w-1/3 mr-1">
             Add    
           </button> 
-          <button type="button" onClick={() => handleOpenDeleteConfirmationDialogClick()} className="mr-1 grid-cols-4 col-span-4 col-start-5 md:col-start-4 md:grid-cols-3 md:col-span-3 ">
+          <button type="button" onClick={() => handleOpenDeleteConfirmationDialogClick()} className="w-1/3 mr-1">
             Delete          
           </button> 
-          <button disabled={isSubmitting} className="grid-cols-4 col-span-4 col-start-9 md:grid-cols-3 md:col-span-3 md:col-start-10 submit ">
+          <button disabled={isSubmitting} className="w-1/3 submit">
             {isSubmitting ? "Saving" : "Save"}          
           </button>
-        </div> 
+        </div>  
       </form> 
     </>
 )}

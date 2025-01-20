@@ -17,25 +17,25 @@ export default function NavigationBar({ toggle }: { toggle: () => void }) {
   // }
 
 return(
-  <nav className="flex items-center justify-between p-3 pr-4 bg-black border-b-2 border-white shadow-[rgba(0,0,15,0.3)_0px_3px_4px_0px]">
+  <nav className="flex items-center justify-between p-0 pr-4 bg-black border-b-2 border-white shadow-[rgba(0,0,15,0.3)_0px_3px_4px_0px]">
      
     <div className="grid grid-cols-12 text-white w-full">
  
-      <div className="lg:col-span-2 lg:grid-cols-2 md:col-span-4 md:grid-cols-4 col-span-12 grid-cols-12 grid pt-1 md:pt-0">
+      <div className="lg:col-span-2 lg:grid-cols-2 md:col-span-4 md:grid-cols-4 col-span-12 grid-cols-12 grid pt-0 md:pt-0">
         <div className="col-span-10 grid-cols-10">
         <Logo/>
         </div>
         <div className="col-span-2 grid-cols-2 col-start-11">
           <button
             type="button"
-            className="inline-flex items-center md:hidden h-full"
+            className="inline-flex items-center md:hidden h-full bg-black"
             onClick={toggle}
           >
             <svg
-              className="absolute left-2 top-0"
+              className="absolute left-2 top-1 md:top-0"
               xmlns="http://www.w3.org/2000/svg"
               width="40"
-              height="40"
+              height="45"
               viewBox="0 0 24 21"
             >
               <path

@@ -1,13 +1,10 @@
 import "./globals.css";
 import Footer from "./components/footer"
-import { Ibarra_Real_Nova, Bellefair, Philosopher, Poppins, Raleway } from 'next/font/google'
+import {  Philosopher, Raleway, Open_Sans } from 'next/font/google'
 import Navigation from "./components/navigation/navigation";   
-
-export const ibarraRealNova = Ibarra_Real_Nova({ weight: "400", display: 'swap', subsets: ['latin'] });
-export const bellefair = Bellefair({ weight: "400", display: 'swap', subsets: ['latin'] }); 
 export const philosopher = Philosopher({ weight: "400", display: 'swap', subsets: ['latin'] }); 
-export const poppins = Poppins({ weight: "400", display: 'swap', subsets: ['latin'] }); 
 export const raleway = Raleway({ weight: "400", display: 'swap', subsets: ['latin'] }); 
+export const openSans = Open_Sans({ weight: "400", display: 'swap', subsets: ['latin'] }); 
  
 export default function RootLayout({
   children,
@@ -17,16 +14,12 @@ export default function RootLayout({
 
   return (
     <html lang="en"> 
-      <body className="w-full flex flex-col min-h-screen"> 
-        <header>
+      <body className="w-full h-screen flex flex-col items-center">  
+        <header className="h-25 w-full">
           <Navigation />
         </header>
-        <main className="w-full flex-grow flex"> 
-          <div className="flex w-full justify-center flex-1 bg-neutral-700">
-            <div className="w-full md:w-[90%] lg:w-[66%] px-4 bg-black mb-4 p-2 flex flex-col"> 
-              {children}
-            </div>
-          </div>
+        <main className="flex-1 w-full md:w-[90%] lg:w-[66%] pl-4 pr-4 pt-2 bg-black">        
+          {children}         
         </main>       
         <Footer></Footer>  
       </body> 

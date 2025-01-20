@@ -22,6 +22,4 @@ export default function PageNavigationBar({mode, action}: IProps) {
       </div> 
     </div> 
   );
-}; 
-
- 
+};

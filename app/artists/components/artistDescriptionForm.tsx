@@ -83,11 +83,11 @@ export default function ArtistDescriptionForm({artistDescription, setShowSpinner
       <Messages messages={messages} onClearMessages={handleClearMessages}></Messages>  
     
       <form onSubmit={handleSubmit(onSubmitForm)} className="space-y-4"> 
-        <div className="grid grid-cols-12">
-          <button className="grid-cols-4 col-span-4 col-start-9 md:col-start-11 md:grid-cols-2 md:col-span-2 submit">
+        <div className="flex justify-end">
+          <button className="submit">
             {isSubmitting ? "Saving" : "Save"}     
           </button> 
-        </div>
+        </div>         
         <Controller
           name="description"
           control={control}
@@ -98,14 +98,19 @@ export default function ArtistDescriptionForm({artistDescription, setShowSpinner
             }
           }}
           render={({ field, fieldState: { error } }) => (
-            <div>
-              <ReactQuill {...field} theme="snow" />
+            <div className='flex flex-col h-full'>
+              <ReactQuill {...field} theme="snow" className='h-full' />
               {error && (
                 <p className="text-red-500 text-sm mt-1">{error.message}</p>
               )}
             </div>
           )}
-        />         
+        />   
+        <div className="flex justify-end">
+          <button className="submit">
+            {isSubmitting ? "Saving" : "Save"}     
+          </button> 
+        </div>    
       </form>
     </> 
   );

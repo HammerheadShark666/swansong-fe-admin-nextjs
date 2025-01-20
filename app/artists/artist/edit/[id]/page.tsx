@@ -1,7 +1,7 @@
 import { getArtist } from "@/app/artists/actions/artist";
 import { getArtistLookupsForm } from "@/app/artists/actions/lookups"; 
 import EditArtistTabs from "@/app/artists/components/tabs/editArtistTabs";
-import PageNavigationBar from "@/app/components/navigation/pageNavBar"; 
+import PageNavigationBar from "@/app/components/navigation/pageNavigationBar"; 
 import { ACTION, MODE } from "@/app/lib/enums";
 import { Artist } from "@/app/types/artist/artist";
 import { ArtistDescription } from "@/app/types/artist/artistDescription";
@@ -30,8 +30,8 @@ export default async function EditArtistPage({ params }:{ params: Promise<{ id: 
   return  (    
     <>
       <PageNavigationBar action={ACTION.EDIT} mode={MODE.ARTIST}></PageNavigationBar>   
-      <div className="flex flex-col w-full border-gray-100 bg-white flex-1 p-4 mb-4">
-        <EditArtistTabs artist={artist} artistDescription={artistDescription} countryItems={lookups.countries}></EditArtistTabs>
+      <div className="flex flex-row h-full flex-1 w-full border-gray-100 bg-white pl-4 pr-4 mb-4">      
+        <EditArtistTabs artist={artist} artistDescription={artistDescription} countryItems={lookups.countries}></EditArtistTabs> 
       </div>      
     </> 
   )}; 

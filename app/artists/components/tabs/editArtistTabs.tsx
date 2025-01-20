@@ -43,36 +43,40 @@ export default function  EditArtistTabs({artist, artistDescription, countryItems
   }  
 
   return (  
-    <div className="relative">
-      <Spinner showSpinner={showSpinner}></Spinner>
-
-      <Tabs aria-label="Tabs with underline" variant="underline" theme={customTheme}>
-        <Tabs.Item active title="Details" icon={HiOutlineIdentification}>
-          <div className="font-medium text-black w-full relative">
-            <ArtistDetailsForm setShowSpinner={setShowSpinner} action={ACTION.EDIT} artistData={artist} countryItems={countryItems} />
-          </div>
-        </Tabs.Item>
-        <Tabs.Item title="Photo" icon={HiOutlineCamera}>
-          <div className="font-medium text-black">
-            <ArtistPhotoForm setShowSpinner={setShowSpinner} id={artist.id} filename={artist.photo}></ArtistPhotoForm> 
-          </div>
-        </Tabs.Item>
-        <Tabs.Item title="Member" icon={HiMusicNote}>
-          <div className="font-medium text-black">
-            <ArtistMembers setShowSpinner={setShowSpinner} members={artist.members} artistId={artist.id}></ArtistMembers>
-          </div>
-        </Tabs.Item>
-        <Tabs.Item title="Description" icon={HiOutlineBookOpen}>
-          <div className="font-medium text-black">
-            <ArtistDescriptionForm setShowSpinner={setShowSpinner} artistDescription={artistDescription}></ArtistDescriptionForm>
-          </div>
-        </Tabs.Item> 
-        <Tabs.Item title="Albums" icon={HiOutlineMusicNote}>
-          <div className="font-medium text-black">
-            <ArtistAlbums albums={artist.albums}></ArtistAlbums>
-          </div>
-        </Tabs.Item> 
-      </Tabs>  
-    </div>     
+  
+    <> 
+      <div className="flex flex-col w-full"> 
+        <Spinner showSpinner={showSpinner}></Spinner>
+          <Tabs className="" aria-label="Tabs with underline" variant="underline" theme={customTheme}>
+            <Tabs.Item active title="Details" icon={HiOutlineIdentification}>
+              <div className="font-medium text-black w-full relative">
+                <ArtistDetailsForm setShowSpinner={setShowSpinner} action={ACTION.EDIT} artistData={artist} countryItems={countryItems} />   
+              
+              </div>
+            </Tabs.Item>
+            <Tabs.Item title="Photo" icon={HiOutlineCamera}>
+              <div className="font-medium text-black">
+                <ArtistPhotoForm setShowSpinner={setShowSpinner} id={artist.id} filename={artist.photo}></ArtistPhotoForm> 
+              </div>
+            </Tabs.Item>
+            <Tabs.Item title="Member" icon={HiMusicNote}>
+              <div className="font-medium text-black flex flex-col">
+                <ArtistMembers setShowSpinner={setShowSpinner} members={artist.members} artistId={artist.id}></ArtistMembers>
+              </div>
+            </Tabs.Item>
+            <Tabs.Item title="Description" icon={HiOutlineBookOpen}>
+              <div className="font-medium text-black flex flex-col">  
+                <ArtistDescriptionForm setShowSpinner={setShowSpinner} artistDescription={artistDescription}></ArtistDescriptionForm>
+              
+              </div>
+            </Tabs.Item> 
+            <Tabs.Item title="Albums" icon={HiOutlineMusicNote}>
+              <div className="font-medium text-black flex flex-col">
+                <ArtistAlbums albums={artist.albums}></ArtistAlbums>
+              </div>
+            </Tabs.Item> 
+          </Tabs>
+      </div>
+    </>
   )
 };

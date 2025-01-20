@@ -43,8 +43,8 @@ export default function  EditAlbumTabs({album, albumDescription, artistItems, st
     }   
   }  
 
-  return (  
-    <div className="relative">
+  return (
+     <div className="flex flex-col"> 
       <Spinner showSpinner={showSpinner}></Spinner>
 
       <Tabs aria-label="Tabs with underline" variant="underline" theme={customTheme}>

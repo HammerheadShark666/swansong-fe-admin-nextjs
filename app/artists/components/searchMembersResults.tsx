@@ -21,19 +21,7 @@ export default function SearchMemberResults({mode, searchResults, showNoResultsF
   const handleSearchResultClick = (id: number) => {     
  
   };
-
-  // function getStoragePath()
-  // {
-  //   switch(mode){
-  //     case MODE.ALBUM:         
-  //       return "albums";
-  //     case MODE.ARTIST:
-  //       return "artists";
-  //     case MODE.MEMBER:
-  //       return "members";
-  //   }    
-  // }
-
+ 
   useEffect(() => {    
     setMessages([{ severity: "info", text: "No " + mode + "s found."}]);   
   }, [mode]);

@@ -70,8 +70,8 @@ export default function AlbumSongs({songs, albumId, setShowSpinner}: IProps) {
 
   return(
     <>
-      <div className="grid grid-cols-12">
-        <div className="grid-cols-12 col-span-12 md:grid-cols-5 md:col-span-5">     
+      <div className="flex flex-col md:flex-row">
+        <div className="w-full md:w-1/2">     
           <table className="table-auto text-left w-full">
             <thead>
               <tr className="p-5 pt-0 text-xs">
@@ -96,12 +96,12 @@ export default function AlbumSongs({songs, albumId, setShowSpinner}: IProps) {
             </tbody>
           </table>
         </div>
-        <div className="grid-cols-12 col-span-12 md:grid-cols-7 md:col-span-7 p-2 md:p-4 md:pl-6 bg-stone-50 md:ml-4"> 
+        <div className="w-full md:w-1/2 p-2 md:p-4 md:pl-6 bg-stone-50 md:ml-4"> 
           <AlbumSongForm setShowSpinner={setShowSpinner} albumId={albumId} albumSong={albumSong} mode={mode} setMode={setMode} setSelectedRow={setSelectedRow} 
                    setClearMessages={setClearMessages} clearMessages={clearMessages}
                   addSongToAlbumSongList={addSongToAlbumSongList} updateSongInAlbumSongList={updateSongInAlbumSongList} removeSongFromList={removeSongFromList}></AlbumSongForm>
         </div>
-      </div>  
+      </div>   
     </>
   )   
 }

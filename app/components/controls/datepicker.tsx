@@ -12,7 +12,7 @@ return (
   <Controller
     name={name}
     control={control} 
-    render={({ field: { onChange, value }, fieldState: { error } }) => ( //onChange,
+    render={({ field: { onChange, value }, fieldState: { error } }) => (
       <div>
         <input
           type="date"

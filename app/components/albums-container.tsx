@@ -1,4 +1,4 @@
-import getUrl from "../lib/http"; //, { createUrl }
+import getUrl from "../lib/http";
 import getToolTip from "../lib/tooltip";
 import { AlbumLookup } from "../types/album/albumLookup";
 import Link from "next/link";
@@ -29,7 +29,7 @@ export default async function AlbumsContainer() {
         <div className="max-w-7xl mx-auto grid grid-cols-12">
           <div className="col-span-12">
             {albums && (
-              <div className="grid grid-cols-2 gap-x-4 gap-y-2 md:grid-cols-6 pt-4"> 
+              <div className="grid grid-cols-2 gap-x-4 gap-y-2 md:grid-cols-6 pt-0"> 
                 {albums.map((album: AlbumLookup) => (     
                   <Link key={album.id} href={`${getUrl("albums", album.id)}`}>
                     <div className="tooltip object-fill w-full" data-tip={getToolTip(album)}>

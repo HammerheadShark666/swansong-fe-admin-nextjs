@@ -8,7 +8,7 @@ import Messages from "@/app/components/controls/messages";
 import { Message } from "@/app/types/message"; 
 import { delayAlertRemove } from "@/app/lib/generalHelper";
 import { ErrorResponse } from "@/app/interfaces/apiResponse";
-import { AlbumPhotoResponse } from "@/app/interfaces/addPhotoResponse";
+import { AddPhotoResponse } from "@/app/interfaces/addPhotoResponse";
 
 interface IProps {
   id: number;
@@ -43,7 +43,7 @@ export default function AlbumPhotoForm({id, filename, setShowSpinner}: IProps) {
 
     if(response?.status == 200)     
     {
-      const filename = (response.data as AlbumPhotoResponse).filename;
+      const filename = (response.data as AddPhotoResponse).filename;
       const url = getAlbumImageUrl(filename);
       setPreview(url);
 
@@ -64,19 +64,16 @@ export default function AlbumPhotoForm({id, filename, setShowSpinner}: IProps) {
   return (  
     <>
       <Messages messages={messages} onClearMessages={handleClearMessages}></Messages>      
-      <div className={`grid grid-cols-12 gap-2 ${messages.length > 0 ? 'mt-4': ''}`}>
- 
-        <div className="grid-cols-12 col-span-12 md:grid-cols-4 md:col-span-4 lg:grid-cols-3 lg:col-span-3">
-          {preview && ( 
-            <div className="relative h-48 w-48 md:h-48 md:w-48">           
+      <div className={`flex flex-col md:flex-row ${messages.length > 0 ? 'mt-4': ''}`}>
+        <div className="flex mb-4 md:mb-0 mr-0 md:mr-4 ">
+          {preview && (                    
               <Image alt="Upload album photo"
-                  src={preview} width={200} height={200} style={{ height: 'auto', objectFit: 'cover', position: 'relative' }}/>
-            </div>
+                  src={preview} width={200} height={200} style={{ height: 'auto', objectFit: 'cover', position: 'relative' }}/>            
           )}
           <input ref={hiddenFileInputRef} hidden type="file" onChange={handleFileChange} /> 
         </div>
 
-        <div className="grid-cols-12 col-span-12 md:grid-cols-4 md:col-span-4">
+        <div>
           <div className="buttons">
             <button type="button" onClick={triggerFileInput} >
               Click to upload

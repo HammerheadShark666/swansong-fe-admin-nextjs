@@ -82,9 +82,7 @@ export default function ArtistDetailsForm({action, artistData, countryItems, set
     { 
       const response = await saveNewArtistDetails(data); 
       if(response?.status == 200)
-        router.push(formatString(ARTIST_EDIT, (response.data as AddEditActionResponse).id));
-
-        //router.push("/artists/artist/edit/" + (response.data as AddEditActionResponse).id.toString());        
+        router.push(formatString(ARTIST_EDIT, (response.data as AddEditActionResponse).id)); 
       else 
       {
         if(response.data)        
@@ -142,7 +140,7 @@ export default function ArtistDetailsForm({action, artistData, countryItems, set
  
       <div className="w-full flex flex-col lg:flex-row gap-4 space-y-0">
 
-        <div className="w-full lg:w-3/6">
+        <div className="w-full">
           <div className="grid grid-cols-12">
             <label className="grid-cols-12 col-span-12 md:grid-cols-2 md:col-span-3">Name*</label>
             <input {...register("name")} type="text" maxLength={120} className="grid-cols-12 col-span-12 md:grid-cols-9 md:col-span-9" placeholder="name of artist" />
@@ -153,7 +151,7 @@ export default function ArtistDetailsForm({action, artistData, countryItems, set
 
           <div className="grid grid-cols-12">
             <label className="grid-cols-12 col-span-12 md:grid-cols-3 md:col-span-3">Country</label>
-            <CountrySelect trigger={trigger} name="countryId" register={register} items={countryItems} error={errors.name?.message} /> 
+            <CountrySelect trigger={trigger} name="countryId" className="grid-cols-12 col-span-12 md:grid-cols-5 md:col-span-5" register={register} items={countryItems} error={errors.name?.message} /> 
             <p className="error grid-cols-12 col-span-12 md:grid-cols-5 md:col-span-5 md:col-start-4 text-gray-900 mb-2">
               {errors.countryId && errors.countryId.message}
             </p>
@@ -161,7 +159,7 @@ export default function ArtistDetailsForm({action, artistData, countryItems, set
 
           <div className="grid grid-cols-12">
             <label className="grid-cols-12 col-span-12 md:grid-cols-3 md:col-span-3">Formation Year</label>          
-            <FormationYearSelect trigger={trigger} name="formationYear" register={register} items={getYears()} error={errors.name?.message} />   
+            <FormationYearSelect trigger={trigger} name="formationYear" className="grid-cols-4 col-span-4 md:grid-cols-2 md:col-span-2" register={register} items={getYears()} error={errors.name?.message} />   
             <p className="error grid-cols-12 col-span-12 md:grid-cols-5 md:col-span-5 md:col-start-4 text-gray-900 mb-2">
               {errors.formationYear && errors.formationYear.message}
             </p>
@@ -169,21 +167,18 @@ export default function ArtistDetailsForm({action, artistData, countryItems, set
 
           <div className="grid grid-cols-12">
             <label className="grid-cols-12 col-span-12 md:grid-cols-3 md:col-span-3">Disband Year</label>          
-            <DisbandYearSelect trigger={trigger} name="disbandYear" register={register} items={getYears()} error={errors.name?.message} />   
+            <DisbandYearSelect trigger={trigger} name="disbandYear" className="grid-cols-4 col-span-4 md:grid-cols-2 md:col-span-2" register={register} items={getYears()} error={errors.name?.message} />   
             <p className="error grid-cols-12 col-span-12 md:grid-cols-5 md:col-span-5 md:col-start-4 text-gray-900 mb-2">
               {errors.disbandYear && errors.disbandYear.message}
             </p>
-          </div> 
-    
-          
+          </div>   
         </div>
- 
-      </div>
+      </div>      
 
-      <div className="grid grid-cols-12">
-        <button disabled={isSubmitting} className="grid-cols-4 col-span-4 col-start-9 md:col-start-11 md:grid-cols-2 md:col-span-2 submit">
+      <div className="flex justify-end">
+        <button disabled={isSubmitting} className="submit">
           {isSubmitting ? "Saving" : "Save"}          
         </button> 
-      </div> 
+      </div>  
     </form> 
 )}

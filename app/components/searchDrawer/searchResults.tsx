@@ -1,6 +1,6 @@
 import { AlbumSearchItem } from "@/app/interfaces/albumSearchItem";
 import Image from "next/image";
-import { poppins, raleway } from '@/app/layout';
+import { openSans } from '@/app/layout';
 import { useRouter } from "next/navigation";
 import Messages from "../controls/messages";
 import { useEffect, useState } from "react";
@@ -74,9 +74,9 @@ export default function SearchResults({mode, searchResults, showNoResultsFound, 
               </div>
               <div className="grid-cols-10 col-span-10 flex items-center">
                 <div>
-                  <p className={`${raleway.className} font-bold`}>{item.name}</p>
+                  <p className={`${openSans.className} font-bold`}>{item.name}</p>
                   { 'artistName' in item ? (
-                    <p className={`${poppins.className}`}>{item.artistName}</p>
+                    <p className={`${openSans.className}`}>{item.artistName}</p>
                   ) : (
                     <></>
                   )}      

@@ -63,20 +63,17 @@ export default function ArtistPhotoForm({id, filename, setShowSpinner}: IProps) 
 
   return (  
     <>
-      <Messages messages={messages} onClearMessages={handleClearMessages}></Messages>      
-      <div className={`grid grid-cols-12 gap-2 ${messages.length > 0 ? 'mt-4': ''}`}>
- 
-        <div className="grid-cols-12 col-span-12 md:grid-cols-4 md:col-span-4 lg:grid-cols-3 lg:col-span-3">
-          {preview && ( 
-            <div className="relative h-48 w-48 md:h-48 md:w-48">           
+      <Messages messages={messages} onClearMessages={handleClearMessages}></Messages>    
+      <div className={`flex flex-col md:flex-row ${messages.length > 0 ? 'mt-4': ''}`}>
+        <div className="flex mb-4 md:mb-0 mr-0 md:mr-4 ">
+          {preview && (                  
               <Image alt="Upload artist photo"
-                  src={preview} width={200} height={200} style={{ height: 'auto', objectFit: 'cover', position: 'relative' }}/>
-            </div>
+                  src={preview} width={200} height={200} style={{ height: 'auto', objectFit: 'cover', position: 'relative' }}/>             
           )}
           <input ref={hiddenFileInputRef} hidden type="file" onChange={handleFileChange} /> 
         </div>
 
-        <div className="grid-cols-12 col-span-12 md:grid-cols-4 md:col-span-4">
+        <div>
           <div className="buttons">
             <button type="button" onClick={triggerFileInput} >
               Click to upload
@@ -84,7 +81,7 @@ export default function ArtistPhotoForm({id, filename, setShowSpinner}: IProps) 
           </div>
           <div className="w-full text-xs mt-1">jpg/png files with a size less than 500kb</div>
         </div>
-      </div>
+      </div> 
     </>
   );
 }

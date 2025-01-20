@@ -11,7 +11,7 @@ import { AlbumSearchItem } from "@/app/interfaces/albumSearchItem";
 import SearchResults from "./searchResults";
 import SearchSpinner from "./searchSpinner";
 import TextSearch from "./textSearch";
-import { ACTION, MODE } from "@/app/lib/enums";
+import { ACTION, DIRECTION, MODE, SEARCH_MODE } from "@/app/lib/enums";
 import { getArtistsByLetter, getArtistsByText } from "@/app/artists/actions/artist"; 
 import { ArtistSearchItem } from "@/app/interfaces/artistSearchItem";
 
@@ -20,7 +20,7 @@ interface IProps {
   action: ACTION;
 }
 
-export default function AlbumSearchDrawer({mode}: IProps) { 
+export default function SearchDrawer({mode}: IProps) { 
 
   const toggleDrawer = () => setIsOpen(!isOpen);
   const [isOpen, setIsOpen] = useState(false); 
@@ -31,18 +31,20 @@ export default function AlbumSearchDrawer({mode}: IProps) {
   const [showNoResultsFound, setShowNoResultsFound] = useState(false);
   const [showSearchResults, setShowSearchResults] = useState(false); 
   const [searchCriteria, setSearchCriteria] = useState(""); 
+  const [selectedLetter, setSelectedLetter] = useState(""); 
+ 
  
   const modeLabel = getModeLabel(mode);
 
-  async function search(searchBy: "letter" | "text", criteria: string) {
+  async function search(searchMode: SEARCH_MODE, criteria: string) {
 
     switch(mode)
     {
       case MODE.ALBUM: {
-        return searchAlbums(searchBy, criteria);
+        return searchAlbums(searchMode, criteria);
       }
       case MODE.ARTIST: {
-        return searchArtists(searchBy, criteria);
+        return searchArtists(searchMode, criteria);
       }
       // case MODE.MEMBER: {
       //   return searchMembers(searchBy, criteria);
@@ -52,24 +54,24 @@ export default function AlbumSearchDrawer({mode}: IProps) {
     } 
   }
 
-  async function searchAlbums(searchBy: string, criteria: string) {
+  async function searchAlbums(searchMode: SEARCH_MODE , criteria: string) {
 
-    switch(searchBy) {    
-      case "letter":     
+    switch(searchMode) {    
+      case SEARCH_MODE.LETTER:     
         return await getAlbumsByLetter(criteria);
-      case "text":
+      case SEARCH_MODE.TEXT:
         return await getAlbumsByText(criteria);      
       default:
         return [];    
     }
   }
 
-  async function searchArtists(searchBy: string, criteria: string) {
+  async function searchArtists(searchMode: SEARCH_MODE , criteria: string) {
 
-    switch(searchBy) {    
-      case "letter":     
+    switch(searchMode) {    
+      case SEARCH_MODE.LETTER:     
         return await getArtistsByLetter(criteria);
-      case "text":
+      case SEARCH_MODE.TEXT:
         return await getArtistsByText(criteria);      
       default:
         return [];    
@@ -94,11 +96,12 @@ export default function AlbumSearchDrawer({mode}: IProps) {
     setIsSearching(false); 
   } 
 
-  const handleSearchClick = async (criteria: string, searchBy: "letter" | "text") => { 
+  const handleSearchClick = async (criteria: string, searchMode: SEARCH_MODE ) => { 
 
     try 
     {
       setMessages([]);
+      setSelectedLetter("");
  
       if(criteria == '')
       {
@@ -106,9 +109,12 @@ export default function AlbumSearchDrawer({mode}: IProps) {
         return;
       }
 
+      if(searchMode == SEARCH_MODE.LETTER)
+        setSelectedLetter(criteria);
+
       setSearchCriteria(criteria); 
       preSearchInitialization();
-      const results = await search(searchBy, criteria);
+      const results = await search(searchMode, criteria);
       setSearchResults(results);
       postSearchSettings(results);
     } 
@@ -145,7 +151,7 @@ export default function AlbumSearchDrawer({mode}: IProps) {
           </button>
         </div>
         <div className="p-4 grid grid-cols-12">           
-          <LetterPicker handleSearchClick={handleSearchClick}></LetterPicker>
+          <LetterPicker selectedLetter={selectedLetter} direction={DIRECTION.HORIZONTAL} handleSearchClick={handleSearchClick}></LetterPicker>
           <TextSearch handleSearchClick={handleSearchClick}></TextSearch>
           <div id="search-results-messages" className="w-full grid-cols-12 col-span-12 mt-4">
             <Messages messages={messages} onClearMessages={handleClearMessages}></Messages>  

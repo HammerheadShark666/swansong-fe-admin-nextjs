@@ -36,8 +36,8 @@ export default function  AddAlbumTabs({artistItems, studioItems, recordLabelItem
     }   
   }  
 
-  return (  
-    <div className="relative">
+  return (   
+    <div className="flex flex-col">
       <Spinner showSpinner={showSpinner}></Spinner>
       <Tabs aria-label="Tabs with underline" variant="underline" theme={customTheme}>
         <Tabs.Item active title="Details" icon={HiOutlineIdentification}>

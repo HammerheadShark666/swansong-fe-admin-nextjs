@@ -34,12 +34,12 @@ export default function  AddArtistTabs({countryItems}: IProps) {
     }   
   }  
 
-  return (  
-    <div className="relative">
+  return (   
+    <div className="flex flex-col">
       <Spinner showSpinner={showSpinner}></Spinner>
       <Tabs aria-label="Tabs with underline" variant="underline" theme={customTheme}>
         <Tabs.Item active title="Details" icon={HiOutlineIdentification}>
-          <div className="font-medium text-black w-full relative">
+          <div className="font-medium text-black w-full h-full">
             <ArtistDetailsForm setShowSpinner={setShowSpinner} action={ACTION.ADD} countryItems={countryItems} />
           </div>
         </Tabs.Item> 
