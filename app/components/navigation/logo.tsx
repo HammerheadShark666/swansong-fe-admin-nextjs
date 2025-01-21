@@ -35,20 +35,12 @@ export default function Logo() {
   }, []);
 
   return (
-    <>             
-      <div className="col-span-12 grid-cols-12 text-center sm:grid-cols-2 sm:col-span-2 md:grid-cols-4 md:col-span-4 lg:grid-cols-2 lg:col-span-2">
-        <Link className="col-span-12 pt-1 md:pt-0 lg:pt-1" href="/" style={{ display: showButton ? "none" : "block" }}>
-          <div className="grid grid-cols-12">
-            <div className="col-span-2 grid-cols-2 md:col-span-4 md:grid-cols-4 flex justify-left mb-1">
-              <Image alt="SwanSong" src={`${process.env.NEXT_PUBLIC_AZURE_STORAGE_URL}site-images/SwanSong.jpg`} width={width < 1024 ? "150" : "250"}
-                height={width < 1024 ? "45" : "74"} sizes="100vw" style={{ width: '72px', height: 'auto' }} />   
-            </div>
-            <div className="col-span-10 grid-cols-10 md:col-span-8 md:grid-cols-8 mt-1">
-              <h1 className={`${bonaNovaSc.className} text-white text-left text-4xl`}>SwanSong</h1>
-            </div>
-          </div>
-        </Link>
-      </div>        
+    <>
+      <Link className="flex flex-row items-center" href="/" style={{ display: showButton ? "none" : "block" }}>
+        <Image alt="SwanSong" src={`${process.env.NEXT_PUBLIC_AZURE_STORAGE_URL}site-images/SwanSong.jpg`} width={width < 1024 ? "150" : "250"}
+                height={width < 1024 ? "45" : "74"} sizes="100vw" style={{ width: '72px', height: 'auto', margin: '2px 0px 4px 0px' }} />   
+        <h1 className={`${bonaNovaSc.className} text-white text-left text-4xl`}>SwanSong</h1>
+      </Link> 
     </>
   );
 };
