@@ -1,30 +1,30 @@
 'use client';
 
-// import { useRouter } from "next/navigation";
-// import { KeyboardEvent } from 'react';
 import Link from "next/link";
 import Logo from "./logo";
+import { useRouter } from "next/navigation";
+import { KeyboardEvent } from 'react'; 
 
 export default function NavigationBar({ toggle }: { toggle: () => void }) { 
 
- // const router = useRouter();
-
-  // const handleOnKeyDown = (e : KeyboardEvent<HTMLInputElement>) => {
-  //   if (e.key === "Enter") {
-  //     router.push("/search?criteria=" + e.currentTarget.value);
-  //     e.currentTarget.value = "";
-  //   }
-  // }
+  const router = useRouter();
+  
+  const handleOnKeyDown = (e : KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      router.push("/search?criteria=" + e.currentTarget.value);
+      e.currentTarget.value = ""; 
+    }
+  }
 
 return (
 
-  <nav className="flex items-center justify-between p-0 pr-4 bg-black border-b-2 border-white shadow-[rgba(0,0,15,0.3)_0px_3px_4px_0px]">
+  <nav className="flex flex-row items-center p-0 pr-4 bg-black border-b-2 border-white shadow-[rgba(0,0,15,0.3)_0px_3px_4px_0px]">
          
-    <div className="flex flex-row w-1/6">
+    <div className="flex w-2/6 lg:w-1/6">
       <Logo/>
     </div>
 
-    <div className="flex flex-row w-5/6 justify-center">
+    <div className="flex w-3/6 lg:w-4/6 justify-center">
       <ul className="hidden md:flex gap-x-6 text-white">
         <li>
           <Link href="/albums/album/add">
@@ -48,8 +48,12 @@ return (
         </li>
       </ul>
     </div>
-       
-    <div className="flex flex-row w-1/6">         
+
+    <div className="flex w-1/6">  
+      <input onKeyDown={handleOnKeyDown} type="search" id="default-search" className="hidden md:block w-full p-3 ps-2 text-sm" placeholder="Search..." required />
+    </div>  
+
+    <div className="flex flex-row w-1/6 md:hidden">         
       <button
         type="button"
         className="inline-flex items-center md:hidden h-full bg-black"
