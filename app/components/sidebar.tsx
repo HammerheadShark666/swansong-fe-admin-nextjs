@@ -27,8 +27,8 @@ export default function Sidebar({ isOpen, toggle, }: { isOpen: boolean, toggle: 
           {/* Close icon */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="48"
-            height="48"
+            width="28"
+            height="28"
             viewBox="0 0 24 24"
           >
             <path
@@ -43,22 +43,22 @@ export default function Sidebar({ isOpen, toggle, }: { isOpen: boolean, toggle: 
         <ul className="sidebar-nav leading-relaxed text-left px-10 text-xl">
           <li>
             <Link href="/albums/album/add" onClick={toggle}>
-              <p>Albums</p>
+              <p className="text-xl mb-2">Albums</p>
             </Link>
           </li>
           <li>
             <Link href="/artists/artist/add" onClick={toggle}>
-              <p>Artists</p>
+              <p className="text-xl mb-2">Artists</p>
             </Link>
           </li>
           <li>
             <Link href="/members/member/add" onClick={toggle}>
-              <p>Members</p>
+              <p className="text-xl mb-2">Members</p>
             </Link>
           </li> 
           <li>
             <Link href="/lookups">
-              <p>Lookups</p>
+              <p className="text-xl">Lookups</p>
             </Link>
           </li>
           <li>

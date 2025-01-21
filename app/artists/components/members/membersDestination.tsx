@@ -53,7 +53,7 @@ export default function  MembersSource({searchResults, setSearchResults, setDest
         </div>     
       </div>
 
-      <div className="flex flex-col pl-4">
+      <div className="flex flex-col md:pl-4">
         <button onClick={handleResetArtistMembersClick}  className="submit mb-4">
           Reset         
         </button> 

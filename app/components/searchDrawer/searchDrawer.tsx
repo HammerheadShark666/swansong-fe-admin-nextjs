@@ -141,11 +141,11 @@ export default function SearchDrawer({mode}: IProps) {
           isOpen ? "translate-x-0" : "translate-x-full"
         } transition-transform duration-300 z-40`}
       >
-        <div className="p-4 border-b flex justify-between items-center">
+        <div className="p-4 border-b flex justify-between items-center mr-2 md:mr-0">
           <h2 className="text-lg font-semibold">Search {modeLabel}s</h2>
           <button
             onClick={toggleDrawer}
-            className="px-3 py-1 bg-red-500 text-white rounded"
+            className="px-3 py-1"
           >
             Close
           </button>
