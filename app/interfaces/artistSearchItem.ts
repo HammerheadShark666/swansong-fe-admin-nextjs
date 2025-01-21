@@ -1,7 +1,7 @@
 export interface ArtistSearchItem 
 {
   id: number;
-  stageName: string;  
+  name: string;  
   photo: string;
 }
 

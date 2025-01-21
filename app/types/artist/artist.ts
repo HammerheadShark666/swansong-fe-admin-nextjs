@@ -1,5 +1,5 @@
-import { AlbumLookup } from "../album/albumLookup";
-import { Member } from "../member/member";
+import { AlbumLookup } from "../album/albumLookup"; 
+import { ArtistMember } from "./artistMember";
 
 export type Artist = 
 {
@@ -11,5 +11,5 @@ export type Artist =
   photo: string;
   description:string;
   albums: AlbumLookup[];
-  members: Member[];
+  members: ArtistMember[];
 }

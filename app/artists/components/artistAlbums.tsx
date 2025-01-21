@@ -1,35 +1,25 @@
-import getUrl from "../lib/http";
-import getToolTip from "../lib/tooltip";
-import { AlbumLookup } from "../types/album/albumLookup";
-import Link from "next/link";
-import { notFound } from "next/navigation"; 
-import AlbumImage from "./albumImage";
-import { getRandomAlbums } from "../albums/actions/album"; 
-import { getPhoto } from "../lib/imageHelper";
+'use client'
 
-async function getAlbums(): Promise<AlbumLookup[]> {
-  
-  try
-  {
-    return await getRandomAlbums();
-  } 
-  catch(error)
-  { console.log(error);
-    notFound(); 
-  }   
-}  
+import AlbumImage from "@/app/components/albumImage";
+import getUrl from "@/app/lib/http";
+import { getPhoto } from "@/app/lib/imageHelper";
+import getToolTip from "@/app/lib/tooltip";
+import { AlbumLookup } from "@/app/types/album/albumLookup";
+import Link from "next/link"; 
 
-export default async function AlbumsContainer() {
+interface IProps { 
+  albums: AlbumLookup[] | undefined; 
+} 
 
-  const albums = await getAlbums(); 
-
+export default function ArtistAlbums({albums}: IProps) {
+ 
   return (          
     <>
       {albums && (          
         <div className="max-w-7xl mx-auto grid grid-cols-12">
           <div className="col-span-12">
             {albums && (
-              <div className="grid grid-cols-2 gap-x-4 gap-y-2 md:grid-cols-6 pt-0"> 
+              <div className="grid grid-cols-2 gap-x-4 gap-y-2 md:grid-cols-6 pt-4"> 
                 {albums.map((album: AlbumLookup) => (     
                   <Link key={album.id} href={`${getUrl("albums", album.id)}`}>
                     <div className="tooltip object-fill w-full" data-tip={getToolTip(album)}>

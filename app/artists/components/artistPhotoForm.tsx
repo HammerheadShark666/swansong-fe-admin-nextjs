@@ -2,8 +2,8 @@
 
 import { useRef, useState } from "react"; 
 import Image from "next/image";
-import { saveAlbumPhoto } from "@/app/albums/actions/albumPhoto";
-import { getAlbumImageUrl, getDefaultAlbumImageUrl } from "@/app/lib/imageHelper";
+import { saveArtistPhoto } from "@/app/artists/actions/artistPhoto";
+import { getArtistImageUrl, getDefaultArtistImageUrl } from "@/app/lib/imageHelper";
 import Messages from "@/app/components/controls/messages";
 import { Message } from "@/app/types/message"; 
 import { delayAlertRemove } from "@/app/lib/generalHelper";
@@ -16,14 +16,14 @@ interface IProps {
   setShowSpinner: (show: boolean) => void;
 }
 
-export default function AlbumPhotoForm({id, filename, setShowSpinner}: IProps) {
+export default function ArtistPhotoForm({id, filename, setShowSpinner}: IProps) {
 
   const [messages, setMessages] = useState<Message[]>([]); 
 
-  let photoUrl = getDefaultAlbumImageUrl();
+  let photoUrl = getDefaultArtistImageUrl();
 
   if(filename != null && filename != "")
-    photoUrl = getAlbumImageUrl(filename);
+    photoUrl = getArtistImageUrl(filename);
 
   const hiddenFileInputRef = useRef<HTMLInputElement | null>(null);
   const [preview, setPreview] = useState<string | null>(photoUrl);
@@ -39,15 +39,15 @@ export default function AlbumPhotoForm({id, filename, setShowSpinner}: IProps) {
     setMessages([]);
 
     const file = event.target.files?.[0]; 
-    const response = await saveAlbumPhoto(file, id); 
+    const response = await saveArtistPhoto(file, id); 
 
     if(response?.status == 200)     
     {
       const filename = (response.data as AddPhotoResponse).filename;
-      const url = getAlbumImageUrl(filename);
+      const url = getArtistImageUrl(filename);
       setPreview(url);
 
-      setMessages([{ severity: "info", text: "Album photo saved."}]);   
+      setMessages([{ severity: "info", text: "Artist photo saved."}]);   
       delayAlertRemove().then(function() {
         setMessages([]);   
       });
@@ -63,12 +63,12 @@ export default function AlbumPhotoForm({id, filename, setShowSpinner}: IProps) {
 
   return (  
     <>
-      <Messages messages={messages} onClearMessages={handleClearMessages}></Messages>      
+      <Messages messages={messages} onClearMessages={handleClearMessages}></Messages>    
       <div className={`flex flex-col md:flex-row ${messages.length > 0 ? 'mt-4': ''}`}>
         <div className="flex mb-4 md:mb-0 mr-0 md:mr-4 ">
-          {preview && (                    
-              <Image alt="Upload album photo"
-                  src={preview} width={200} height={200} style={{ height: 'auto', objectFit: 'cover', position: 'relative' }}/>            
+          {preview && (                  
+              <Image alt="Upload artist photo"
+                  src={preview} width={200} height={200} style={{ height: 'auto', objectFit: 'cover', position: 'relative' }}/>             
           )}
           <input ref={hiddenFileInputRef} hidden type="file" onChange={handleFileChange} /> 
         </div>
@@ -81,7 +81,7 @@ export default function AlbumPhotoForm({id, filename, setShowSpinner}: IProps) {
           </div>
           <div className="w-full text-xs mt-1">jpg/png files with a size less than 500kb</div>
         </div>
-      </div>
+      </div> 
     </>
   );
 }

@@ -139,7 +139,8 @@ export default function AlbumDetailsForm({action, albumData, artistItems, studio
  
       <div className="w-full flex flex-col lg:flex-row gap-4 space-y-0">
 
-        <div className="w-full lg:w-3/6">
+        <div className="w-full lg:w-3/6"> 
+
           <div className="grid grid-cols-12">
             <label className="grid-cols-12 col-span-12 md:grid-cols-2 md:col-span-3">Name*</label>
             <input {...register("name")} type="text" maxLength={120} className="grid-cols-12 col-span-12 md:grid-cols-9 md:col-span-9" placeholder="name of album" />
@@ -150,7 +151,7 @@ export default function AlbumDetailsForm({action, albumData, artistItems, studio
 
           <div className="grid grid-cols-12">
             <label className="grid-cols-12 col-span-12 md:grid-cols-3 md:col-span-3">Artist*</label>
-            <ArtistSelect trigger={trigger} name="artistId" register={register} items={artistItems} error={errors.name?.message} /> 
+            <ArtistSelect trigger={trigger} name="artistId" className="grid-cols-12 col-span-12 md:grid-cols-9 md:col-span-9" register={register} items={artistItems} error={errors.name?.message} /> 
             <p className="error grid-cols-12 col-span-12 md:grid-cols-5 md:col-span-5 md:col-start-4 text-gray-900 mb-2">
               {errors.artistId && errors.artistId.message}
             </p>
@@ -170,7 +171,7 @@ export default function AlbumDetailsForm({action, albumData, artistItems, studio
         <div className="w-full lg:w-3/6"> 
           <div className="grid grid-cols-12">
             <label className="grid-cols-12 col-span-12 md:grid-cols-3 md:col-span-3">Record Label</label>          
-            <RecordLabelSelect trigger={trigger} name="labelId" register={register} items={recordLabelItems} error={errors.name?.message} />   
+            <RecordLabelSelect trigger={trigger} name="labelId" register={register} className="grid-cols-12 col-span-12 md:grid-cols-9 md:col-span-9" items={recordLabelItems} error={errors.name?.message} />   
             <p className="error grid-cols-12 col-span-12 md:grid-cols-5 md:col-span-5 md:col-start-4 text-gray-900 mb-2">
               {errors.labelId && errors.labelId.message}
             </p>
@@ -178,7 +179,7 @@ export default function AlbumDetailsForm({action, albumData, artistItems, studio
 
           <div className="grid grid-cols-12">
             <label className="grid-cols-12 col-span-12 md:grid-cols-3 md:col-span-3">Studio</label>          
-            <StudioSelect trigger={trigger} name="studioId" register={register} items={studioItems} error={errors.name?.message} />   
+            <StudioSelect trigger={trigger} name="studioId" register={register} className="grid-cols-12 col-span-12 md:grid-cols-9 md:col-span-9" items={studioItems} error={errors.name?.message} />   
             <p className="error grid-cols-12 col-span-12 md:grid-cols-5 md:col-span-5 md:col-start-4 text-gray-900 mb-2">
               {errors.studioId && errors.studioId.message}
             </p>
@@ -210,10 +211,10 @@ export default function AlbumDetailsForm({action, albumData, artistItems, studio
         </div>
       </div>
 
-      <div className="grid grid-cols-12">
-        <button disabled={isSubmitting} className="grid-cols-4 col-span-4 col-start-9 md:col-start-11 md:grid-cols-2 md:col-span-2 submit">
+      <div className="flex justify-end">
+        <button disabled={isSubmitting} className="submit">
           {isSubmitting ? "Saving" : "Save"}          
         </button> 
-      </div> 
+      </div>  
     </form> 
 )}

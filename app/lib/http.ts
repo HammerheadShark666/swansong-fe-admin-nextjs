@@ -22,15 +22,15 @@ export function getAddUrl(mode: MODE)
   switch(mode) {  
     case MODE.ALBUM :
     {
-      return "albums/album/add";
+      return "/albums/album/add";
     }
     case MODE.ARTIST :
     {
-      return "artists/artist/add";
+      return "/artists/artist/add";
     }
     case MODE.MEMBER :
     {
-      return "members/member/add";
+      return "/members/member/add";
     }
     default:
       throw new Error("Add url not found for mode: " + mode);

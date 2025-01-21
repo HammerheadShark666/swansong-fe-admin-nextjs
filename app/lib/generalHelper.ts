@@ -1,5 +1,5 @@
 import { Message } from "../types/message";
-import { ACTION } from "./enums";
+import { ACTION, MODE } from "./enums";
 
 export const ALERT_DELAY_REMOVE_TIME = 5000;
 
@@ -19,14 +19,14 @@ export function getMessagesBySeverity(messages: Message[], severity: string) {
                   : [];
 }
 
-export function getModeLabel(mode: string)
+export function getModeLabel(mode: MODE)
 {
   switch (mode){
-    case "album" : 
+    case MODE.ALBUM : 
       return "Album";
-    case "artist" : 
+    case MODE.ARTIST : 
       return "Artist";
-    case "member" : 
+    case MODE.MEMBER : 
       return "Member";
     default:
       return "Unknow Mode"

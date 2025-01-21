@@ -29,7 +29,7 @@ export default function  EditAlbumTabs({album, albumDescription, artistItems, st
   { 
     "tablist": {    
       "tabitem": {
-        "base": "flex items-center justify-center p-4 text-sm font-medium first:ml-0 disabled:cursor-not-allowed disabled:text-gray-400 disabled:dark:text-gray-500",
+        "base": "flex items-center justify-center p-4 text-sm font-medium first:ml-0 disabled:cursor-not-allowed disabled:text-gray-400",
         "variant": {       
           "underline": {
             "base": "text-black bg-white",
@@ -43,8 +43,8 @@ export default function  EditAlbumTabs({album, albumDescription, artistItems, st
     }   
   }  
 
-  return (  
-    <div className="relative">
+  return (
+     <div className="flex flex-col"> 
       <Spinner showSpinner={showSpinner}></Spinner>
 
       <Tabs aria-label="Tabs with underline" variant="underline" theme={customTheme}>

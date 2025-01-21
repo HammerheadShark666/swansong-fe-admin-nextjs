@@ -2,13 +2,13 @@
 
 import React, { useEffect, useState } from 'react'; 
 import 'react-quill-new/dist/quill.snow.css';
-import { albumDescriptionSchema, AlbumDescriptionSchema } from '../validation/albumDescriptionSchema';
+import { artistDescriptionSchema, ArtistDescriptionSchema } from '../validation/artistDescriptionSchema';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { AlbumDescription } from '@/app/types/album/albumDescription';
+import { ArtistDescription } from '@/app/types/artist/artistDescription';
 import { Message } from '@/app/types/message';
 import Messages from '@/app/components/controls/messages';
-import { saveExistingAlbumDescriptionDetails } from '@/app/albums/actions/album';
+import { saveExistingArtistDescriptionDetails } from '@/app/artists/actions/artist';
 import { delayAlertRemove } from '@/app/lib/generalHelper';
 import dynamic from 'next/dynamic'; 
 import { ErrorResponse } from '@/app/interfaces/apiResponse';
@@ -19,54 +19,54 @@ const ReactQuill = dynamic(() => import('react-quill-new'), {
 });
 
 interface IProps { 
-  albumDescription?: AlbumDescription;
+  artistDescription?: ArtistDescription;
   setShowSpinner: (show: boolean) => void;
 }
 
-export default function AlbumDescriptionForm({albumDescription, setShowSpinner} : IProps) {
+export default function ArtistDescriptionForm({artistDescription, setShowSpinner} : IProps) {
 
   const [messages, setMessages] = useState<Message[]>([]);  
 
-  const { control, handleSubmit, setValue, formState: { isSubmitting }  } = useForm<AlbumDescriptionSchema>({
+  const { control, handleSubmit, setValue, formState: { isSubmitting }  } = useForm<ArtistDescriptionSchema>({
       mode: 'onChange',
-      resolver: zodResolver(albumDescriptionSchema),
+      resolver: zodResolver(artistDescriptionSchema),
       defaultValues: {
         id: 0,
         description: ""   
       },    
     });  
 
-  function setAlbumDescriptionValues(data: AlbumDescription) {
+  function setArtistDescriptionValues(data: ArtistDescription) {
     setValue("id", data.id);
     setValue("description", data.description); 
   } 
 
-  function updatingAlbumDescriptionData(data: AlbumDescriptionSchema)
+  function updatingArtistDescriptionData(data: ArtistDescriptionSchema)
   {
-    if(albumDescription != null) { 
-      albumDescription.description = data.description;         
+    if(artistDescription != null) { 
+      artistDescription.description = data.description;         
     }
   }
 
   useEffect(() => {    
-    if(albumDescription != null && albumDescription != undefined)  
-      setAlbumDescriptionValues(albumDescription);
+    if(artistDescription != null && artistDescription != undefined)  
+      setArtistDescriptionValues(artistDescription);
   });  
   
   const handleClearMessages = () => {
     setMessages([]);
   };
   
-  const onSubmitForm: SubmitHandler<AlbumDescriptionSchema> = async (data) => { 
+  const onSubmitForm: SubmitHandler<ArtistDescriptionSchema> = async (data) => { 
   
     setShowSpinner(true);
     setMessages([]);          
-    updatingAlbumDescriptionData(data);  
+    updatingArtistDescriptionData(data);  
 
-    const response = await saveExistingAlbumDescriptionDetails(data); 
+    const response = await saveExistingArtistDescriptionDetails(data); 
     if(response?.status == 200)     
     {
-      setMessages([{ severity: "info", text: "Album description saved."}]);   
+      setMessages([{ severity: "info", text: "Artist description saved."}]);   
       delayAlertRemove().then(function() {
         setMessages([]);   
       });
@@ -87,7 +87,7 @@ export default function AlbumDescriptionForm({albumDescription, setShowSpinner} 
           <button className="submit">
             {isSubmitting ? "Saving" : "Save"}     
           </button> 
-        </div>    
+        </div>         
         <Controller
           name="description"
           control={control}
@@ -98,14 +98,14 @@ export default function AlbumDescriptionForm({albumDescription, setShowSpinner} 
             }
           }}
           render={({ field, fieldState: { error } }) => (
-            <div>
-              <ReactQuill {...field} theme="snow" />
+            <div className='flex flex-col h-full'>
+              <ReactQuill {...field} theme="snow" className='h-full' />
               {error && (
                 <p className="text-red-500 text-sm mt-1">{error.message}</p>
               )}
             </div>
           )}
-        />    
+        />   
         <div className="flex justify-end">
           <button className="submit">
             {isSubmitting ? "Saving" : "Save"}     

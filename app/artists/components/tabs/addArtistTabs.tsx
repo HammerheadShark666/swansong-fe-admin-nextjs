@@ -20,7 +20,7 @@ export default function  AddArtistTabs({countryItems}: IProps) {
   { 
     "tablist": {    
       "tabitem": {
-        "base": "flex items-center justify-center p-4 text-sm font-medium first:ml-0 disabled:cursor-not-allowed disabled:text-gray-400 disabled:dark:text-gray-500",
+        "base": "flex items-center justify-center p-4 text-sm font-medium first:ml-0 disabled:cursor-not-allowed disabled:text-gray-400",
         "variant": {       
           "underline": {
             "base": "text-black bg-white",
@@ -34,12 +34,12 @@ export default function  AddArtistTabs({countryItems}: IProps) {
     }   
   }  
 
-  return (  
-    <div className="relative">
+  return (   
+    <div className="flex flex-col">
       <Spinner showSpinner={showSpinner}></Spinner>
       <Tabs aria-label="Tabs with underline" variant="underline" theme={customTheme}>
         <Tabs.Item active title="Details" icon={HiOutlineIdentification}>
-          <div className="font-medium text-black w-full relative">
+          <div className="font-medium text-black w-full h-full">
             <ArtistDetailsForm setShowSpinner={setShowSpinner} action={ACTION.ADD} countryItems={countryItems} />
           </div>
         </Tabs.Item> 

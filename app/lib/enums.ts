@@ -22,3 +22,21 @@ export enum ACTION
    ADD = "add",
    EDIT = "edit"
 }
+
+export enum DROP_MODE 
+{
+  ADD = "add",
+  REMOVE = "remove"
+}
+
+export enum SEARCH_MODE 
+{
+  LETTER = "letter",
+  TEXT = "text"
+}
+
+export enum DIRECTION
+{
+  HORIZONTAL = "horizontal",
+  VERTICAL = "vertical"
+}
