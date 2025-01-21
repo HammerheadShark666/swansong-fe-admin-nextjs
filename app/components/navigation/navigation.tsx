@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import NavigationBar from "./navigationBar"
 import Sidebar from "../sidebar";
