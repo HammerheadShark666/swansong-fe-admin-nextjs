@@ -6,6 +6,8 @@ import { notFound } from "next/navigation";
 import AlbumImage from "./albumImage";
 import { getRandomAlbums } from "../albums/actions/album"; 
 import { getPhoto } from "../lib/imageHelper";
+import { MODE } from "../lib/enums";
+import { Button, Tooltip } from "flowbite-react";
 
 async function getAlbums(): Promise<AlbumLookup[]> {
   
@@ -32,14 +34,14 @@ export default async function AlbumsContainer() {
               <div className="grid grid-cols-2 gap-x-4 gap-y-2 md:grid-cols-6 pt-0"> 
                 {albums.map((album: AlbumLookup) => (     
                   <Link key={album.id} href={`${getUrl("albums", album.id)}`}>
-                    <div className="tooltip object-fill w-full" data-tip={getToolTip(album)}>
-                      <AlbumImage id={album.id} name={album.name} photoSrc={`${process.env.NEXT_PUBLIC_AZURE_STORAGE_URL}albums/${getPhoto(album.photo)}`}/>
+                    <div data-tooltip-target="tooltip-default" className="text-sm sm:text-base md:text-lg lg:text-xl object-fill w-full tooltip tooltip-top" data-tip={getToolTip(album)}>
+                      <AlbumImage id={album.id} name={album.name} photoSrc={`${process.env.NEXT_PUBLIC_AZURE_STORAGE_URL}albums/${getPhoto(album.photo, MODE.ALBUM)}`}/>
                     </div>
                   </Link>              
                 ))}
               </div>
             )}       
-          </div>
+          </div>  
         </div> 
       )}       
     </> 

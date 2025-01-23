@@ -36,7 +36,7 @@ export default function  MembersSource({showSearchResults, showNoResultsFound, s
         {searchResults?.map((item: MemberSearchItem) => (      
           <div key={item.id} draggable onDragStart={(e) => handleDragStart(e, item)} className="flex flex-row w-full hover:bg-stone-300 hover:cursor-pointer cursor-move">
             <div className="flex flex-col p-1">  
-              <Image className='hover:cursor-pointer' key={1} alt={"Album Photo"} 
+              <Image className='hover:cursor-pointer' key={1} alt={"Member Photo"} 
                     src={`${getMemberPhoto(item)}`} width={50} height={50} style={{
                     width: '100%',
                     height: '100%',

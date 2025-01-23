@@ -31,7 +31,7 @@ export default function  MembersSource({searchResults, setSearchResults, setDest
     <>    
       <div className="flex flex-col min-h-fit w-full md:w-1/3 md:border-l md:border-l-gray-200 md:border-1px md:border-r md:border-r-gray-200 md:border-1px md:pl-4 md:mt-0 mt-8"> 
         <p className="flex font-semibold border-l border-l-gray-200 border-t border-t-gray-200 border-b border-b-gray-200 border-1px p-2">Artist Members</p>
-        <div id="search-results-messages" className="w-full grid-cols-12 col-span-12 mt-4">
+        <div id="search-results-messages" className="w-full grid-cols-12 col-span-12 mt-4 pr-4">
           <Messages messages={messages} onClearMessages={handleClearMessages}></Messages>  
         </div>
         <div className="w-full h-[calc(100vh-320px)] overflow-y-scroll mr-6" onDragOver={handleDragOver} onDrop={(e) => handleDrop(e, setDestinationItems, destinationItems, setSearchResults, searchResults, DROP_MODE.ADD)}>

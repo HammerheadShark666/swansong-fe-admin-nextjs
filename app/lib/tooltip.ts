@@ -1,6 +1,6 @@
-import { AlbumLookup } from "@/types/albumLookup";
-import { ArtistLookup } from "@/types/artistLookup";
-import { MemberLookup } from "@/types/memberLookup";
+import { AlbumLookup } from "@/app/types/album/albumLookup";
+import { ArtistLookup } from "@/app/types/artist/artistLookup";
+import { MemberLookup } from "@/app/types/member/memberLookup";
  
 export default function getToolTip(result: AlbumLookup | ArtistLookup | MemberLookup) {
 

@@ -17,8 +17,8 @@ export default async function EditAlbumPage({ params }:{ params: Promise<{ id: s
   const {id} = await params; 
   const album = await getAlbum(Number(id)); 
   const albumDescription = getAlbumDescription(album);
-  const lookups = await getAlbumLookups();
-
+  const lookups = await getAlbumLookups(); 
+  
   function getAlbumDescription(album: Album){
     const albumDescription: AlbumDescription = {
       id: album.id,
