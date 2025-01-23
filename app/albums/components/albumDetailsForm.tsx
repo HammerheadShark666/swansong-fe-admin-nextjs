@@ -21,6 +21,7 @@ import { delayAlertRemove } from "@/app/lib/generalHelper";
 import { ErrorResponse } from "@/app/interfaces/apiResponse";
 import { AddEditActionResponse } from "@/app/interfaces/addEditActionResponse";  
 import { ACTION } from "@/app/lib/enums";
+import { setErrorMessagesValue } from "@/app/lib/messageHelper";
 
 interface IProps {
   action: ACTION;
@@ -91,39 +92,51 @@ export default function AlbumDetailsForm({action, albumData, artistItems, studio
     setMessages([]);
   };
 
+  async function addNewAlbum(data: AlbumDetailsSchema)
+  {
+    const response = await saveNewAlbumDetails(data); 
+    if(response?.status == 200)        
+      router.push("/albums/album/edit/" + (response.data as AddEditActionResponse).id.toString());        
+    else 
+    {
+      if(response.data)        
+        setMessages((response.data as ErrorResponse).messages);    
+    }     
+  }
+
+  async function updateAlbum(data: AlbumDetailsSchema)
+  {
+    updatingExistingData(data);  
+
+    const response = await saveExistingAlbumDetails(data); 
+    if(response?.status == 200)     
+    {
+      setMessages([{ severity: "info", text: "Album saved."}]);   
+      delayAlertRemove().then(function() {
+        setMessages([]);   
+      });
+    }      
+    else
+    {
+      if(response.data)        
+        setMessages((response.data as ErrorResponse).messages);    
+    }      
+  }
+
   const onSubmitForm: SubmitHandler<AlbumDetailsSchema> = async (data) => { 
 
     setShowSpinner(true);
     setMessages([]); 
 
-    if(action === ACTION.ADD)
-    { 
-      const response = await saveNewAlbumDetails(data); 
-      if(response?.status == 200)        
-        router.push("/albums/album/edit/" + (response.data as AddEditActionResponse).id.toString());        
-      else 
-      {
-        if(response.data)        
-          setMessages((response.data as ErrorResponse).messages);    
-      }     
+    try {
+      if(action === ACTION.ADD)     
+        await addNewAlbum(data);      
+      else     
+        await updateAlbum(data);    
     } 
-    else
+    catch(error)
     {
-      updatingExistingData(data);  
-
-      const response = await saveExistingAlbumDetails(data); 
-      if(response?.status == 200)     
-      {
-        setMessages([{ severity: "info", text: "Album saved."}]);   
-        delayAlertRemove().then(function() {
-          setMessages([]);   
-        });
-      }      
-      else
-      {
-        if(response.data)        
-          setMessages((response.data as ErrorResponse).messages);    
-      }             
+      setErrorMessagesValue(error, setMessages);
     }
 
     setShowSpinner(false);

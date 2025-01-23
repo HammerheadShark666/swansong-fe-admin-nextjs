@@ -20,6 +20,7 @@ import { ErrorResponse } from "@/app/interfaces/apiResponse";
 import { AddEditActionResponse } from "@/app/interfaces/addEditActionResponse";  
 import { ACTION } from "@/app/lib/enums";
 import { ARTIST_EDIT } from "@/app/lib/urls";
+import { setErrorMessagesValue } from "@/app/lib/messageHelper";
 
 interface IProps {
   action: ACTION;
@@ -73,39 +74,52 @@ export default function ArtistDetailsForm({action, artistData, countryItems, set
     setMessages([]);
   };
 
+  async function addNewArtist(data: ArtistDetailsSchema)
+  {
+    const response = await saveNewArtistDetails(data); 
+    if(response?.status == 200)
+      router.push(formatString(ARTIST_EDIT, (response.data as AddEditActionResponse).id)); 
+    else 
+    {
+      if(response.data)        
+        setMessages((response.data as ErrorResponse).messages);    
+    }   
+  }
+
+  async function updateArtist(data: ArtistDetailsSchema)
+  {
+    updatingExistingData(data);  
+
+    const response = await saveExistingArtistDetails(data); 
+    if(response?.status == 200)     
+    {
+      setMessages([{ severity: "info", text: "Artist saved."}]);   
+      delayAlertRemove().then(function() {
+        setMessages([]);   
+      });
+    }      
+    else
+    {
+      if(response.data)        
+        setMessages((response.data as ErrorResponse).messages);    
+    }  
+  }
+
   const onSubmitForm: SubmitHandler<ArtistDetailsSchema> = async (data) => { 
 
     setShowSpinner(true);
     setMessages([]); 
 
-    if(action === ACTION.ADD)
-    { 
-      const response = await saveNewArtistDetails(data); 
-      if(response?.status == 200)
-        router.push(formatString(ARTIST_EDIT, (response.data as AddEditActionResponse).id)); 
-      else 
-      {
-        if(response.data)        
-          setMessages((response.data as ErrorResponse).messages);    
-      }     
-    } 
-    else
+    try
     {
-      updatingExistingData(data);  
-
-      const response = await saveExistingArtistDetails(data); 
-      if(response?.status == 200)     
-      {
-        setMessages([{ severity: "info", text: "Artist saved."}]);   
-        delayAlertRemove().then(function() {
-          setMessages([]);   
-        });
-      }      
-      else
-      {
-        if(response.data)        
-          setMessages((response.data as ErrorResponse).messages);    
-      }             
+      if(action === ACTION.ADD)    
+        await addNewArtist(data);
+      else    
+        await updateArtist(data);
+    } 
+    catch(error)
+    {
+      setErrorMessagesValue(error, setMessages);
     }
 
     setShowSpinner(false);

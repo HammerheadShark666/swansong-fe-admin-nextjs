@@ -1,22 +1,24 @@
 import PageNavigationBar from "@/app/components/navigation/pageNavigationBar";
 import { Metadata } from "next";
+import AddMemberTabs from "@/app/members/components/tabs/addMemberTabs";
 import { ACTION, MODE } from "@/app/lib/enums";
+import { getMemberLookupsForm } from "@/app/members/actions/lookups";  
 
 export const metadata: Metadata = {
-  title: "Swansong - Add Artist",
+  title: "Swansong - Add Member",
   description: "Swansong music admin site"
 }
 
 export default async function AddMemberPage() {  
-  
+ 
+  const lookups = await getMemberLookupsForm();  
+ 
   return  (    
     <>    
-      <PageNavigationBar action={ACTION.ADD} mode={MODE.ARTIST}></PageNavigationBar>
-      <b>Using the h-full class</b>
-        <div className="parent flex flex-col h-full bg-gray-300 mt-4 w-full">
-            <div className="child flex-1 bg-blue-500 w-1/2"></div>
-            <div className="child flex-1 bg-blue-500 w-1/2"></div>
-        </div>
+      <PageNavigationBar action={ACTION.ADD} mode={MODE.MEMBER}></PageNavigationBar>
+      <div className="flex flex-col w-full border-gray-100 bg-white h-full flex-1 pl-4 pr-4">  
+        <AddMemberTabs birthPlaceItems={lookups.birthPlaces}></AddMemberTabs>
+      </div>
     </> 
   )
 };

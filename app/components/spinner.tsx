@@ -6,8 +6,8 @@ export default function Spinner({showSpinner}: IProps) {
     
   return (
     <>          
-      {(showSpinner) ? (  
-        <div className="absolute bg-white bg-opacity-60 z-10 h-full w-full flex items-center justify-center">
+      {(showSpinner) ? (
+        <div className="absolute top-0 left-0 w-full h-full bg-white bg-opacity-60 z-50 flex items-center justify-center">         
           <div className="flex items-center">
             <svg className="animate-spin h-8 w-8 text-gray-800" xmlns="http://www.w3.org/2000/svg" fill="none"
               viewBox="0 0 24 24">
