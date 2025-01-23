@@ -151,7 +151,7 @@ export default function SearchDrawer({mode}: IProps) {
         </div>
       </Link>  
       <div
-        className={`fixed top-0 right-0 h-screen w-full md:w-1/2 lg:w-1/4 bg-white shadow-lg transform ${
+        className={`p-4 fixed top-0 right-0 h-screen w-full md:w-1/2 lg:w-1/4 bg-white shadow-lg transform ${
           isOpen ? "translate-x-0" : "translate-x-full"
         } transition-transform duration-300 z-40`}
       >
