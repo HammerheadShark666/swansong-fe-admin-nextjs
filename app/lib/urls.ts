@@ -39,3 +39,21 @@ export const MEMBERS_UPDATE_ARTISTS = `${process.env.NEXT_PUBLIC_API_URL}members
 export const MEMBER_UPDATE_DESCRIPTION = `${process.env.NEXT_PUBLIC_API_URL}members/member/description/update`;
 export const MEMBER_UPDATE_PHOTO = `${process.env.NEXT_PUBLIC_API_URL}members/member/upload-photo/{0}`;
 export const MEMBER_EDIT = `/members/member/edit/{0}`;
+
+export const LOOKUPS = `${process.env.NEXT_PUBLIC_API_URL}lookups`;
+
+export const LOOKUP_ITEM_BIRTH_PLACE_ADD = `${process.env.NEXT_PUBLIC_API_URL}birth-places/birth-place/add`;
+export const LOOKUP_ITEM_BIRTH_PLACE_UPDATE = `${process.env.NEXT_PUBLIC_API_URL}birth-places/birth-place/update`;
+export const LOOKUP_ITEM_BIRTH_PLACE_DELETE = `${process.env.NEXT_PUBLIC_API_URL}birth-places/birth-place/{0}`;
+
+export const LOOKUP_ITEM_COUNTRY_ADD = `${process.env.NEXT_PUBLIC_API_URL}countries/country/add`;
+export const LOOKUP_ITEM_COUNTRY_UPDATE = `${process.env.NEXT_PUBLIC_API_URL}countries/country/update`;
+export const LOOKUP_ITEM_COUNTRY_DELETE = `${process.env.NEXT_PUBLIC_API_URL}countries/country/{0}`;
+
+export const LOOKUP_ITEM_RECORD_LABEL_ADD = `${process.env.NEXT_PUBLIC_API_URL}record-labels/record-label/add`;
+export const LOOKUP_ITEM_RECORD_LABEL_UPDATE = `${process.env.NEXT_PUBLIC_API_URL}record-labels/record-label/update`;
+export const LOOKUP_ITEM_RECORD_LABEL_DELETE = `${process.env.NEXT_PUBLIC_API_URL}record-labels/record-label/{0}`;
+
+export const LOOKUP_ITEM_STUDIO_ADD = `${process.env.NEXT_PUBLIC_API_URL}studios/studio/add`;
+export const LOOKUP_ITEM_STUDIO_UPDATE = `${process.env.NEXT_PUBLIC_API_URL}studios/studio/update`;
+export const LOOKUP_ITEM_STUDIO_DELETE = `${process.env.NEXT_PUBLIC_API_URL}studios/studio/{0}`;
