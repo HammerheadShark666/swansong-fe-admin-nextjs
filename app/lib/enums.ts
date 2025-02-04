@@ -14,7 +14,11 @@ export enum MODE
 {
   ALBUM = "album", 
   ARTIST = "artist",
-  MEMBER = "member"
+  BIRTHPLACE = "birthplace",
+  COUNTRY = "countries",
+  MEMBER = "member",
+  RECORDLABEL = "recordlabels",
+  STUDIO = "studio"
 }
 
 export enum ACTION

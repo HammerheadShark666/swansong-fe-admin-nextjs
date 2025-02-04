@@ -7,7 +7,6 @@ import AlbumImage from "./albumImage";
 import { getRandomAlbums } from "../albums/actions/album"; 
 import { getPhoto } from "../lib/imageHelper";
 import { MODE } from "../lib/enums";
-import { Button, Tooltip } from "flowbite-react";
 
 async function getAlbums(): Promise<AlbumLookup[]> {
   

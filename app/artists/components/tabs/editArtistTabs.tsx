@@ -66,8 +66,7 @@ export default function  EditArtistTabs({artist, artistDescription, countryItems
             </Tabs.Item>
             <Tabs.Item title="Description" icon={HiOutlineBookOpen}>
               <div className="font-medium text-black flex flex-col">  
-                <ArtistDescriptionForm setShowSpinner={setShowSpinner} artistDescription={artistDescription}></ArtistDescriptionForm>
-              
+                <ArtistDescriptionForm setShowSpinner={setShowSpinner} artistDescription={artistDescription}></ArtistDescriptionForm>              
               </div>
             </Tabs.Item> 
             <Tabs.Item title="Albums" icon={HiOutlineMusicNote}>
