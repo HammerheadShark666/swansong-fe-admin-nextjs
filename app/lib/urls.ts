@@ -53,6 +53,10 @@ export const API_LOOKUP_ITEM_STUDIO_ADD = `${process.env.NEXT_PUBLIC_API_URL}stu
 export const API_LOOKUP_ITEM_STUDIO_UPDATE = `${process.env.NEXT_PUBLIC_API_URL}studios/studio/update`;
 export const API_LOOKUP_ITEM_STUDIO_DELETE = `${process.env.NEXT_PUBLIC_API_URL}studios/studio/{0}`;
 
+export const API_REFRESH_TOKEN = `${process.env.NEXT_PUBLIC_API_URL}refresh-token`; 
+export const API_REGISTER = `${process.env.NEXT_PUBLIC_API_URL}register`; 
+export const API_VERIFY_EMAIL_REGISTRATION = `${process.env.NEXT_PUBLIC_API_URL}register/verify-email`; 
+
 export const FE_MEMBER_EDIT = `/members/member/edit/{0}`;
 export const FE_ARTIST_EDIT = `/artists/artist/edit/{0}`;
 export const FE_ALBUM_EDIT = `/albums/album/edit/`;
