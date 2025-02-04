@@ -9,6 +9,7 @@ import { ArtistSearchItem } from "@/app/interfaces/artistSearchItem";
 import { MODE } from "@/app/lib/enums";
 import { MemberSearchItem } from "@/app/interfaces/memberSearchItem";
 import { getPhoto, getStoragePath } from "@/app/lib/imageHelper";
+import { FE_ALBUM_EDIT, FE_ARTIST_EDIT, FE_MEMBER_EDIT } from "@/app/lib/urls";
  
 interface IProps { 
   searchResults: AlbumSearchItem[] | ArtistSearchItem[] | MemberSearchItem[] | undefined;
@@ -27,13 +28,13 @@ export default function SearchResults({mode, searchResults, showNoResultsFound, 
 
     switch(mode){
       case MODE.ALBUM:
-        router.push("/albums/album/edit/" + id.toString());  
+        router.push(FE_ALBUM_EDIT + id.toString());  
         return;
       case MODE.ARTIST:
-        router.push("/artists/artist/edit/" + id.toString());  
+        router.push(FE_ARTIST_EDIT + id.toString());  
         return;
       case MODE.MEMBER:
-        router.push("/members/member/edit/" + id.toString());  
+        router.push(FE_MEMBER_EDIT + id.toString());  
         return;
     }    
   };

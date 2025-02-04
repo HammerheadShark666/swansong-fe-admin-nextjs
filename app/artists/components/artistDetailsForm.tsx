@@ -19,7 +19,7 @@ import { delayAlertRemove } from "@/app/lib/generalHelper";
 import { ErrorResponse } from "@/app/interfaces/apiResponse";
 import { AddEditActionResponse } from "@/app/interfaces/addEditActionResponse";  
 import { ACTION } from "@/app/lib/enums";
-import { ARTIST_EDIT } from "@/app/lib/urls";
+import { FE_ARTIST_EDIT } from "@/app/lib/urls";
 import { setErrorMessagesValue } from "@/app/lib/messageHelper";
 
 interface IProps {
@@ -78,7 +78,7 @@ export default function ArtistDetailsForm({action, artistData, countryItems, set
   {
     const response = await saveNewArtistDetails(data); 
     if(response?.status == 200)
-      router.push(formatString(ARTIST_EDIT, (response.data as AddEditActionResponse).id)); 
+      router.push(formatString(FE_ARTIST_EDIT, (response.data as AddEditActionResponse).id)); 
     else 
     {
       if(response.data)        

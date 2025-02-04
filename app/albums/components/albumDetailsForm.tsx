@@ -22,6 +22,7 @@ import { ErrorResponse } from "@/app/interfaces/apiResponse";
 import { AddEditActionResponse } from "@/app/interfaces/addEditActionResponse";  
 import { ACTION } from "@/app/lib/enums";
 import { setErrorMessagesValue } from "@/app/lib/messageHelper";
+import { FE_ALBUM_EDIT } from "@/app/lib/urls";
 
 interface IProps {
   action: ACTION;
@@ -96,7 +97,7 @@ export default function AlbumDetailsForm({action, albumData, artistItems, studio
   {
     const response = await saveNewAlbumDetails(data); 
     if(response?.status == 200)        
-      router.push("/albums/album/edit/" + (response.data as AddEditActionResponse).id.toString());        
+      router.push(FE_ALBUM_EDIT + (response.data as AddEditActionResponse).id.toString());        
     else 
     {
       if(response.data)        
