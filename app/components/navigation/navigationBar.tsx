@@ -4,6 +4,7 @@ import Link from "next/link";
 import Logo from "./logo";
 import { useRouter } from "next/navigation";
 import { KeyboardEvent } from 'react'; 
+import { FE_SEARCH } from "@/app/lib/urls";
 
 export default function NavigationBar({ toggle }: { toggle: () => void }) { 
 
@@ -11,7 +12,7 @@ export default function NavigationBar({ toggle }: { toggle: () => void }) {
   
   const handleOnKeyDown = (e : KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      router.push("/search?criteria=" + e.currentTarget.value);
+      router.push(FE_SEARCH + e.currentTarget.value);
       e.currentTarget.value = ""; 
     }
   }

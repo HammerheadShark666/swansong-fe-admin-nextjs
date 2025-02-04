@@ -17,7 +17,7 @@ import { delayAlertRemove } from "@/app/lib/generalHelper";
 import { ErrorResponse } from "@/app/interfaces/apiResponse";
 import { AddEditActionResponse } from "@/app/interfaces/addEditActionResponse";  
 import { ACTION } from "@/app/lib/enums";
-import { MEMBER_EDIT } from "@/app/lib/urls";
+import { FE_MEMBER_EDIT } from "@/app/lib/urls";
 import DatePicker from "@/app/components/controls/datepicker";
 import { getDateOnly } from "@/app/lib/date";
 import { setErrorMessagesValue } from "@/app/lib/messageHelper";
@@ -87,7 +87,7 @@ export default function MemberDetailsForm({action, memberData, birthPlaceItems, 
   {
     const response = await saveNewMemberDetails(data); 
     if(response?.status == 200)
-      router.push(formatString(MEMBER_EDIT, (response.data as AddEditActionResponse).id)); 
+      router.push(formatString(FE_MEMBER_EDIT, (response.data as AddEditActionResponse).id)); 
     else 
     {
       if(response.data)        

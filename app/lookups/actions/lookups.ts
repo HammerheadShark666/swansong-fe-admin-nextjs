@@ -1,6 +1,6 @@
 import { apiGetCall } from "@/app/lib/apiHelper";
 import { CACHE_TYPE, MODE } from "@/app/lib/enums"; 
-import { LOOKUP_ITEM_BIRTH_PLACE_ADD, LOOKUP_ITEM_BIRTH_PLACE_DELETE, LOOKUP_ITEM_BIRTH_PLACE_UPDATE, LOOKUP_ITEM_COUNTRY_ADD, LOOKUP_ITEM_COUNTRY_DELETE, LOOKUP_ITEM_COUNTRY_UPDATE, LOOKUP_ITEM_RECORD_LABEL_ADD, LOOKUP_ITEM_RECORD_LABEL_DELETE, LOOKUP_ITEM_RECORD_LABEL_UPDATE, LOOKUP_ITEM_STUDIO_ADD, LOOKUP_ITEM_STUDIO_DELETE, LOOKUP_ITEM_STUDIO_UPDATE, LOOKUPS } from "@/app/lib/urls"; 
+import { API_LOOKUP_ITEM_BIRTH_PLACE_ADD, API_LOOKUP_ITEM_BIRTH_PLACE_DELETE, API_LOOKUP_ITEM_BIRTH_PLACE_UPDATE, API_LOOKUP_ITEM_COUNTRY_ADD, API_LOOKUP_ITEM_COUNTRY_DELETE, API_LOOKUP_ITEM_COUNTRY_UPDATE, API_LOOKUP_ITEM_RECORD_LABEL_ADD, API_LOOKUP_ITEM_RECORD_LABEL_DELETE, API_LOOKUP_ITEM_RECORD_LABEL_UPDATE, API_LOOKUP_ITEM_STUDIO_ADD, API_LOOKUP_ITEM_STUDIO_DELETE, API_LOOKUP_ITEM_STUDIO_UPDATE, API_LOOKUPS } from "@/app/lib/urls"; 
 import { Lookups } from "@/app/types/lookups";
 import { mapLookupItem } from "@/app/lib/mappers/lookupMapper";
 import { LookupItemSchema } from "../validation/lookupItemSchema";   
@@ -11,7 +11,7 @@ import { formatString } from "@/app/lib/stringHelper";
 import { LookupItemResponse } from "@/app/interfaces/lookupResponse";
 
 export async function getLookups(): Promise<Lookups> {
-  return await apiGetCall<Lookups>(LOOKUPS, CACHE_TYPE.NO_CACHE);
+  return await apiGetCall<Lookups>(API_LOOKUPS, CACHE_TYPE.NO_CACHE);
 }
   
 export async function saveExistingLookupItem(data: LookupItemSchema, mode: MODE): Promise<ApiResponse<LookupItemResponse>> {  
@@ -31,13 +31,13 @@ const getAddApiPath = (mode: MODE) => {
   switch(mode)
   {
     case MODE.BIRTHPLACE:
-      return LOOKUP_ITEM_BIRTH_PLACE_ADD
+      return API_LOOKUP_ITEM_BIRTH_PLACE_ADD
     case MODE.COUNTRY:
-      return LOOKUP_ITEM_COUNTRY_ADD
+      return API_LOOKUP_ITEM_COUNTRY_ADD
     case MODE.RECORDLABEL:
-      return LOOKUP_ITEM_RECORD_LABEL_ADD
+      return API_LOOKUP_ITEM_RECORD_LABEL_ADD
     case MODE.STUDIO:
-      return LOOKUP_ITEM_STUDIO_ADD
+      return API_LOOKUP_ITEM_STUDIO_ADD
     default:
       throw new Error("Lookup add item api path not found.")
   } 
@@ -48,13 +48,13 @@ const getUpdateApiPath = (mode: MODE) => {
   switch(mode)
   {
     case MODE.BIRTHPLACE:
-      return LOOKUP_ITEM_BIRTH_PLACE_UPDATE
+      return API_LOOKUP_ITEM_BIRTH_PLACE_UPDATE
     case MODE.COUNTRY:
-      return LOOKUP_ITEM_COUNTRY_UPDATE
+      return API_LOOKUP_ITEM_COUNTRY_UPDATE
     case MODE.RECORDLABEL:
-      return LOOKUP_ITEM_RECORD_LABEL_UPDATE
+      return API_LOOKUP_ITEM_RECORD_LABEL_UPDATE
     case MODE.STUDIO:
-      return LOOKUP_ITEM_STUDIO_UPDATE
+      return API_LOOKUP_ITEM_STUDIO_UPDATE
     default:
       throw new Error("Lookup update item api path not found.")
   } 
@@ -65,13 +65,13 @@ const getDeleteApiPath = (mode: MODE) => {
   switch(mode)
   {
     case MODE.BIRTHPLACE:
-      return LOOKUP_ITEM_BIRTH_PLACE_DELETE
+      return API_LOOKUP_ITEM_BIRTH_PLACE_DELETE
     case MODE.COUNTRY:
-      return LOOKUP_ITEM_COUNTRY_DELETE
+      return API_LOOKUP_ITEM_COUNTRY_DELETE
     case MODE.RECORDLABEL:
-      return LOOKUP_ITEM_RECORD_LABEL_DELETE
+      return API_LOOKUP_ITEM_RECORD_LABEL_DELETE
     case MODE.STUDIO:
-      return LOOKUP_ITEM_STUDIO_DELETE
+      return API_LOOKUP_ITEM_STUDIO_DELETE
     default:
       throw new Error("Lookup delete item api path not found.")
   } 

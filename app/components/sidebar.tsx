@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { KeyboardEvent } from 'react'; 
+import { FE_SEARCH } from "../lib/urls";
 
 export default function Sidebar({ isOpen, toggle, }: { isOpen: boolean, toggle: () => void }) { 
 
@@ -8,7 +9,7 @@ export default function Sidebar({ isOpen, toggle, }: { isOpen: boolean, toggle: 
 
   const handleOnKeyDown = (e : KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      router.push("/search?criteria=" + e.currentTarget.value);
+      router.push(FE_SEARCH + e.currentTarget.value);
       e.currentTarget.value = ""; 
       toggle();
     }
