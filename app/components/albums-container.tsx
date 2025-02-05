@@ -4,7 +4,7 @@ import { AlbumLookup } from "../types/album/albumLookup";
 import Link from "next/link";
 import { notFound } from "next/navigation"; 
 import AlbumImage from "./albumImage";
-import { getRandomAlbums } from "../albums/actions/album"; 
+import { getRandomAlbums } from "@/app/(secure)/albums/actions/album"; 
 import { getPhoto } from "../lib/imageHelper";
 import { MODE } from "../lib/enums";
 

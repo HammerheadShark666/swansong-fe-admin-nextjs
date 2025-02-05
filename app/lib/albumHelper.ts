@@ -1,5 +1,5 @@
-import { AlbumSong } from "../types/albumSong";
-
+import { AlbumSong } from "../types/album/albumSong";
+ 
 export function getAlbumSongsTotalLength(albumSongs: AlbumSong[]) {  
   
   let sum = "";

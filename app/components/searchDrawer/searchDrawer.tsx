@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import React, { useState } from "react"; 
-import { getModeLabel } from "@/app/lib/generalHelper";
-import { getAlbumsByLetter, getAlbumsByText } from "@/app/albums/actions/album";
+import { getModeLabel } from "@/app/lib/generalHelper"; 
 import Messages from "../controls/messages";
 import { Message } from "@/app/types/message";
 import LetterPicker from "./letterPicker";
@@ -12,10 +11,11 @@ import SearchResults from "./searchResults";
 import SearchSpinner from "./searchSpinner";
 import TextSearch from "./textSearch";
 import { ACTION, DIRECTION, MODE, SEARCH_MODE } from "@/app/lib/enums";
-import { getArtistsByLetter, getArtistsByText } from "@/app/artists/actions/artist"; 
+import { getArtistsByLetter, getArtistsByText } from "@/app/(secure)/artists/actions/artist"; 
 import { ArtistSearchItem } from "@/app/interfaces/artistSearchItem";
-import { getMembersByLetter, getMembersByText } from "@/app/members/actions/member";
+import { getMembersByLetter, getMembersByText } from "@/app/(secure)/members/actions/member";
 import { MemberSearchItem } from "@/app/interfaces/memberSearchItem";
+import { getAlbumsByLetter, getAlbumsByText } from "@/app/(secure)/albums/actions/album";
 
 interface IProps { 
   mode: MODE; 
