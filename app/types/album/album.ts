@@ -16,3 +16,7 @@ export type Album =
   songs: AlbumSong[];
   description: string;
 }
+
+export function isAlbum(obj: any): obj is Album {
+  return obj && typeof obj.id === "number" && typeof obj.artistId === "number" && typeof obj.name === "string";
+}

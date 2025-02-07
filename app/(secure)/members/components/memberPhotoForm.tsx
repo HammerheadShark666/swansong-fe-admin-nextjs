@@ -6,9 +6,9 @@ import { saveMemberPhoto } from "@/app/(secure)/members/actions/memberPhoto";
 import { getMemberImageUrl, getDefaultMemberImageUrl } from "@/app/lib/imageHelper";
 import Messages from "@/app/components/controls/messages";
 import { Message } from "@/app/types/message"; 
-import { delayAlertRemove } from "@/app/lib/generalHelper";
-import { ErrorResponse } from "@/app/interfaces/apiResponse";
-import { AddPhotoResponse } from "@/app/interfaces/addPhotoResponse";
+import { delayAlertRemove } from "@/app/lib/generalHelper"; 
+import { isAddPhotoResponse } from "@/app/interfaces/addPhotoResponse";
+import { MESSAGE_TYPE } from "@/app/lib/enums";
 
 interface IProps {
   id: number;
@@ -41,22 +41,18 @@ export default function MemberPhotoForm({id, filename, setShowSpinner}: IProps) 
     const file = event.target.files?.[0]; 
     const response = await saveMemberPhoto(file, id); 
 
-    if(response?.status == 200)     
-    {
-      const filename = (response.data as AddPhotoResponse).filename;
-      const url = getMemberImageUrl(filename);
+    if(isAddPhotoResponse(response))      
+    { 
+      const url = getMemberImageUrl(response.filename);
       setPreview(url);
 
-      setMessages([{ severity: "info", text: "Member photo saved."}]);   
+      setMessages([{ severity: MESSAGE_TYPE.INFO, text: "Member photo saved."}]);   
       delayAlertRemove().then(function() {
         setMessages([]);   
       });
     }      
     else
-    {
-      if(response.data)        
-        setMessages((response.data as ErrorResponse).messages);    
-    }   
+      setMessages(response.messages);
  
     setShowSpinner(false);   
   } 

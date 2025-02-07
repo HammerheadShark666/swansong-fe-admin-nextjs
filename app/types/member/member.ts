@@ -11,3 +11,7 @@ export type Member =
   photo: string;
   description: string;
 }
+
+export function isMember(obj: any): obj is Member {
+  return obj && typeof obj.id === "number" && typeof obj.birthPlaceId === "number" && typeof obj.stageName === "string";
+}

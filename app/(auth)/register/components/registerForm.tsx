@@ -1,23 +1,22 @@
 "use client";
  
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useState } from "react"; 
-import { useRouter } from "next/navigation"; 
+import { useState } from "react";  
 import { registerSchema, RegisterSchema } from "../validation/registerSchema";
 import { zodResolver } from "@hookform/resolvers/zod"; 
 import Messages from "@/app/components/controls/messages"; 
-import { setErrorMessagesValue } from "@/app/lib/messageHelper";
+import { setMessagesValue } from "@/app/lib/messageHelper";
 import { registerFromApi } from "../actions/register"; 
 import TitleBar from "../../components/titlebar";
 import { Message } from "@/app/types/message";
-import { ErrorResponse } from "@/app/interfaces/apiResponse";
+import { isRegisterResponse } from "@/app/interfaces/registerResponse";
+import { MESSAGE_TYPE } from "@/app/lib/enums";
  
 export default function RegisterForm() {
- 
-  const router = useRouter();
+  
   const [messages, setMessages] = useState<Message[]>([]);  
  
-  const { register, handleSubmit,formState: { errors, isSubmitting } } = useForm<RegisterSchema>({
+  const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<RegisterSchema>({
     mode: 'onChange',
     resolver: zodResolver(registerSchema),
     defaultValues: {  
@@ -31,19 +30,7 @@ export default function RegisterForm() {
  
   const handleClearMessages = () => {
     setMessages([]);
-  };
-
-  async function login(data: RegisterSchema)
-  {
-    const response = await registerFromApi(data); 
-    if(response.status == 200)        
-      router.push("/home");        
-    else 
-    {
-      if(response.data)        
-        setMessages((response.data as ErrorResponse).messages);    
-    }     
-  } 
+  }; 
 
   const onSubmitForm: SubmitHandler<RegisterSchema> = async (data) => { 
 
@@ -51,11 +38,17 @@ export default function RegisterForm() {
 
     try 
     {
-      login(data);
+      const response = await registerFromApi(data); 
+      if(isRegisterResponse(response)) {    
+        reset();
+        setMessagesValue(MESSAGE_TYPE.INFO, "Registration successful, please check your email for verification instructions.", setMessages);
+      }
+      else       
+        setMessages(response.messages);    
     } 
     catch(error)
     {
-      setErrorMessagesValue(error, setMessages);
+      setMessagesValue(MESSAGE_TYPE.ERROR, error, setMessages); 
     }
   }
  
@@ -110,7 +103,7 @@ export default function RegisterForm() {
 
       <div className="flex justify-end">
         <button disabled={isSubmitting} className="submit">
-          {isSubmitting ? "Registering" : "Registration"}          
+          {isSubmitting ? "Registering" : "Register"}          
         </button> 
       </div>  
     </form> 

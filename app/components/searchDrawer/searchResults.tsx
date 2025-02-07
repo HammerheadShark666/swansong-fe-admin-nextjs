@@ -6,7 +6,7 @@ import Messages from "../controls/messages";
 import { useEffect, useState } from "react";
 import { Message } from "@/app/types/message";
 import { ArtistSearchItem } from "@/app/interfaces/artistSearchItem";
-import { MODE } from "@/app/lib/enums";
+import { MESSAGE_TYPE, MODE } from "@/app/lib/enums";
 import { MemberSearchItem } from "@/app/interfaces/memberSearchItem";
 import { getPhoto, getStoragePath } from "@/app/lib/imageHelper";
 import { FE_ALBUM_EDIT, FE_ARTIST_EDIT, FE_MEMBER_EDIT } from "@/app/lib/urls";
@@ -40,7 +40,7 @@ export default function SearchResults({mode, searchResults, showNoResultsFound, 
   };
 
   useEffect(() => {    
-    setMessages([{ severity: "info", text: "No " + mode + "s found."}]);   
+    setMessages([{ severity: MESSAGE_TYPE.INFO, text: "No " + mode + "s found."}]);   
   }, [mode]);
 
   const handleClearMessages = () => {

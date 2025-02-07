@@ -1,3 +1,5 @@
+'use client'
+
 import { Message } from "@/app/types/message";
  
 interface IProps {  
@@ -7,6 +9,14 @@ interface IProps {
 
 export default function InformationMessages({messages, onClearMessages}: IProps) {
  
+  const handleClick = () => {
+    if (onClearMessages) {
+      onClearMessages(); 
+    } else {
+      console.log('Default action triggered'); 
+    }
+  };
+
   return (
     <div>
       {messages.length > 0 && (
@@ -24,7 +34,7 @@ export default function InformationMessages({messages, onClearMessages}: IProps)
           </ul>
           
         </div>
-        <button onClick={() => {onClearMessages()}} type="button" className="ms-auto -mx-1.5 -my-1.5 bg-blue-50 text-blue-500 rounded-lg focus:ring-2 focus:ring-blue-400 p-1.5 hover:bg-blue-200 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert-1" aria-label="Close">
+        <button onClick={() => {handleClick()}} type="button" className="ms-auto -mx-1.5 -my-1.5 bg-blue-50 text-blue-500 rounded-lg focus:ring-2 focus:ring-blue-400 p-1.5 hover:bg-blue-200 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert-1" aria-label="Close">
           <span className="sr-only">Close</span>
           <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>

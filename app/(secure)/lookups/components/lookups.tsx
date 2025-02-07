@@ -69,7 +69,7 @@ export default function Lookup({ mode, items, setShowSpinner }: IProps) {
               <div className={`flex flex-col p-1 text-xs w-full border-b border-slate-600 hover:bg-slate-300 hover:cursor-pointer ${
                 selectedRow === item.id ? "bg-blue-100" : ""
               }`}>  
-                <p className={`${openSans.className} font-bold`}>{item.name as string}</p>    
+                <p className={`${openSans.className} font-bold`}>{item.name}</p>    
               </div> 
             </div>              
           ))}     

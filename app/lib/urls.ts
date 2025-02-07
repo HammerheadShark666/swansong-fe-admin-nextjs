@@ -4,6 +4,7 @@ export const API_SEARCH_ARTISTS_BY_LETTER = `${process.env.NEXT_PUBLIC_API_URL}a
 export const API_SEARCH_ARTISTS_BY_TEXT = `${process.env.NEXT_PUBLIC_API_URL}artists/search/{0}`;
 export const API_SEARCH_MEMBERS_BY_LETTER = `${process.env.NEXT_PUBLIC_API_URL}members/search-by-letter/{0}`;
 export const API_SEARCH_MEMBERS_BY_TEXT = `${process.env.NEXT_PUBLIC_API_URL}members/search/{0}`;
+export const API_SEARCH = `${process.env.NEXT_PUBLIC_API_URL}search?criteria=`;
 
 export const API_ALBUM_LOOKUPS = `${process.env.NEXT_PUBLIC_API_URL}albums/lookups`;  
 export const API_GET_RANDOM_ALBUMS = `${process.env.NEXT_PUBLIC_API_URL}albums/random`;

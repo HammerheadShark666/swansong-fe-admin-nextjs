@@ -13,14 +13,13 @@ import { useRouter } from "next/navigation";
 import Messages from "@/app/components/controls/messages";
 import { Message } from "@/app/types/message";
 import { Artist } from "@/app/types/artist/artist";
-import { formatString, numberToString, selectKeyNumberToString } from "@/app/lib/stringHelper"; 
+import { numberToString, selectKeyNumberToString } from "@/app/lib/stringHelper"; 
 import { SelectItem } from "@/app/types/selectItem";
 import { delayAlertRemove } from "@/app/lib/generalHelper";
-import { ErrorResponse } from "@/app/interfaces/apiResponse";
-import { AddEditActionResponse } from "@/app/interfaces/addEditActionResponse";  
-import { ACTION } from "@/app/lib/enums";
+import { isAddEditActionResponse } from "@/app/interfaces/addEditActionResponse";  
+import { ACTION, MESSAGE_TYPE } from "@/app/lib/enums";
 import { FE_ARTIST_EDIT } from "@/app/lib/urls";
-import { setErrorMessagesValue } from "@/app/lib/messageHelper";
+import { setMessagesValue } from "@/app/lib/messageHelper";
 
 interface IProps {
   action: ACTION;
@@ -49,7 +48,7 @@ export default function ArtistDetailsForm({action, artistData, countryItems, set
   function setArtistValues(data: Artist) {
     setValue("id", data.id);
     setValue("name", data.name);
-    setValue("countryId", selectKeyNumberToString(data.countryId));  
+    setValue("countryId", selectKeyNumberToString(data.countryId));
     setValue("formationYear", selectKeyNumberToString(data.formationYear));
     setValue("disbandYear", selectKeyNumberToString(data.disbandYear)); 
   } 
@@ -77,13 +76,10 @@ export default function ArtistDetailsForm({action, artistData, countryItems, set
   async function addNewArtist(data: ArtistDetailsSchema)
   {
     const response = await saveNewArtistDetails(data); 
-    if(response?.status == 200)
-      router.push(formatString(FE_ARTIST_EDIT, (response.data as AddEditActionResponse).id)); 
+    if(isAddEditActionResponse(response)) 
+      router.push(FE_ARTIST_EDIT + response.id.toString()); 
     else 
-    {
-      if(response.data)        
-        setMessages((response.data as ErrorResponse).messages);    
-    }   
+      setMessages(response.messages);
   }
 
   async function updateArtist(data: ArtistDetailsSchema)
@@ -91,18 +87,15 @@ export default function ArtistDetailsForm({action, artistData, countryItems, set
     updatingExistingData(data);  
 
     const response = await saveExistingArtistDetails(data); 
-    if(response?.status == 200)     
+    if(isAddEditActionResponse(response)) 
     {
-      setMessages([{ severity: "info", text: "Artist saved."}]);   
+      setMessages([{ severity: MESSAGE_TYPE.INFO, text: "Artist saved."}]);   
       delayAlertRemove().then(function() {
         setMessages([]);   
       });
-    }      
-    else
-    {
-      if(response.data)        
-        setMessages((response.data as ErrorResponse).messages);    
-    }  
+    }
+    else 
+      setMessages(response.messages);
   }
 
   const onSubmitForm: SubmitHandler<ArtistDetailsSchema> = async (data) => { 
@@ -119,7 +112,7 @@ export default function ArtistDetailsForm({action, artistData, countryItems, set
     } 
     catch(error)
     {
-      setErrorMessagesValue(error, setMessages);
+      setMessagesValue(MESSAGE_TYPE.ERROR, error, setMessages);
     }
 
     setShowSpinner(false);

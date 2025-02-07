@@ -7,14 +7,11 @@ import { loginSchema, LoginSchema } from "../validation/loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Message } from "@/app/types/message";
 import { loginFromApi } from "@/app/(auth)/login/actions/login";
-import Messages from "@/app/components/controls/messages";
-import { ErrorResponse } from "@/app/interfaces/apiResponse";
-import { setErrorMessagesValue } from "@/app/lib/messageHelper"; 
+import Messages from "@/app/components/controls/messages"; 
+import { setMessagesValue } from "@/app/lib/messageHelper"; 
 import TitleBar from "../../components/titlebar";
-// import Image from "next/image";  
-// import { Bona_Nova_SC } from 'next/font/google'
-
-// const bonaNovaSc = Bona_Nova_SC({ weight: "400", display: 'swap', subsets: ['latin'] });
+import { isLoginResponse } from "@/app/interfaces/loginResponse"; 
+import { MESSAGE_TYPE } from "@/app/lib/enums";
  
 export default function LoginForm() {
  
@@ -32,19 +29,7 @@ export default function LoginForm() {
  
   const handleClearMessages = () => {
     setMessages([]);
-  };
-
-  async function login(data: LoginSchema)
-  {
-    const response = await loginFromApi(data.email, data.password); 
-    if(response.status == 200)        
-      router.push("/home");        
-    else 
-    {
-      if(response.data)        
-        setMessages((response.data as ErrorResponse).messages);    
-    }     
-  } 
+  }; 
 
   const onSubmitForm: SubmitHandler<LoginSchema> = async (data) => { 
  
@@ -52,11 +37,15 @@ export default function LoginForm() {
 
     try 
     {
-      login(data);
+      const response = await loginFromApi(data.email, data.password); 
+      if(isLoginResponse(response)) 
+        router.push("/home");        
+      else 
+        setMessages(response.messages);   
     } 
     catch(error)
     {
-      setErrorMessagesValue(error, setMessages);
+      setMessagesValue(MESSAGE_TYPE.ERROR, error, setMessages);
     } 
   }
  

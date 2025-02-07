@@ -8,12 +8,12 @@ import Messages from "@/app/components/controls/messages";
 import { Message } from "@/app/types/message"; 
 import { albumSongSchema, AlbumSongSchema } from "../validation/albumSongSchema";
 import { AlbumSong } from "@/app/types/album/albumSong";   
-import { AlbumSongResponse } from "@/app/interfaces/albumSongResponse"; 
+import { AlbumSongResponse, isAlbumSongResponse } from "@/app/interfaces/albumSongResponse"; 
 import ConfirmationDialog from '@/app/components/dialogs/confirmationDialog'; 
 import React from "react";
-import { displayMessage, setErrorMessagesValue } from "@/app/lib/messageHelper";
-import { ApiResponse, ErrorResponse } from "@/app/interfaces/apiResponse";
-import { ACTION } from "@/app/lib/enums";
+import { displayMessage, setMessagesValue } from "@/app/lib/messageHelper";
+import { ErrorResponse } from "@/app/interfaces/apiResponse";
+import { ACTION, MESSAGE_TYPE } from "@/app/lib/enums";
  
 interface IProps { 
   albumSong?: AlbumSong;
@@ -106,9 +106,9 @@ export default function SongForm({albumSong, albumId, mode, setSelectedRow, setM
       }
     }  
 
-  }, [albumSong, clearMessages, mode, setClearMessages, setFocus, setValue]);   
+  }, [albumSong, clearMessages, mode, setClearMessages, setFocus, setValue]);    
    
-  async function saveAlbumSong(data: AlbumSongSchema): Promise<ApiResponse<AlbumSongResponse>>
+  async function saveAlbumSong(data: AlbumSongSchema): Promise<AlbumSongResponse | ErrorResponse>
   {
     if(mode === ACTION.ADD)       
       return await saveNewAlbumSong(data); 
@@ -133,31 +133,24 @@ export default function SongForm({albumSong, albumId, mode, setSelectedRow, setM
       setMessages([]);    
 
       const response = await saveAlbumSong(data);
-      if(response.status == 200)   
+      if(isAlbumSongResponse(response)) 
       { 
-        if(response.data) 
-        { 
-          const albumSongResponse = response.data as AlbumSongResponse; 
-          const updatedAlbumSong = createAlbumSong(albumSongResponse.id, albumSongResponse.songId, data);
+        const updatedAlbumSong = createAlbumSong(response.id, response.songId, data);
 
-          if(mode === ACTION.ADD)  
-            addSongToAlbumSongList(updatedAlbumSong);        
-          else       
-            updateSongInAlbumSongList(updatedAlbumSong);       
-        } 
-
+        if(mode === ACTION.ADD)  
+          addSongToAlbumSongList(updatedAlbumSong);        
+        else       
+          updateSongInAlbumSongList(updatedAlbumSong);   
+        
         resetForNextAction(); 
-        displayMessage("info", "Album song saved.", setMessages);
-      }      
-      else
-      {
-        if(response.data)        
-          setMessages((response.data as ErrorResponse).messages);      
+        displayMessage(MESSAGE_TYPE.INFO, "Album song saved.", setMessages);
       }
+      else 
+        setMessages(response.messages);   
     } 
     catch(error: unknown)
     {
-      setErrorMessagesValue(error, setMessages); 
+      setMessagesValue(MESSAGE_TYPE.ERROR, error, setMessages); 
     } 
 
     setShowSpinner(false);
@@ -181,17 +174,22 @@ export default function SongForm({albumSong, albumId, mode, setSelectedRow, setM
       setMessages([]);    
 
       if(albumSong && albumSong.id ) {        
-        await deleteAlbumSong(albumSong.id);
-        resetForNextAction();
-        displayMessage("info", "Album song deleted.", setMessages);
-        removeSongFromList(albumSong.id);
+        const response = await deleteAlbumSong(albumSong.id);
+        if(isAlbumSongResponse(response)) 
+        { 
+          resetForNextAction();
+          displayMessage(MESSAGE_TYPE.INFO, "Album song deleted.", setMessages);
+          removeSongFromList(albumSong.id);
+        }
+        else 
+          setMessages(response.messages);   
       }
       else
-        throw new Error("Error deleting album song.");
+        setMessagesValue(MESSAGE_TYPE.ERROR, "Error deleting album song", setMessages);  
     } 
     catch(error: unknown)
     {
-      setErrorMessagesValue(error, setMessages); 
+      setMessagesValue(MESSAGE_TYPE.ERROR, error, setMessages); 
     } 
 
     setShowSpinner(false);    

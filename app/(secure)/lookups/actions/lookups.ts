@@ -6,24 +6,24 @@ import { API_LOOKUP_ITEM_BIRTH_PLACE_ADD, API_LOOKUP_ITEM_BIRTH_PLACE_DELETE, AP
 import { Lookups } from "@/app/types/lookups";
 import { mapLookupItem } from "@/app/lib/mappers/lookupMapper";
 import { LookupItemSchema } from "../validation/lookupItemSchema";   
-import { ApiResponse } from "@/app/interfaces/apiResponse";  
+import { ErrorResponse } from "@/app/interfaces/apiResponse";  
 import { API_METHOD } from "@/app/lib/enums"; 
 import { formatString } from "@/app/lib/stringHelper";
 import { LookupItemResponse } from "@/app/interfaces/lookupResponse";
 
-export async function getLookups(): Promise<Lookups> {
+export async function getLookups(): Promise<Lookups | ErrorResponse> {
   return await apiGetCallAuthenticated<Lookups>(API_LOOKUPS, CACHE_TYPE.NO_CACHE);
 }
   
-export async function saveExistingLookupItem(data: LookupItemSchema, mode: MODE): Promise<ApiResponse<LookupItemResponse>> {  
+export async function saveExistingLookupItem(data: LookupItemSchema, mode: MODE): Promise<LookupItemResponse | ErrorResponse> {  
   return await apiCallAuthenticated<LookupItemResponse>(getUpdateApiPath(mode), API_METHOD.PUT, JSON.stringify(mapLookupItem(data))); 
 }
 
-export async function saveNewLookupItem(data: LookupItemSchema, mode: MODE): Promise<ApiResponse<LookupItemResponse>> {  
+export async function saveNewLookupItem(data: LookupItemSchema, mode: MODE): Promise<LookupItemResponse | ErrorResponse> {  
   return await apiCallAuthenticated<LookupItemResponse>(getAddApiPath(mode), API_METHOD.POST, JSON.stringify(mapLookupItem(data)));
 }
 
-export async function deleteLookupItem(id: number, mode: MODE): Promise<ApiResponse<LookupItemResponse>> {  
+export async function deleteLookupItem(id: number, mode: MODE): Promise<LookupItemResponse | ErrorResponse> {  
   return await apiCallAuthenticated<LookupItemResponse>(formatString(getDeleteApiPath(mode), id), API_METHOD.DELETE, null);   
 }
 

@@ -43,7 +43,7 @@ export default function  MembersSource({showSearchResults, showNoResultsFound, s
                   }}/>
             </div>
             <div className="flex items-center">
-              <p className={`${openSans.className} font-bold`}>{item.stageName as string}</p>    
+              <p className={`${openSans.className} font-bold`}>{item.stageName}</p>    
             </div>         
           </div>              
         ))}     

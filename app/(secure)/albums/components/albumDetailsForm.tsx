@@ -18,10 +18,9 @@ import { Album } from "@/app/types/album/album";
 import { selectKeyNumberToString } from "@/app/lib/stringHelper"; 
 import { SelectItem } from "@/app/types/selectItem";
 import { delayAlertRemove } from "@/app/lib/generalHelper";
-import { ErrorResponse } from "@/app/interfaces/apiResponse";
-import { AddEditActionResponse } from "@/app/interfaces/addEditActionResponse";  
-import { ACTION } from "@/app/lib/enums";
-import { setErrorMessagesValue } from "@/app/lib/messageHelper";
+import { isAddEditActionResponse } from "@/app/interfaces/addEditActionResponse";  
+import { ACTION, MESSAGE_TYPE } from "@/app/lib/enums";
+import { setMessagesValue } from "@/app/lib/messageHelper";
 import { FE_ALBUM_EDIT } from "@/app/lib/urls";
 
 interface IProps {
@@ -96,13 +95,10 @@ export default function AlbumDetailsForm({action, albumData, artistItems, studio
   async function addNewAlbum(data: AlbumDetailsSchema)
   {
     const response = await saveNewAlbumDetails(data); 
-    if(response?.status == 200)        
-      router.push(FE_ALBUM_EDIT + (response.data as AddEditActionResponse).id.toString());        
+    if(isAddEditActionResponse(response)) 
+      router.push(FE_ALBUM_EDIT + response.id.toString()); 
     else 
-    {
-      if(response.data)        
-        setMessages((response.data as ErrorResponse).messages);    
-    }     
+      setMessages(response.messages);   
   }
 
   async function updateAlbum(data: AlbumDetailsSchema)
@@ -110,18 +106,15 @@ export default function AlbumDetailsForm({action, albumData, artistItems, studio
     updatingExistingData(data);  
 
     const response = await saveExistingAlbumDetails(data); 
-    if(response?.status == 200)     
+    if(isAddEditActionResponse(response)) 
     {
-      setMessages([{ severity: "info", text: "Album saved."}]);   
+      setMessages([{ severity: MESSAGE_TYPE.INFO, text: "Album saved."}]);   
       delayAlertRemove().then(function() {
         setMessages([]);   
       });
     }      
     else
-    {
-      if(response.data)        
-        setMessages((response.data as ErrorResponse).messages);    
-    }      
+      setMessages(response.messages);   
   }
 
   const onSubmitForm: SubmitHandler<AlbumDetailsSchema> = async (data) => { 
@@ -137,7 +130,7 @@ export default function AlbumDetailsForm({action, albumData, artistItems, studio
     } 
     catch(error)
     {
-      setErrorMessagesValue(error, setMessages);
+      setMessagesValue(MESSAGE_TYPE.ERROR, error, setMessages);
     }
 
     setShowSpinner(false);
@@ -153,7 +146,7 @@ export default function AlbumDetailsForm({action, albumData, artistItems, studio
  
       <div className="w-full flex flex-col lg:flex-row gap-4 space-y-0">
 
-        <div className="w-full lg:w-3/6"> 
+        <div className="w-full lg:w-3/6">  
 
           <div className="grid grid-cols-12">
             <label className="grid-cols-12 col-span-12 md:grid-cols-2 md:col-span-3">Name*</label>
