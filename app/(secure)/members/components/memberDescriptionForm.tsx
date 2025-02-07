@@ -10,8 +10,9 @@ import { Message } from '@/app/types/message';
 import Messages from '@/app/components/controls/messages';
 import { saveExistingMemberDescriptionDetails } from '@/app/(secure)/members/actions/member';
 import { delayAlertRemove } from '@/app/lib/generalHelper';
-import dynamic from 'next/dynamic'; 
-import { ErrorResponse } from '@/app/interfaces/apiResponse';
+import dynamic from 'next/dynamic';
+import { MESSAGE_TYPE } from '@/app/lib/enums';
+import { isAddEditActionResponse } from '@/app/interfaces/addEditActionResponse';
 
 const ReactQuill = dynamic(() => import('react-quill-new'), {
   ssr: false,
@@ -64,16 +65,15 @@ export default function MemberDescriptionForm({memberDescription, setShowSpinner
     updatingMemberDescriptionData(data);  
 
     const response = await saveExistingMemberDescriptionDetails(data); 
-    if(response?.status == 200)     
+    if(isAddEditActionResponse(response)) 
     {
-      setMessages([{ severity: "info", text: "Member description saved."}]);   
+      setMessages([{ severity: MESSAGE_TYPE.INFO, text: "Member description saved."}]);   
       delayAlertRemove().then(function() {
         setMessages([]);   
       });
     }      
     else
-      if(response.data)        
-        setMessages((response.data as ErrorResponse).messages);  
+    setMessages(response.messages); 
       
     setShowSpinner(false);
   } 

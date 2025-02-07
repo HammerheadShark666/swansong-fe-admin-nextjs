@@ -13,14 +13,13 @@ import { Message } from "@/app/types/message";
 import { Member } from "@/app/types/member/member";
 import { formatString, selectKeyNumberToString } from "@/app/lib/stringHelper"; 
 import { SelectItem } from "@/app/types/selectItem";
-import { delayAlertRemove } from "@/app/lib/generalHelper";
-import { ErrorResponse } from "@/app/interfaces/apiResponse";
-import { AddEditActionResponse } from "@/app/interfaces/addEditActionResponse";  
-import { ACTION } from "@/app/lib/enums";
+import { delayAlertRemove } from "@/app/lib/generalHelper"; 
+import { isAddEditActionResponse } from "@/app/interfaces/addEditActionResponse";  
+import { ACTION, MESSAGE_TYPE } from "@/app/lib/enums";
 import { FE_MEMBER_EDIT } from "@/app/lib/urls";
 import DatePicker from "@/app/components/controls/datepicker";
 import { getDateOnly } from "@/app/lib/date";
-import { setErrorMessagesValue } from "@/app/lib/messageHelper";
+import { setMessagesValue } from "@/app/lib/messageHelper";
 
 interface IProps {
   action: ACTION;
@@ -86,13 +85,10 @@ export default function MemberDetailsForm({action, memberData, birthPlaceItems, 
   async function addNewMember(data: MemberDetailsSchema)
   {
     const response = await saveNewMemberDetails(data); 
-    if(response?.status == 200)
-      router.push(formatString(FE_MEMBER_EDIT, (response.data as AddEditActionResponse).id)); 
-    else 
-    {
-      if(response.data)        
-        setMessages((response.data as ErrorResponse).messages);    
-    }     
+    if(isAddEditActionResponse(response)) 
+      router.push(formatString(FE_MEMBER_EDIT, response.id)); 
+    else  
+      setMessages(response.messages);        
   }
 
   async function updateMember(data: MemberDetailsSchema)
@@ -100,18 +96,15 @@ export default function MemberDetailsForm({action, memberData, birthPlaceItems, 
       updatingExistingData(data);  
 
       const response = await saveExistingMemberDetails(data); 
-      if(response?.status == 200)     
+      if(isAddEditActionResponse(response)) 
       {
-        setMessages([{ severity: "info", text: "Member saved."}]);   
+        setMessages([{ severity: MESSAGE_TYPE.INFO, text: "Member saved."}]);   
         delayAlertRemove().then(function() {
           setMessages([]);   
         });
       }      
       else
-      {
-        if(response.data)        
-          setMessages((response.data as ErrorResponse).messages);    
-      }
+        setMessages(response.messages);     
   }
 
   const onSubmitForm: SubmitHandler<MemberDetailsSchema> = async (data) => { 
@@ -128,7 +121,7 @@ export default function MemberDetailsForm({action, memberData, birthPlaceItems, 
     } 
     catch(error)
     {
-      setErrorMessagesValue(error, setMessages);
+      setMessagesValue(MESSAGE_TYPE.ERROR, error, setMessages);
     }
 
     setShowSpinner(false);

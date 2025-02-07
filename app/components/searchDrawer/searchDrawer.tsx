@@ -6,17 +6,17 @@ import { getModeLabel } from "@/app/lib/generalHelper";
 import Messages from "../controls/messages";
 import { Message } from "@/app/types/message";
 import LetterPicker from "./letterPicker";
-import { AlbumSearchItem } from "@/app/interfaces/albumSearchItem";
+import { AlbumSearchItem, isAlbumSearchItemArray } from "@/app/interfaces/albumSearchItem";
 import SearchResults from "./searchResults";
 import SearchSpinner from "./searchSpinner";
 import TextSearch from "./textSearch";
-import { ACTION, DIRECTION, MODE, SEARCH_MODE } from "@/app/lib/enums";
+import { ACTION, DIRECTION, MESSAGE_TYPE, MODE, SEARCH_MODE } from "@/app/lib/enums";
 import { getArtistsByLetter, getArtistsByText } from "@/app/(secure)/artists/actions/artist"; 
-import { ArtistSearchItem } from "@/app/interfaces/artistSearchItem";
+import { ArtistSearchItem, isArtistSearchItemArray } from "@/app/interfaces/artistSearchItem";
 import { getMembersByLetter, getMembersByText } from "@/app/(secure)/members/actions/member";
-import { MemberSearchItem } from "@/app/interfaces/memberSearchItem";
+import { isMemberSearchItemArray, MemberSearchItem } from "@/app/interfaces/memberSearchItem";
 import { getAlbumsByLetter, getAlbumsByText } from "@/app/(secure)/albums/actions/album";
-import { ErrorResponse } from "@/app/interfaces/apiResponse";
+import { ErrorResponse, isErrorResponse } from "@/app/interfaces/apiResponse";
 
 interface IProps { 
   mode: MODE; 
@@ -34,61 +34,36 @@ export default function SearchDrawer({mode}: IProps) {
   const [showNoResultsFound, setShowNoResultsFound] = useState(false);
   const [showSearchResults, setShowSearchResults] = useState(false); 
   const [searchCriteria, setSearchCriteria] = useState(""); 
-  const [selectedLetter, setSelectedLetter] = useState(""); 
- 
+  const [selectedLetter, setSelectedLetter] = useState("");  
  
   const modeLabel = getModeLabel(mode);
 
-  async function search(searchMode: SEARCH_MODE, criteria: string) {
+  async function search(searchMode: SEARCH_MODE, criteria: string): Promise<AlbumSearchItem[] | ArtistSearchItem[] | MemberSearchItem[] | ErrorResponse > {
 
     switch(mode)
     {
       case MODE.ALBUM: {
        return searchAlbums(searchMode, criteria);
       }
-      // case MODE.ARTIST: {
-      //   return searchArtists(searchMode, criteria);
-      // }
-      // case MODE.MEMBER: {
-      //   return searchMembers(searchMode, criteria);
-      // }       
-      // default:
-      //   return [];
+      case MODE.ARTIST: {
+        return searchArtists(searchMode, criteria);
+      }
+      case MODE.MEMBER: {
+        return searchMembers(searchMode, criteria);
+      }       
+      default:
+        const errorResponse: ErrorResponse = { status: 500, messages: [{ severity: MESSAGE_TYPE.ERROR, text: "Invalid Search Mode"}]};
+        return errorResponse;
     } 
   }
 
   async function searchAlbums(searchMode: SEARCH_MODE , criteria: string) {
 
     switch(searchMode) {    
-      case SEARCH_MODE.LETTER:     
-        
-
-        {
-          return await getAlbumsByLetter(criteria);
-
-          // const response = await getAlbumsByLetter(criteria); 
-          // if(response.status != 200)   
-          //   setMessages((response.data as ErrorResponse).messages);    
-          // else
-          //   return response.data;
-           
-        }
-      case SEARCH_MODE.TEXT:
-        {
-          return await getAlbumsByText(criteria);    
-         
-         
-        // const response = await getAlbumsByText(criteria); 
-        // if(response.status != 200)   
-        //   setMessages((response.data as ErrorResponse).messages);    
-        // else
-        //   return response.data;
-        
-
-        }
-         
-      // default:
-      //   return [];    
+      case SEARCH_MODE.LETTER:           
+        return await getAlbumsByLetter(criteria);       
+      case SEARCH_MODE.TEXT:        
+        return await getAlbumsByText(criteria);        
     }
   }
 
@@ -134,6 +109,13 @@ export default function SearchDrawer({mode}: IProps) {
     setIsSearching(false); 
   } 
 
+  function isSearchItems(obj: any): obj is ArtistSearchItem[] | AlbumSearchItem[] | MemberSearchItem[] { 
+    return (
+        isArtistSearchItemArray(obj) || isAlbumSearchItemArray(obj) || isMemberSearchItemArray(obj)
+    );
+  }
+
+
   const handleSearchClick = async (criteria: string, searchMode: SEARCH_MODE ) => { 
 
     try 
@@ -143,7 +125,7 @@ export default function SearchDrawer({mode}: IProps) {
  
       if(criteria == '')
       {
-        setMessages([{ severity: "error", text: "Select letter or enter text."}]); 
+        setMessages([{ severity: MESSAGE_TYPE.ERROR, text: "Select letter or enter text."}]); 
         return;
       }
 
@@ -152,22 +134,24 @@ export default function SearchDrawer({mode}: IProps) {
 
       setSearchCriteria(criteria); 
       preSearchInitialization();
-      const results = await search(searchMode, criteria);
 
-      if(results && results.status == 200)
+      const response = await search(searchMode, criteria);
+      if(isSearchItems(response))
       {
-        setSearchResults(results.data as AlbumSearchItem[]);
-        postSearchSettings(results.data as AlbumSearchItem[]);
-      }
-
-      // setSearchResults(results);
-      // postSearchSettings(results);
+        setSearchResults(response);
+        postSearchSettings(response);
+      } 
+      else if(isErrorResponse(response))
+        setMessages(response.messages);
     } 
     catch(error)
     {
-      setIsSearching(false);
-      setMessages([{ severity: "error", text: "Error doing search. ("  + error + ")"}]);   
+      setMessages([{ severity: MESSAGE_TYPE.ERROR, text: "Error doing search. ("  + error + ")"}]);   
     }    
+    finally
+    {
+      setIsSearching(false);
+    }
   };
  
   const handleClearMessages = () => {

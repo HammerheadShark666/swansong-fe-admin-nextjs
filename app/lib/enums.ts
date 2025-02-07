@@ -44,3 +44,10 @@ export enum DIRECTION
   HORIZONTAL = "horizontal",
   VERTICAL = "vertical"
 }
+
+export enum MESSAGE_TYPE
+{
+  ERROR = "error",
+  INFO = "info",
+  WARNING = "warning"
+}

@@ -1,6 +1,7 @@
 'use client'
 
 import AlbumImage from "@/app/components/albumImage";
+import { MODE } from "@/app/lib/enums";
 import getUrl from "@/app/lib/http";
 import { getPhoto } from "@/app/lib/imageHelper";
 import getToolTip from "@/app/lib/tooltip";
@@ -23,7 +24,7 @@ export default function ArtistAlbums({albums}: IProps) {
                 {albums.map((album: AlbumLookup) => (     
                   <Link key={album.id} href={`${getUrl("albums", album.id)}`}>
                     <div className="tooltip object-fill w-full" data-tip={getToolTip(album)}>
-                      <AlbumImage id={album.id} name={album.name} photoSrc={`${process.env.NEXT_PUBLIC_AZURE_STORAGE_URL}albums/${getPhoto(album.photo)}`}/>
+                      <AlbumImage id={album.id} name={album.name} photoSrc={`${process.env.NEXT_PUBLIC_AZURE_STORAGE_URL}albums/${getPhoto(album.photo, MODE.ALBUM)}`}/>
                     </div>
                   </Link>              
                 ))}

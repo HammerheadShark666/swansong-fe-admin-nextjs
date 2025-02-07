@@ -7,8 +7,8 @@ import { getAlbumImageUrl, getDefaultAlbumImageUrl } from "@/app/lib/imageHelper
 import Messages from "@/app/components/controls/messages";
 import { Message } from "@/app/types/message"; 
 import { delayAlertRemove } from "@/app/lib/generalHelper";
-import { ErrorResponse } from "@/app/interfaces/apiResponse";
-import { AddPhotoResponse } from "@/app/interfaces/addPhotoResponse";
+import { MESSAGE_TYPE } from "@/app/lib/enums";
+import { isAddPhotoResponse } from "@/app/interfaces/addPhotoResponse";
 
 interface IProps {
   id: number;
@@ -39,25 +39,28 @@ export default function AlbumPhotoForm({id, filename, setShowSpinner}: IProps) {
     setMessages([]);
 
     const file = event.target.files?.[0]; 
-    const response = await saveAlbumPhoto(file, id); 
 
-    if(response?.status == 200)     
+    if(file == undefined)
     {
-      const filename = (response.data as AddPhotoResponse).filename;
-      const url = getAlbumImageUrl(filename);
+      setMessages([{ severity: MESSAGE_TYPE.ERROR, text: "Album photo not found."}]);  
+      setShowSpinner(false); 
+      return;
+    }
+
+    const response = await saveAlbumPhoto(file, id); 
+    if(isAddPhotoResponse(response)) 
+    { 
+      const url = getAlbumImageUrl(response.filename);
       setPreview(url);
 
-      setMessages([{ severity: "info", text: "Album photo saved."}]);   
+      setMessages([{ severity: MESSAGE_TYPE.INFO, text: "Album photo saved."}]);   
       delayAlertRemove().then(function() {
         setMessages([]);   
       });
     }      
     else
-    {
-      if(response.data)        
-        setMessages((response.data as ErrorResponse).messages);    
-    }   
- 
+      setMessages(response.messages);
+
     setShowSpinner(false);   
   } 
 

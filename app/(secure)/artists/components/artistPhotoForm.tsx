@@ -7,8 +7,8 @@ import { getArtistImageUrl, getDefaultArtistImageUrl } from "@/app/lib/imageHelp
 import Messages from "@/app/components/controls/messages";
 import { Message } from "@/app/types/message"; 
 import { delayAlertRemove } from "@/app/lib/generalHelper";
-import { ErrorResponse } from "@/app/interfaces/apiResponse";
-import { AddPhotoResponse } from "@/app/interfaces/addPhotoResponse";
+import { isAddPhotoResponse } from "@/app/interfaces/addPhotoResponse";
+import { MESSAGE_TYPE } from "@/app/lib/enums";
 
 interface IProps {
   id: number;
@@ -40,23 +40,18 @@ export default function ArtistPhotoForm({id, filename, setShowSpinner}: IProps) 
 
     const file = event.target.files?.[0]; 
     const response = await saveArtistPhoto(file, id); 
-
-    if(response?.status == 200)     
-    {
-      const filename = (response.data as AddPhotoResponse).filename;
-      const url = getArtistImageUrl(filename);
+    if(isAddPhotoResponse(response))  
+    { 
+      const url = getArtistImageUrl(response.filename);
       setPreview(url);
 
-      setMessages([{ severity: "info", text: "Artist photo saved."}]);   
+      setMessages([{ severity: MESSAGE_TYPE.INFO, text: "Artist photo saved."}]);   
       delayAlertRemove().then(function() {
         setMessages([]);   
       });
     }      
     else
-    {
-      if(response.data)        
-        setMessages((response.data as ErrorResponse).messages);    
-    }   
+      setMessages(response.messages);
  
     setShowSpinner(false);   
   } 

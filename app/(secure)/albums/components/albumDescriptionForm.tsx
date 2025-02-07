@@ -10,8 +10,9 @@ import { Message } from '@/app/types/message';
 import Messages from '@/app/components/controls/messages';
 import { saveExistingAlbumDescriptionDetails } from '@/app/(secure)/albums/actions/album';
 import { delayAlertRemove } from '@/app/lib/generalHelper';
-import dynamic from 'next/dynamic'; 
-import { ErrorResponse } from '@/app/interfaces/apiResponse';
+import dynamic from 'next/dynamic';  
+import { isAddEditActionResponse } from '@/app/interfaces/addEditActionResponse';
+import { MESSAGE_TYPE } from '@/app/lib/enums';
 
 const ReactQuill = dynamic(() => import('react-quill-new'), {
   ssr: false,
@@ -49,7 +50,7 @@ export default function AlbumDescriptionForm({albumDescription, setShowSpinner} 
   }
 
   useEffect(() => {    
-    if(albumDescription != null && albumDescription != undefined)  
+    if(albumDescription != null && albumDescription != undefined)
       setAlbumDescriptionValues(albumDescription);
   });  
   
@@ -64,16 +65,15 @@ export default function AlbumDescriptionForm({albumDescription, setShowSpinner} 
     updatingAlbumDescriptionData(data);  
 
     const response = await saveExistingAlbumDescriptionDetails(data); 
-    if(response?.status == 200)     
+    if(isAddEditActionResponse(response)) 
     {
-      setMessages([{ severity: "info", text: "Album description saved."}]);   
+      setMessages([{ severity: MESSAGE_TYPE.INFO, text: "Album description saved."}]);   
       delayAlertRemove().then(function() {
         setMessages([]);   
       });
     }      
     else
-      if(response.data)        
-        setMessages((response.data as ErrorResponse).messages);  
+      setMessages(response.messages);    
       
     setShowSpinner(false);
   } 

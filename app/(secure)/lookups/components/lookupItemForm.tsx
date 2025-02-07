@@ -8,12 +8,12 @@ import Messages from "@/app/components/controls/messages";
 import { Message } from "@/app/types/message";
 import ConfirmationDialog from '@/app/components/dialogs/confirmationDialog'; 
 import React from "react";
-import { displayMessage, setErrorMessagesValue } from "@/app/lib/messageHelper";
-import { ApiResponse, ErrorResponse } from "@/app/interfaces/apiResponse";
-import { ACTION, MODE } from "@/app/lib/enums"; 
+import { displayMessage, setMessagesValue } from "@/app/lib/messageHelper";
+import { ErrorResponse } from "@/app/interfaces/apiResponse";
+import { ACTION, MESSAGE_TYPE, MODE } from "@/app/lib/enums"; 
 import { lookupItemSchema, LookupItemSchema } from "../validation/lookupItemSchema";
 import { LookupItem } from "@/app/types/lookups";
-import { LookupItemResponse } from "@/app/interfaces/lookupResponse";
+import { isLookupItemResponse, LookupItemResponse } from "@/app/interfaces/lookupResponse";
  
 interface IProps { 
   lookupItem?: LookupItem;
@@ -84,7 +84,7 @@ export default function LookupItemForm({lookupItem, mode, action, setSelectedRow
 
   }, [lookupItem, clearMessages, mode, action, setClearMessages, setFocus, setValue]);   
    
-  async function saveLookupItem(data: LookupItemSchema): Promise<ApiResponse<LookupItemResponse>>
+  async function saveLookupItem(data: LookupItemSchema): Promise<LookupItemResponse | ErrorResponse>
   {
     if(action === ACTION.ADD)       
       return await saveNewLookupItem(data, mode); 
@@ -109,31 +109,24 @@ export default function LookupItemForm({lookupItem, mode, action, setSelectedRow
       setMessages([]);    
 
       const response = await saveLookupItem(data);
-      if(response.status == 200)   
-      { 
-        if(response.data) 
-        { 
-          const lookupItemResponse = response.data as LookupItemResponse; 
-          const updatedLookupItem = createLookupItem(lookupItemResponse.id, data);
+      if(isLookupItemResponse(response))      
+      {        
+        const updatedLookupItem = createLookupItem(response.id, data);
 
-          if(action === ACTION.ADD)  
-            addLookupItemToList(updatedLookupItem);        
-          else       
-            updateLookupItemInList(updatedLookupItem);       
-        } 
+        if(action === ACTION.ADD)  
+          addLookupItemToList(updatedLookupItem);        
+        else       
+          updateLookupItemInList(updatedLookupItem);     
 
         resetForNextAction(); 
-        displayMessage("info", "Lookup item saved.", setMessages);
+        displayMessage(MESSAGE_TYPE.INFO, "Lookup item saved.", setMessages);
       }      
       else
-      {
-        if(response.data)        
-          setMessages((response.data as ErrorResponse).messages);      
-      }
+        setMessages(response.messages);
     } 
     catch(error: unknown)
     {
-      setErrorMessagesValue(error, setMessages); 
+      setMessagesValue(MESSAGE_TYPE.ERROR, error, setMessages); 
     } 
 
     setShowSpinner(false);
@@ -157,17 +150,22 @@ export default function LookupItemForm({lookupItem, mode, action, setSelectedRow
       setMessages([]);    
 
       if(lookupItem && lookupItem.id ) {        
-        await deleteLookupItem(lookupItem.id, mode);
-        resetForNextAction();
-        displayMessage("info", "Lookup item deleted.", setMessages);
-        removeLookupItemFromList(lookupItem.id);
+        const response = await deleteLookupItem(lookupItem.id, mode);
+        if(isLookupItemResponse(response))
+        {
+          resetForNextAction();
+          displayMessage(MESSAGE_TYPE.INFO, "Lookup item deleted.", setMessages);
+          removeLookupItemFromList(lookupItem.id);
+        }
+        else 
+          setMessages(response.messages);   
       }
       else
-        throw new Error("Error deleting album song.");
+        setMessagesValue(MESSAGE_TYPE.ERROR, "Error deleting lookup item", setMessages);   
     } 
     catch(error: unknown)
     {
-      setErrorMessagesValue(error, setMessages); 
+      setMessagesValue(MESSAGE_TYPE.ERROR, error, setMessages); 
     } 
 
     setShowSpinner(false);    

@@ -13,3 +13,7 @@ export type Artist =
   albums: AlbumLookup[];
   members: ArtistMember[];
 }
+
+export function isArtist(obj: any): obj is Artist {
+  return obj && typeof obj.id === "number" && typeof obj.formationYear === "number" && typeof obj.name === "string";
+}

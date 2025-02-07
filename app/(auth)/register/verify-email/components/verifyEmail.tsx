@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { verifyEmailRegistrationFromApi } from "../actions/verifyEmail";
+import { isVerifyRegistrationResponse } from "@/app/interfaces/verifyRegistrationResponse";
 
 interface IProps {
   token: string;
@@ -16,7 +17,7 @@ export default function VerifyEmail({token}: IProps) {
   useEffect(()  => {    
     const verifyRegistration = async () => {
       const response = await verifyEmailRegistrationFromApi(token); 
-      if(response.status == 200)        
+      if(isVerifyRegistrationResponse(response)) 
         router.push("/login");     
       else
         setVerificationFailed(true);

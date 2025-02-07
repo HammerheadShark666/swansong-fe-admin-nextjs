@@ -2,13 +2,12 @@
 
 import getUrl from "../lib/http";
 import getToolTip from "../lib/tooltip";
-import { AlbumLookup } from "../types/album/albumLookup";
+import { AlbumLookup, isAlbumLookupArray } from "../types/album/albumLookup";
 import Link from "next/link";
 import AlbumImage from "./albumImage";
 import { getRandomAlbums } from "@/app/(secure)/albums/actions/album"; 
 import { getPhoto } from "../lib/imageHelper";
-import { MODE } from "../lib/enums";
-import { ErrorResponse } from "../interfaces/apiResponse";
+import { MODE } from "../lib/enums"; 
 import Messages from "./controls/messages";
 import { useEffect, useState } from "react";
 import { Message } from "../types/message"; 
@@ -25,10 +24,10 @@ export default function AlbumsContainer() {
   useEffect(()  => {   
     const getAlbums = async () => {
       const response = await getRandomAlbums();
-      if(response.status != 200)   
-        setMessages((response.data as ErrorResponse).messages);    
+      if(isAlbumLookupArray(response))
+        setAlbums(response);
       else
-        setAlbums(response.data as AlbumLookup[]);  
+        setMessages(response.messages); 
     }
     getAlbums();
   }, []);    

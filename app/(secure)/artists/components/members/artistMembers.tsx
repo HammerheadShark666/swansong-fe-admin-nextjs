@@ -5,14 +5,15 @@ import { ArtistMember } from "@/app/types/artist/artistMember";
 import { getMembersByLetter, getMembersByText } from "@/app/(secure)/members/actions/member";
 import { Message } from "@/app/types/message";
 import { MemberSearchItem } from "@/app/interfaces/memberSearchItem"; 
-import { DROP_MODE, SEARCH_MODE } from "@/app/lib/enums";
+import { DROP_MODE, MESSAGE_TYPE, SEARCH_MODE } from "@/app/lib/enums";
 import { UpdateArtistMembersRequest } from "@/app/interfaces/updateArtistMembersRequest";
 import MembersSource from "./membersSource";
 import MembersDestination from "./membersDestination";
 import { updateMemberArtistId } from "../../actions/artistMember";
 import { delayAlertRemove } from "@/app/lib/generalHelper";
-import { ErrorResponse } from "@/app/interfaces/apiResponse";
+import { isErrorResponse } from "@/app/interfaces/apiResponse";
 import LetterPicker from "./letterPicker"; 
+import { isMemberArtistUpdateResponse } from "@/app/interfaces/artistMemberResponse";
 
 interface IProps {
   members: ArtistMember[];
@@ -126,7 +127,7 @@ export default function ArtistMembers({members, artistId, setShowSpinner}: IProp
  
       if(criteria == '')
       {
-        setMessages([{ severity: "error", text: "Select letter or enter text."}]); 
+        setMessages([{ severity: MESSAGE_TYPE.ERROR, text: "Select letter or enter text."}]); 
         return;
       }
  
@@ -136,7 +137,7 @@ export default function ArtistMembers({members, artistId, setShowSpinner}: IProp
     catch(error)
     {
       setIsSearching(false);
-      setMessages([{ severity: "error", text: "Error doing search. ("  + error + ")"}]);   
+      setMessages([{ severity: MESSAGE_TYPE.ERROR, text: "Error doing search. ("  + error + ")"}]);   
     }    
   };
 
@@ -173,7 +174,7 @@ export default function ArtistMembers({members, artistId, setShowSpinner}: IProp
     catch(error)
     {
       setIsSearching(false);
-      setMessages([{ severity: "error", text: "Error doing search. ("  + error + ")"}]);   
+      setMessages([{ severity: MESSAGE_TYPE.ERROR, text: "Error doing search. ("  + error + ")"}]);   
     }    
   }; 
 
@@ -293,23 +294,21 @@ export default function ArtistMembers({members, artistId, setShowSpinner}: IProp
       };
 
       const response = await updateMemberArtistId(updateArtistMembersRequest);
-
-      if(response?.status == 200)     
+      if(isMemberArtistUpdateResponse(response))
       { 
         updateMemberLists();        
-        setMessages([{ severity: "info", text: "Artist members saved."}]);   
+        setMessages([{ severity: MESSAGE_TYPE.INFO, text: "Artist members saved."}]);   
         delayAlertRemove().then(function() {
           setMessages([]);   
         });
       }      
-      else
-        if(response.data)        
-          setMessages((response.data as ErrorResponse).messages);  
+      else if (isErrorResponse(response))
+        setMessages(response.messages); 
     } 
     catch(error)
     {
       setIsSearching(false);
-      setMessages([{ severity: "error", text: "Error doing search. ("  + error + ")"}]);   
+      setMessages([{ severity: MESSAGE_TYPE.ERROR, text: "Error doing search. ("  + error + ")"}]);   
     }  
           
     setShowSpinner(false);

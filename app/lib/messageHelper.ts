@@ -1,4 +1,5 @@
 import { Message } from "../types/message";
+import { MESSAGE_TYPE } from "./enums";
 import { delayAlertRemove } from "./generalHelper";
 
 export function displayMessage(severity: string, message: string, setMessages:(messages: Message[]) => void ) 
@@ -9,14 +10,14 @@ export function displayMessage(severity: string, message: string, setMessages:(m
     });
 }
 
-export function setErrorMessagesValue(error: unknown, setMessages: (messages: Message[]) => void) {
+export function setMessagesValue(severity: MESSAGE_TYPE, info: unknown, setMessages: (messages: Message[]) => void) {
 
-    let message = "";
-    if (typeof error === "string") {
-      message = error;  
-    } else if (error instanceof Error) {
-      message = error.message;  
-    }
+  let message = "";
+  if (typeof info === "string") {
+    message = info;  
+  } else if (info instanceof Error) {
+    message = info.message;  
+  }
 
-    setMessages([{severity: "error",  text: message}])
+  setMessages([{severity: severity,  text: message}])
 }
