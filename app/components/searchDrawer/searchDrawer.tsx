@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import React, { useState } from "react"; 
-import { getModeLabel } from "@/app/lib/generalHelper";
-import { getAlbumsByLetter, getAlbumsByText } from "@/app/albums/actions/album";
+import { getModeLabel } from "@/app/lib/generalHelper"; 
 import Messages from "../controls/messages";
 import { Message } from "@/app/types/message";
 import LetterPicker from "./letterPicker";
@@ -12,10 +11,12 @@ import SearchResults from "./searchResults";
 import SearchSpinner from "./searchSpinner";
 import TextSearch from "./textSearch";
 import { ACTION, DIRECTION, MODE, SEARCH_MODE } from "@/app/lib/enums";
-import { getArtistsByLetter, getArtistsByText } from "@/app/artists/actions/artist"; 
+import { getArtistsByLetter, getArtistsByText } from "@/app/(secure)/artists/actions/artist"; 
 import { ArtistSearchItem } from "@/app/interfaces/artistSearchItem";
-import { getMembersByLetter, getMembersByText } from "@/app/members/actions/member";
+import { getMembersByLetter, getMembersByText } from "@/app/(secure)/members/actions/member";
 import { MemberSearchItem } from "@/app/interfaces/memberSearchItem";
+import { getAlbumsByLetter, getAlbumsByText } from "@/app/(secure)/albums/actions/album";
+import { ErrorResponse } from "@/app/interfaces/apiResponse";
 
 interface IProps { 
   mode: MODE; 
@@ -43,16 +44,16 @@ export default function SearchDrawer({mode}: IProps) {
     switch(mode)
     {
       case MODE.ALBUM: {
-        return searchAlbums(searchMode, criteria);
+       return searchAlbums(searchMode, criteria);
       }
-      case MODE.ARTIST: {
-        return searchArtists(searchMode, criteria);
-      }
-      case MODE.MEMBER: {
-        return searchMembers(searchMode, criteria);
-      }       
-      default:
-        return [];
+      // case MODE.ARTIST: {
+      //   return searchArtists(searchMode, criteria);
+      // }
+      // case MODE.MEMBER: {
+      //   return searchMembers(searchMode, criteria);
+      // }       
+      // default:
+      //   return [];
     } 
   }
 
@@ -60,11 +61,34 @@ export default function SearchDrawer({mode}: IProps) {
 
     switch(searchMode) {    
       case SEARCH_MODE.LETTER:     
-        return await getAlbumsByLetter(criteria);
+        
+
+        {
+          return await getAlbumsByLetter(criteria);
+
+          // const response = await getAlbumsByLetter(criteria); 
+          // if(response.status != 200)   
+          //   setMessages((response.data as ErrorResponse).messages);    
+          // else
+          //   return response.data;
+           
+        }
       case SEARCH_MODE.TEXT:
-        return await getAlbumsByText(criteria);      
-      default:
-        return [];    
+        {
+          return await getAlbumsByText(criteria);    
+         
+         
+        // const response = await getAlbumsByText(criteria); 
+        // if(response.status != 200)   
+        //   setMessages((response.data as ErrorResponse).messages);    
+        // else
+        //   return response.data;
+        
+
+        }
+         
+      // default:
+      //   return [];    
     }
   }
 
@@ -129,8 +153,15 @@ export default function SearchDrawer({mode}: IProps) {
       setSearchCriteria(criteria); 
       preSearchInitialization();
       const results = await search(searchMode, criteria);
-      setSearchResults(results);
-      postSearchSettings(results);
+
+      if(results && results.status == 200)
+      {
+        setSearchResults(results.data as AlbumSearchItem[]);
+        postSearchSettings(results.data as AlbumSearchItem[]);
+      }
+
+      // setSearchResults(results);
+      // postSearchSettings(results);
     } 
     catch(error)
     {
