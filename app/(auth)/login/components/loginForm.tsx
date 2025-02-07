@@ -9,7 +9,12 @@ import { Message } from "@/app/types/message";
 import { loginFromApi } from "@/app/(auth)/login/actions/login";
 import Messages from "@/app/components/controls/messages";
 import { ErrorResponse } from "@/app/interfaces/apiResponse";
-import { setErrorMessagesValue } from "@/app/lib/messageHelper";
+import { setErrorMessagesValue } from "@/app/lib/messageHelper"; 
+import TitleBar from "../../components/titlebar";
+// import Image from "next/image";  
+// import { Bona_Nova_SC } from 'next/font/google'
+
+// const bonaNovaSc = Bona_Nova_SC({ weight: "400", display: 'swap', subsets: ['latin'] });
  
 export default function LoginForm() {
  
@@ -62,9 +67,13 @@ export default function LoginForm() {
       <Messages messages={messages} onClearMessages={handleClearMessages}></Messages>   
      
       <div className="w-full flex flex-col gap-4 space-y-0">
+   
+        <div className="w-full flex justify-center">
+          <h1 className="text-zinc-800 text-lg">Login</h1>
+        </div>
 
-        <h1 className="text-zinc-800 text-lg">Login</h1>
-
+        <TitleBar></TitleBar>        
+ 
         <div className="w-full">
           <div className="grid grid-cols-12">
             <label className="grid-cols-12 col-span-12 md:grid-cols-2 md:col-span-3">Email*</label>

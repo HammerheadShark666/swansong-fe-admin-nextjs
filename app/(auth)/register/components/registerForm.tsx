@@ -4,12 +4,13 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react"; 
 import { useRouter } from "next/navigation"; 
 import { registerSchema, RegisterSchema } from "../validation/registerSchema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Message } from "@/types/message";
-import Messages from "@/app/components/controls/messages";
-import { ErrorResponse } from "@/interfaces/apiResponse";
+import { zodResolver } from "@hookform/resolvers/zod"; 
+import Messages from "@/app/components/controls/messages"; 
 import { setErrorMessagesValue } from "@/app/lib/messageHelper";
 import { registerFromApi } from "../actions/register"; 
+import TitleBar from "../../components/titlebar";
+import { Message } from "@/app/types/message";
+import { ErrorResponse } from "@/app/interfaces/apiResponse";
  
 export default function RegisterForm() {
  
@@ -62,14 +63,12 @@ export default function RegisterForm() {
 
     <form className="space-y-2 pb w-1/2" onSubmit={handleSubmit(onSubmitForm)}>
   
-      <Messages messages={messages} onClearMessages={handleClearMessages}></Messages>   
-     
+      <Messages messages={messages} onClearMessages={handleClearMessages}></Messages>        
       <div className="w-full flex flex-col gap-4 space-y-0">
-
-        <div className="w-full">
+        <div className="w-full flex justify-center">
           <h1 className="text-zinc-800 text-lg">Register</h1>
         </div>
-
+        <TitleBar></TitleBar>      
         <div className="w-full lg:full">
         <div className="grid grid-cols-12">
             <label className="grid-cols-12 col-span-12 md:grid-cols-2 md:col-span-3">First Name*</label>

@@ -28,7 +28,7 @@ export async function loginFromApi(email: string, password: string): Promise<Api
 		else
     {
       const error = response.data as ErrorResponse;
-      resolve({status: 400, data: {messages: error.messages}});          
+      resolve({status: response.status, data: {messages: error.messages}});          
     } 
 	}); 
 }
