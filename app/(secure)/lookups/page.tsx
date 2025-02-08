@@ -2,7 +2,8 @@ import { Metadata } from "next";
 import LookupTabs from "@/app/(secure)/lookups/components/tabs/lookupTabs";
 import { getLookups } from "./actions/lookups";
 import { isLookups, Lookups, LookupTab } from "../../types/lookups";
-import { MODE } from "../../lib/enums";
+import { ACTION, MODE } from "../../lib/enums";
+import PageNavigationBar from "@/app/components/navigation/pageNavigationBar"; 
 
 export const metadata: Metadata = {
   title: "Swansong - Lookups",
@@ -27,7 +28,8 @@ export default async function LookupPage() {
   { 
     return  (    
       <>
-        <div className="flex flex-col w-full border-gray-100 bg-white h-full flex-1 pl-4 pr-4">  
+        <PageNavigationBar action={ACTION.BOTH} mode={MODE.LOOKUPS}></PageNavigationBar>   
+        <div className="flex flex-col w-full border-gray-100 bg-white h-full flex-1 pl-4 pr-4">
           <LookupTabs lookupTabs={createTabsArray(response)}></LookupTabs>
         </div>
       </> 

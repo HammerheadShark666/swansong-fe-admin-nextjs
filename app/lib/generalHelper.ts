@@ -28,6 +28,8 @@ export function getModeLabel(mode: MODE)
       return "Artist";
     case MODE.MEMBER : 
       return "Member";
+    case MODE.LOOKUPS : 
+      return "Lookups";
     default:
       return "Unknow Mode"
   }
@@ -35,11 +37,13 @@ export function getModeLabel(mode: MODE)
 
 export function getActionLabel(action: ACTION)
 {
-  switch (action){
-    case ACTION.ADD : 
+  switch (action) {
+    case ACTION.ADD: 
       return "Add";
-    case ACTION.EDIT : 
-      return "Edit"; 
+    case ACTION.EDIT: 
+      return "Edit";
+    case ACTION.BOTH: 
+      return "Add/Edit/Delete"
     default:
       return "Unknown Action"
   }

@@ -58,6 +58,7 @@ export const API_REFRESH_TOKEN = `${process.env.NEXT_PUBLIC_API_URL}refresh-toke
 export const API_REGISTER = `${process.env.NEXT_PUBLIC_API_URL}register`; 
 export const API_VERIFY_EMAIL_REGISTRATION = `${process.env.NEXT_PUBLIC_API_URL}register/verify-email`; 
 
+
 export const API_LOGIN = `${process.env.NEXT_PUBLIC_API_URL}login`;
 
 export const FE_MEMBER_EDIT = `/members/member/edit/`;
