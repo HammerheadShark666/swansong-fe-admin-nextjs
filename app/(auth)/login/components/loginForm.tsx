@@ -31,6 +31,10 @@ export default function LoginForm() {
     setMessages([]);
   }; 
 
+  const handleForgottenPassword = () => {    
+    router.push("/forgotten-password"); 
+  }; 
+
   const onSubmitForm: SubmitHandler<LoginSchema> = async (data) => { 
  
     setMessages([]); 
@@ -81,10 +85,11 @@ export default function LoginForm() {
         </div>  
       </div>
 
-      <div className="flex justify-end">
+      <div className="flex flex-row w-full justify-between">
+        <button type="button" className="button" onClick={handleForgottenPassword}>Forgotten Password</button>      
         <button disabled={isSubmitting} className="submit">
           {isSubmitting ? "Logging In" : "Login"}          
-        </button> 
-      </div>  
+        </button>         
+      </div>
     </form> 
 )}

@@ -21,7 +21,7 @@ export async function loginFromApi(email: string, password: string): Promise<Log
         cookieStore.set('refresh-token', response.refreshToken, {path: '/', httpOnly: true, secure: true, sameSite: 'none', maxAge: 60 * 60 * 12});
         cookieStore.set('profile', JSON.stringify(response.profile), {path: '/', httpOnly: true, secure: true, sameSite: 'none', maxAge: 600});
 			}
-			resolve({message: "Login succesful"}); 
+			resolve({message: "Login successful"}); 
     } 
 		else  
       resolve(response);      

@@ -15,7 +15,7 @@ export async function registerFromApi(register: RegisterSchema): Promise<Registe
 
     const response = await apiCall<RegisterActionResponse>(API_REGISTER, API_METHOD.POST, JSON.stringify(mapRegister(register))); 
     if(isRegisterResponse(response))   
-      resolve({message: "Registration succesful"});   
+      resolve({message: "Registration successful"});   
     else 
       resolve(response); 
   });

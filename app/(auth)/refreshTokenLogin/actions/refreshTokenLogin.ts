@@ -18,7 +18,7 @@ export async function refreshTokenLogin(refreshToken: string): Promise<RefreshTo
       cookieStore.set('jwt', response.jwtToken, {path: '/', httpOnly: true, secure: true, sameSite: 'none', maxAge: 60 * 2});
       cookieStore.set('refresh-token', response.refreshToken, {path: '/', httpOnly: true, secure: true, sameSite: 'none', maxAge: 60 * 60 * 12});
       cookieStore.set('profile', JSON.stringify(response.profile), {path: '/', httpOnly: true, secure: true, sameSite: 'none', maxAge: 600});      
-      resolve({message: "Refresh Token Login succesful"}); 
+      resolve({message: "Refresh Token Login successful"}); 
     } 
     else  
       resolve(response);      
