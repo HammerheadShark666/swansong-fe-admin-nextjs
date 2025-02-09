@@ -63,13 +63,13 @@ export default function Lookup({ mode, items, setShowSpinner }: IProps) {
   return (
     <div className="flex flex-col md:flex-row flex-1 h-full w-full">   
       <div className="p-4 flex flex-col w-full md:w-1/2 min-h-fit md:border-l md:border-l-gray-200 md:border-1px md:pl-4"> 
-        <div className="h-[calc(100vh-320px)] overflow-y-scroll">
+        <div className="h-[calc(100vh-270px)] overflow-y-scroll">
           {lookupItems?.map((item: LookupItem) => (      
             <div onClick={() => handleRowClick(item)} key={item.id} className="flex flex-row w-full hover:bg-stone-300 hover:cursor-pointer cursor-move">
               <div className={`flex flex-col p-1 text-xs w-full border-b border-slate-600 hover:bg-slate-300 hover:cursor-pointer ${
                 selectedRow === item.id ? "bg-blue-100" : ""
               }`}>  
-                <p className={`${openSans.className} font-bold`}>{item.name}</p>    
+                <p className={`${openSans.className}`}>{item.name}</p>    
               </div> 
             </div>              
           ))}     

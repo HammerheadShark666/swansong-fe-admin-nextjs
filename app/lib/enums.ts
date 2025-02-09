@@ -18,13 +18,15 @@ export enum MODE
   COUNTRY = "countries",
   MEMBER = "member",
   RECORDLABEL = "recordlabels",
-  STUDIO = "studio"
+  STUDIO = "studio",
+  LOOKUPS = "lookups"
 }
 
 export enum ACTION
 {
    ADD = "add",
-   EDIT = "edit"
+   EDIT = "edit",
+   BOTH = "both"
 }
 
 export enum DROP_MODE 
