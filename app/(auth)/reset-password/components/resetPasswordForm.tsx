@@ -10,6 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { resetPasswordSchema, ResetPasswordSchema } from "../validation/resetPasswordSchema";
 import { resetPasswordFromApi } from "../actions/resetPassword";
+import Link from "next/link"; 
 import { isResetPasswordResponse } from "@/app/interfaces/resetPasswordResponse";
 
 interface IProps { 
@@ -98,7 +99,10 @@ export default function ResetPasswordForm({ token }: IProps) {
 					</div>  
 				</div>
 	
-				<div className="flex justify-end">
+				<div className="flex justify-between">
+					<Link href="/login">
+						<button type="button" className="button">Login</button>  
+					</Link>       
 					<button disabled={isSubmitting} className="submit">
 						{isSubmitting ? "Resetting Password" : "Reset Password"}          
 					</button> 

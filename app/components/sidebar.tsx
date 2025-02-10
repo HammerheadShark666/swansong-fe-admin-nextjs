@@ -73,7 +73,12 @@ export default function Sidebar({ isOpen, toggle, }: { isOpen: boolean, toggle: 
                 <input onKeyDown={handleOnKeyDown} type="search" id="default-search" className="block w-full p-3 ps-10 text-sm text-gray-900 border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Search..." required />
               </div>   
             </div>
-          </li>        
+          </li>   
+          <li>
+            <Link href="/logout">
+              <p className="text-xl mt-2">Logout</p>
+            </Link>
+          </li>     
         </ul>
       </div> 
       </div>

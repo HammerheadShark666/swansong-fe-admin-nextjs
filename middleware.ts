@@ -6,7 +6,7 @@ import { refreshTokenLogin } from "./app/(auth)/refreshTokenLogin/actions/refres
 import { isErrorResponse } from "./app/interfaces/apiResponse"; 
 
 // Define paths that should bypass auth
-const PUBLIC_PATHS = ["/login", "/register"]; //, "/"
+const PUBLIC_PATHS = ["/login", "/register", "/forgotten-password", "/reset-password"];
 
 export async function middleware(request: NextRequest) {
 

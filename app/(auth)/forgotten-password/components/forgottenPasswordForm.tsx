@@ -1,7 +1,8 @@
 "use client";
  
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useState } from "react";  
+import { useState } from "react";
+import { useRouter } from "next/navigation"; 
 import { forgottenPasswordSchema, ForgottenPasswordSchema } from "../validation/forgottenPasswordSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Message } from "@/app/types/message"; 
@@ -11,9 +12,11 @@ import TitleBar from "../../components/titlebar";
 import { MESSAGE_TYPE } from "@/app/lib/enums";
 import { forgottenPasswordFromApi } from "../actions/forgottenPassword";
 import { isForgottenPasswordResponse } from "@/app/interfaces/forgottenPasswordResponse";
+import Link from "next/link";
  
 export default function ForgottenPasswordForm() {
   
+  const router = useRouter();
   const [messages, setMessages] = useState<Message[]>([]);  
   const [showForm, setShowForm] = useState<boolean>(true);
   const [forgottenPasswordMessage, setForgottenPasswordMessage] = useState<string>("");
@@ -29,6 +32,10 @@ export default function ForgottenPasswordForm() {
   const handleClearMessages = () => {
     setMessages([]);
   }; 
+
+  const handleLogin = () => {    
+    router.push("/login"); 
+  }; 
  
   const onSubmitForm: SubmitHandler<ForgottenPasswordSchema> = async (data) => { 
  
@@ -40,7 +47,7 @@ export default function ForgottenPasswordForm() {
       if(isForgottenPasswordResponse(response)) 
       {
         setShowForm(false);
-        setForgottenPasswordMessage(response.message)
+        setForgottenPasswordMessage(response.message);
       }
       else 
         setMessages(response.messages);   
@@ -72,7 +79,10 @@ export default function ForgottenPasswordForm() {
             </div> 
             </div>  
         </div>
-        <div className="flex w-full justify-end">      
+        <div className="flex w-full justify-between">  
+          <Link href="/login"> 
+            <button type="button" className="button">Login</button>  
+          </Link>       
           <button disabled={isSubmitting} className="submit">
               {isSubmitting ? "Request Reset Password" : "Reset Password"}          
           </button>         
