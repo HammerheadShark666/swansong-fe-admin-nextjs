@@ -5,6 +5,7 @@ import Logo from "./logo";
 import { useRouter } from "next/navigation";
 import { KeyboardEvent } from 'react'; 
 import { FE_SEARCH } from "@/app/lib/urls";
+import Logout from "./logout";
 
 export default function NavigationBar({ toggle }: { toggle: () => void }) { 
 
@@ -53,6 +54,10 @@ return (
     <div className="flex w-1/6">  
       <input onKeyDown={handleOnKeyDown} type="search" id="default-search" className="hidden md:block w-full p-3 ps-2 text-sm" placeholder="Search..." required />
     </div>  
+
+    <div className="hidden md:flex w-1/6 justify-end">
+      <Logout></Logout>
+    </div>
 
     <div className="flex flex-row w-1/6 md:hidden">         
       <button

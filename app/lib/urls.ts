@@ -60,6 +60,9 @@ export const API_VERIFY_EMAIL_REGISTRATION = `${process.env.NEXT_PUBLIC_API_URL}
 
 
 export const API_LOGIN = `${process.env.NEXT_PUBLIC_API_URL}login`;
+export const API_FORGOTTEN_PASSWORD = `${process.env.NEXT_PUBLIC_API_URL}forgot-password`;
+export const API_FORGOTTEN_PASSWORD_VALID_RESET_TOKEN = `${process.env.NEXT_PUBLIC_API_URL}forgot-password/validate-reset-token`;
+export const API_FORGOTTEN_PASSWORD_RESET_PASSWORD = `${process.env.NEXT_PUBLIC_API_URL}forgot-password/reset-password-with-email-current-password`;
 
 export const FE_MEMBER_EDIT = `/members/member/edit/`;
 export const FE_ARTIST_EDIT = `/artists/artist/edit/`;

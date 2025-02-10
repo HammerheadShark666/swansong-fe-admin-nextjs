@@ -1,5 +1,6 @@
-import { RegisterSchema } from "@/app/register/validation/registerSchema";
-import { Register } from "@/types/register"; 
+import { RegisterSchema } from "@/app/(auth)/register/validation/registerSchema";
+import { Register } from "@/app/types/register";
+
 
 export function mapRegister(data: RegisterSchema) {
 

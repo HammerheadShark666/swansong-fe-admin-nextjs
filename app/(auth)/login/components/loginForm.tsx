@@ -12,6 +12,7 @@ import { setMessagesValue } from "@/app/lib/messageHelper";
 import TitleBar from "../../components/titlebar";
 import { isLoginResponse } from "@/app/interfaces/loginResponse"; 
 import { MESSAGE_TYPE } from "@/app/lib/enums";
+import Link from "next/link";
  
 export default function LoginForm() {
  
@@ -29,7 +30,7 @@ export default function LoginForm() {
  
   const handleClearMessages = () => {
     setMessages([]);
-  }; 
+  };  
 
   const onSubmitForm: SubmitHandler<LoginSchema> = async (data) => { 
  
@@ -81,10 +82,13 @@ export default function LoginForm() {
         </div>  
       </div>
 
-      <div className="flex justify-end">
+      <div className="flex flex-row w-full justify-between">
+        <Link href="/forgotten-password">
+          <button type="button" className="button">Forgotten Password</button>     
+        </Link> 
         <button disabled={isSubmitting} className="submit">
           {isSubmitting ? "Logging In" : "Login"}          
-        </button> 
-      </div>  
+        </button>         
+      </div>
     </form> 
 )}
