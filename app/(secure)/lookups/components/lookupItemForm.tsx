@@ -9,7 +9,7 @@ import { Message } from "@/app/types/message";
 import ConfirmationDialog from '@/app/components/dialogs/confirmationDialog'; 
 import React from "react";
 import { displayMessage, setMessagesValue } from "@/app/lib/messageHelper";
-import { ErrorResponse } from "@/app/interfaces/apiResponse";
+import { ErrorResponse } from "@/app/interfaces/errorResponse";
 import { ACTION, MESSAGE_TYPE, MODE } from "@/app/lib/enums"; 
 import { lookupItemSchema, LookupItemSchema } from "../validation/lookupItemSchema";
 import { LookupItem } from "@/app/types/lookups";

@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import Messages from "@/app/components/controls/messages";
 import { Message } from "@/app/types/message";
 import { Member } from "@/app/types/member/member";
-import { formatString, selectKeyNumberToString } from "@/app/lib/stringHelper"; 
+import { selectKeyNumberToString } from "@/app/lib/stringHelper"; 
 import { SelectItem } from "@/app/types/selectItem";
 import { delayAlertRemove } from "@/app/lib/generalHelper"; 
 import { isAddEditActionResponse } from "@/app/interfaces/addEditActionResponse";  
@@ -86,7 +86,7 @@ export default function MemberDetailsForm({action, memberData, birthPlaceItems, 
   {
     const response = await saveNewMemberDetails(data); 
     if(isAddEditActionResponse(response)) 
-      router.push(formatString(FE_MEMBER_EDIT, response.id)); 
+      router.push(FE_MEMBER_EDIT + response.id.toString()); 
     else  
       setMessages(response.messages);        
   }

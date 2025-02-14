@@ -6,7 +6,7 @@ import { API_LOOKUP_ITEM_BIRTH_PLACE_ADD, API_LOOKUP_ITEM_BIRTH_PLACE_DELETE, AP
 import { Lookups } from "@/app/types/lookups";
 import { mapLookupItem } from "@/app/lib/mappers/lookupMapper";
 import { LookupItemSchema } from "../validation/lookupItemSchema";   
-import { ErrorResponse } from "@/app/interfaces/apiResponse";  
+import { ErrorResponse } from "@/app/interfaces/errorResponse";  
 import { API_METHOD } from "@/app/lib/enums"; 
 import { formatString } from "@/app/lib/stringHelper";
 import { LookupItemResponse } from "@/app/interfaces/lookupResponse";

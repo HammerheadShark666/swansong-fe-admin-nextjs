@@ -1,7 +1,7 @@
 'use server'
  
 import { API_FORGOTTEN_PASSWORD_RESET_PASSWORD } from "@/app/lib/urls";
-import { ErrorResponse } from "@/app/interfaces/apiResponse";
+import { ErrorResponse } from "@/app/interfaces/errorResponse";
 import { API_METHOD } from "@/app/lib/enums";
 import { apiCall } from "@/app/lib/apiHelper"; 
 import { isResetPasswordResponse, ResetPasswordResponse } from "@/app/interfaces/resetPasswordResponse";

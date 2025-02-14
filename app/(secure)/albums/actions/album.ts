@@ -4,9 +4,9 @@ import { Album } from "@/app/types/album/album";
 import { mapAlbum, mapAlbumDescription } from "@/app/lib/mappers/albumMapper"; 
 import { apiCallAuthenticated, apiGetCallAuthenticated } from "@/app/lib/apiHelper"; 
 import { AlbumSearchItem } from "@/app/interfaces/albumSearchItem";
-import { API_ALBUM_ADD, API_ALBUM_UPDATE, API_ALBUM_UPDATE_DESCRIPTION, API_GET_ALBUM, API_GET_RANDOM_ALBUMS, API_SEARCH_ALBUMS_BY_LETTER, API_SEARCH_ALBUMS_BY_TEXT } from "@/app/lib/urls";
+import { API_ALBUM_ADD, API_ALBUM_UPDATE, API_ALBUM_UPDATE_DESCRIPTION, API_DELETE_ALBUM, API_GET_ALBUM, API_GET_RANDOM_ALBUMS, API_SEARCH_ALBUMS_BY_LETTER, API_SEARCH_ALBUMS_BY_TEXT } from "@/app/lib/urls";
 import { formatString } from "@/app/lib/stringHelper"; 
-import { ErrorResponse } from "@/app/interfaces/apiResponse";
+import { ErrorResponse } from "@/app/interfaces/errorResponse";
 import { API_METHOD, CACHE_TYPE } from "@/app/lib/enums";
 import { AlbumLookup } from "@/app/types/album/albumLookup";
 import { AlbumDetailsSchema } from "../validation/albumDetailsSchema";
@@ -39,4 +39,8 @@ export async function getAlbumsByLetter(letter: string): Promise<AlbumSearchItem
 
 export async function getAlbumsByText(text: string): Promise<AlbumSearchItem[] | ErrorResponse> {  
   return await apiGetCallAuthenticated<AlbumSearchItem[]>(formatString(API_SEARCH_ALBUMS_BY_TEXT, text), CACHE_TYPE.NO_CACHE);
-} 
+}
+
+export async function deleteAlbum(id: number): Promise<AddEditActionResponse | ErrorResponse> {  
+  return await apiCallAuthenticated<AddEditActionResponse>(formatString(API_DELETE_ALBUM, id), API_METHOD.DELETE, "");
+}

@@ -13,6 +13,7 @@ export const API_ALBUM_ADD = `${process.env.NEXT_PUBLIC_API_URL}albums/album/add
 export const API_ALBUM_UPDATE_DESCRIPTION = `${process.env.NEXT_PUBLIC_API_URL}albums/album/description/update`;
 export const API_ALBUM_UPDATE = `${process.env.NEXT_PUBLIC_API_URL}albums/album/update`;
 export const API_ALBUM_UPDATE_PHOTO = `${process.env.NEXT_PUBLIC_API_URL}albums/album/upload-photo/{0}`;
+export const API_DELETE_ALBUM = `${process.env.NEXT_PUBLIC_API_URL}albums/album/{0}`;
  
 export const API_ALBUM_SONG_ADD = `${process.env.NEXT_PUBLIC_API_URL}album/songs/song/add`;
 export const API_ALBUM_SONG_UPDATE = `${process.env.NEXT_PUBLIC_API_URL}album/songs/song/update`;
@@ -26,6 +27,8 @@ export const API_ARTIST_ADD = `${process.env.NEXT_PUBLIC_API_URL}artists/artist/
 export const API_ARTIST_UPDATE_DESCRIPTION = `${process.env.NEXT_PUBLIC_API_URL}artists/artist/description/update`;
 export const API_ARTIST_UPDATE = `${process.env.NEXT_PUBLIC_API_URL}artists/artist/update`;
 export const API_ARTIST_UPDATE_PHOTO = `${process.env.NEXT_PUBLIC_API_URL}artists/artist/upload-photo/{0}`;
+export const API_DELETE_ARTIST = `${process.env.NEXT_PUBLIC_API_URL}artists/artist/{0}`;
+export const API_ARTIST_MEMBERS_UPDATE = `${process.env.NEXT_PUBLIC_API_URL}artist/members/update`;
   
 export const API_MEMBER_LOOKUPS = `${process.env.NEXT_PUBLIC_API_URL}members/lookups`;
 export const API_MEMBER_LOOKUPS_FORM = `${process.env.NEXT_PUBLIC_API_URL}members/lookups/form`;
@@ -35,6 +38,7 @@ export const API_MEMBER_UPDATE = `${process.env.NEXT_PUBLIC_API_URL}members/memb
 export const API_MEMBERS_UPDATE_ARTISTS = `${process.env.NEXT_PUBLIC_API_URL}members/update/artist/assigned-to`;
 export const API_MEMBER_UPDATE_DESCRIPTION = `${process.env.NEXT_PUBLIC_API_URL}members/member/description/update`;
 export const API_MEMBER_UPDATE_PHOTO = `${process.env.NEXT_PUBLIC_API_URL}members/member/upload-photo/{0}`;
+export const API_DELETE_MEMBER = `${process.env.NEXT_PUBLIC_API_URL}members/member/{0}`;
 
 export const API_LOOKUPS = `${process.env.NEXT_PUBLIC_API_URL}lookups`;
 

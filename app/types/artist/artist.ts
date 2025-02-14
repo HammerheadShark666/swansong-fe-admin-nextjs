@@ -1,5 +1,5 @@
 import { AlbumLookup } from "../album/albumLookup"; 
-import { ArtistMember } from "./artistMember";
+import { MemberLookup } from "../member/memberLookup";
 
 export type Artist = 
 {
@@ -11,9 +11,9 @@ export type Artist =
   photo: string;
   description:string;
   albums: AlbumLookup[];
-  members: ArtistMember[];
+  members: MemberLookup[];
 }
-
+  
 export function isArtist(obj: any): obj is Artist {
-  return obj && typeof obj.id === "number" && typeof obj.formationYear === "number" && typeof obj.name === "string";
+  return obj && typeof obj.id === "number" && typeof obj.name === "string";
 }

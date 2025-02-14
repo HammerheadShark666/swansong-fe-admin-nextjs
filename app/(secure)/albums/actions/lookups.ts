@@ -1,6 +1,6 @@
 'use server'
 
-import { ErrorResponse } from "@/app/interfaces/apiResponse";
+import { ErrorResponse } from "@/app/interfaces/errorResponse";
 import { apiGetCallAuthenticated } from "@/app/lib/apiHelper";
 import { CACHE_TYPE } from "@/app/lib/enums"; 
 import { API_ALBUM_LOOKUPS } from "@/app/lib/urls"; 
