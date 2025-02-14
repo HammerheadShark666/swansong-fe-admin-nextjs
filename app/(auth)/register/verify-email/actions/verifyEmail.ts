@@ -1,7 +1,7 @@
 'use server'
 
 import { API_VERIFY_EMAIL_REGISTRATION } from "@/app/lib/urls";
-import { ErrorResponse } from "@/app/interfaces/apiResponse";
+import { ErrorResponse } from "@/app/interfaces/errorResponse";
 import { API_METHOD } from "@/app/lib/enums";
 import { apiCall } from "@/app/lib/apiHelper";
 import { RegisterActionResponse } from "@/app/interfaces/registerActionResponse";    

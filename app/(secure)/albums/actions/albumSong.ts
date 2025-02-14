@@ -3,7 +3,7 @@
 import { mapAlbumSong } from "@/app/lib/mappers/albumMapper";
 import { AlbumSongSchema } from "../validation/albumSongSchema";  
 import { AlbumSongResponse } from "@/app/interfaces/albumSongResponse"; 
-import { ErrorResponse } from "@/app/interfaces/apiResponse";  
+import { ErrorResponse } from "@/app/interfaces/errorResponse";  
 import { apiCallAuthenticated } from "@/app/lib/apiHelper";
 import { API_METHOD } from "@/app/lib/enums";
 import { API_ALBUM_SONG_ADD, API_ALBUM_SONG_DELETE, API_ALBUM_SONG_UPDATE } from "@/app/lib/urls";

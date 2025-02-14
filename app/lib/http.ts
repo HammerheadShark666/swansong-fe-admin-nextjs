@@ -36,3 +36,23 @@ export function getAddUrl(mode: MODE)
       throw new Error("Add url not found for mode: " + mode);
   }  
 }
+
+export function getDeleteUrl(mode: MODE, id: string)
+{
+  switch(mode) {  
+    case MODE.ALBUM :
+    {
+      return "/albums/album?id=" + id;
+    }
+    case MODE.ARTIST :
+    {
+      return "/artists/artist?id=" + id;
+    }
+    case MODE.MEMBER :
+    {
+      return "/members/member?id=" + id;
+    }
+    default:
+      throw new Error("Delete url not found for mode: " + mode);
+  }  
+}

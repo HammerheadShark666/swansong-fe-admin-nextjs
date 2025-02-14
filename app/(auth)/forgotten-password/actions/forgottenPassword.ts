@@ -3,7 +3,7 @@
 import { apiCall } from "../../../lib/apiHelper"; 
 import { API_METHOD } from "../../../lib/enums";
 import { ForgottenPasswordActionResponse, isForgottenPasswordActionResponse } from "@/app/types/forgottenPassword";  
-import { ErrorResponse } from "@/app/interfaces/apiResponse";
+import { ErrorResponse } from "@/app/interfaces/errorResponse";
 import { API_FORGOTTEN_PASSWORD } from "../../../lib/urls";    
 import { ForgottenPasswordResponse } from "@/app/interfaces/forgottenPasswordResponse";
 

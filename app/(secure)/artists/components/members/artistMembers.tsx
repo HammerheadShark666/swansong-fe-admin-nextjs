@@ -4,16 +4,16 @@ import { useState } from "react";
 import { ArtistMember } from "@/app/types/artist/artistMember";    
 import { getMembersByLetter, getMembersByText } from "@/app/(secure)/members/actions/member";
 import { Message } from "@/app/types/message";
-import { MemberSearchItem } from "@/app/interfaces/memberSearchItem"; 
+import { isMemberSearchItemArray, MemberSearchItem } from "@/app/interfaces/memberSearchItem"; 
 import { DROP_MODE, MESSAGE_TYPE, SEARCH_MODE } from "@/app/lib/enums";
 import { UpdateArtistMembersRequest } from "@/app/interfaces/updateArtistMembersRequest";
 import MembersSource from "./membersSource";
 import MembersDestination from "./membersDestination";
-import { updateMemberArtistId } from "../../actions/artistMember";
+import { updateArtistMembers } from "../../actions/artistMember";
 import { delayAlertRemove } from "@/app/lib/generalHelper";
-import { isErrorResponse } from "@/app/interfaces/apiResponse";
+import { isErrorResponse } from "@/app/interfaces/errorResponse";
 import LetterPicker from "./letterPicker"; 
-import { isMemberArtistUpdateResponse } from "@/app/interfaces/artistMemberResponse";
+import { isArtistMemberUpdateResponse } from "@/app/interfaces/artistMemberResponse";
 
 interface IProps {
   members: ArtistMember[];
@@ -105,17 +105,20 @@ export default function ArtistMembers({members, artistId, setShowSpinner}: IProp
     let results = await searchMembers(searchMode, criteria); 
 
     //Remove artists currently in the target
-    results = filterResults(results);
+    if(isMemberSearchItemArray(results))
+    {
+      results = filterResults(results);
 
-    //Keep any artist in source that were in target before search
-    results = addMembersRemovedFromDestinationIntoNewResults( originalArtistMembers, searchResults, results);
+      //Keep any artist in source that were in target before search
+      results = addMembersRemovedFromDestinationIntoNewResults( originalArtistMembers, searchResults, results);
 
-    results = results.filter(
-      (item, index, self) => self.findIndex(i => i.id === item.id) === index
-    ); 
+      results = results.filter(
+        (item, index, self) => self.findIndex(i => i.id === item.id) === index
+      );       
 
-    setSearchResults(sortMembers(results));
-    postSearchSettings(results);
+      setSearchResults(sortMembers(results));
+      postSearchSettings(results);
+    }
   }
 
   async function handleSearchClick (criteria: string, searchMode: SEARCH_MODE) { 
@@ -215,8 +218,7 @@ export default function ArtistMembers({members, artistId, setShowSpinner}: IProp
   } 
 
   function updateMemberLists()
-  {
-    
+  {    
     //remove members who have been removed from artist from original members
     membersToRemove.map((memberToRemove) => {
       const indexToRemove = originalArtistMembers.findIndex(member => member.id === memberToRemove.id);
@@ -225,8 +227,8 @@ export default function ArtistMembers({members, artistId, setShowSpinner}: IProp
     });
 
     //add members to original members that have been added to artist
-    membersToAdd.map((memberToAdd) => {
-      const artistMember: ArtistMember = {id: memberToAdd.id, artistId: artistId, stageName: memberToAdd.stageName, photo: memberToAdd.photo };
+    membersToAdd.map((memberToAdd) => {  // artistId: artistId,
+      const artistMember: ArtistMember = {id: memberToAdd.id,  stageName: memberToAdd.stageName, photo: memberToAdd.photo };
       originalArtistMembers.push(artistMember);
     });
 
@@ -287,14 +289,17 @@ export default function ArtistMembers({members, artistId, setShowSpinner}: IProp
       const membersToAddIds: number[] = membersToAdd.map(member => member.id);
       const membersToRemoveIds: number[] = membersToRemove.map(member => member.id);
 
+      if( membersToAddIds.length == 0 && membersToRemoveIds.length == 0)
+        setMessages([{ severity: MESSAGE_TYPE.WARNING, text: "Not changes to save."}]);   
+
       const updateArtistMembersRequest : UpdateArtistMembersRequest  = {
         artistId: artistId,
         membersToAdd: membersToAddIds,
         membersToRemove: membersToRemoveIds
       };
 
-      const response = await updateMemberArtistId(updateArtistMembersRequest);
-      if(isMemberArtistUpdateResponse(response))
+      const response = await updateArtistMembers(updateArtistMembersRequest);
+      if(isArtistMemberUpdateResponse(response))
       { 
         updateMemberLists();        
         setMessages([{ severity: MESSAGE_TYPE.INFO, text: "Artist members saved."}]);   

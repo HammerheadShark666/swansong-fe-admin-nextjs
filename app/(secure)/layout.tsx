@@ -17,7 +17,7 @@ export default function RootLayout({
       <header className="h-25 w-full">
         <Navigation />
       </header>
-      <main className="flex-1 w-full md:w-[90%] lg:w-[66%] pl-4 pr-4 pt-2 bg-black">        
+      <main className="flex-1 w-full md:w-[90%] lg:w-[66%] pl-4 pr-4 pt-2 bg-black">       
         {children}         
       </main>       
       <Footer></Footer>  

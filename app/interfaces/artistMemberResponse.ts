@@ -1,7 +1,7 @@
 export interface ArtistMemberResponse {id: number, memberId: number}
 
-export interface MemberArtistUpdateResponse {artistId: number}
+export interface ArtistMemberUpdateResponse {message: string}
 
-export function isMemberArtistUpdateResponse(obj: any): obj is MemberArtistUpdateResponse[] {  
-    return obj && typeof obj.artistId === "number";  
+export function isArtistMemberUpdateResponse(obj: any): obj is ArtistMemberUpdateResponse {  
+    return obj && typeof obj.message === "string";  
 }

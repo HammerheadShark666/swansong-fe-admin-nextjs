@@ -3,7 +3,7 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { refreshTokenLogin } from "./app/(auth)/refreshTokenLogin/actions/refreshTokenLogin";
-import { isErrorResponse } from "./app/interfaces/apiResponse"; 
+import { isErrorResponse } from "./app/interfaces/errorResponse"; 
 
 // Define paths that should bypass auth
 const PUBLIC_PATHS = ["/login", "/register", "/forgotten-password", "/reset-password"];

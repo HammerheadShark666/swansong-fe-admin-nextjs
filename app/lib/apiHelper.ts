@@ -1,4 +1,4 @@
-import { ErrorResponse } from "../interfaces/apiResponse"; 
+import { ErrorResponse } from "../interfaces/errorResponse"; 
 import { API_METHOD, CACHE_TYPE, MESSAGE_TYPE } from "./enums";
 import { cookies } from 'next/headers';
 
@@ -21,7 +21,10 @@ export async function apiCall<T>(path: string, method: API_METHOD, body: string 
       return dataResponse;
     }      
     else   
-      errorResponse = await response.json();           
+    {
+      errorResponse = await response.json(); 
+      errorResponse.status = response.status;
+    } 
   }
   catch(error){    
     console.log(error);
@@ -37,8 +40,8 @@ export async function apiCallAuthenticated<T>(path: string, method: API_METHOD, 
 
   try
   {
-    const cookieStore = await cookies(); 
-    const token = cookieStore.get('jwt'); 
+    const cookieStore = await cookies();
+    const token = cookieStore.get('jwt');
 
     const response = await fetch(path, {
       method: method,
@@ -49,12 +52,15 @@ export async function apiCallAuthenticated<T>(path: string, method: API_METHOD, 
       body: body
     }); 
 
-    if(response.status == 200) {
+    if(response.status == 200) { 
       const dataResponse: T = await response.json(); 
       return dataResponse;
     }      
-    else  
-      errorResponse = await response.json();
+    else   
+    {
+      errorResponse = await response.json(); 
+      errorResponse.status = response.status;
+    }
   }
   catch(error){
     console.log(error);
@@ -82,8 +88,11 @@ export async function apiGetCall<T>(path: string, cacheType: CACHE_TYPE): Promis
       const dataResponse: T = await response.json(); 
       return dataResponse;
     }      
-    else    
-      errorResponse = await response.json();
+    else   
+    {
+      errorResponse = await response.json(); 
+      errorResponse.status = response.status;
+    }
   }
   catch(error){
     console.log(error);
@@ -112,11 +121,15 @@ export async function apiGetCallAuthenticated<T>(path: string, cacheType: CACHE_
       }); 
 
       if(response.status == 200) {       
-        const dataResponse: T = await response.json(); 
+        const dataResponse: T = await response.json();       
         return dataResponse; 
       }      
       else   
+      {
         errorResponse = await response.json(); 
+        errorResponse.status = response.status;
+      }
+        
     }
     catch(error){
       console.log(error);
@@ -148,8 +161,11 @@ export async function apiPhotoCall<T>(path: string, method: API_METHOD, file: Fi
       const dataResponse: T = await response.json(); 
       return dataResponse;  
     }      
-    else
+    else   
+    {
       errorResponse = await response.json(); 
+      errorResponse.status = response.status;
+    }
   }
   catch(error){
     console.log(error);
@@ -186,8 +202,11 @@ export async function apiPhotoCallAuthenticated<T>(path: string, method: API_MET
       const dataResponse: T = await response.json(); 
       return dataResponse;
     }      
-    else
-      errorResponse = await response.json();
+    else   
+    {
+      errorResponse = await response.json(); 
+      errorResponse.status = response.status;
+    }
   }
   catch(error) {
     console.log(error);

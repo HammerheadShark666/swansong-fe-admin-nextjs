@@ -2,7 +2,6 @@
  
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
-import { useRouter } from "next/navigation"; 
 import { forgottenPasswordSchema, ForgottenPasswordSchema } from "../validation/forgottenPasswordSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Message } from "@/app/types/message"; 
@@ -15,8 +14,7 @@ import { isForgottenPasswordResponse } from "@/app/interfaces/forgottenPasswordR
 import Link from "next/link";
  
 export default function ForgottenPasswordForm() {
-  
-  const router = useRouter();
+   
   const [messages, setMessages] = useState<Message[]>([]);  
   const [showForm, setShowForm] = useState<boolean>(true);
   const [forgottenPasswordMessage, setForgottenPasswordMessage] = useState<string>("");
@@ -31,10 +29,6 @@ export default function ForgottenPasswordForm() {
  
   const handleClearMessages = () => {
     setMessages([]);
-  }; 
-
-  const handleLogin = () => {    
-    router.push("/login"); 
   }; 
  
   const onSubmitForm: SubmitHandler<ForgottenPasswordSchema> = async (data) => { 

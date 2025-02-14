@@ -12,7 +12,7 @@ import { AlbumSongResponse, isAlbumSongResponse } from "@/app/interfaces/albumSo
 import ConfirmationDialog from '@/app/components/dialogs/confirmationDialog'; 
 import React from "react";
 import { displayMessage, setMessagesValue } from "@/app/lib/messageHelper";
-import { ErrorResponse } from "@/app/interfaces/apiResponse";
+import { ErrorResponse } from "@/app/interfaces/errorResponse";
 import { ACTION, MESSAGE_TYPE } from "@/app/lib/enums";
  
 interface IProps { 

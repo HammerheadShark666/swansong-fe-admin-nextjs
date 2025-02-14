@@ -1,5 +1,5 @@
 import { getMember } from "@/app/(secure)/members/actions/member";
-import { getMemberLookups } from "@/app/(secure)/members/actions/lookups"; 
+import { getMemberLookupsForm } from "@/app/(secure)/members/actions/lookups"; 
 import EditMemberTabs from "@/app/(secure)/members/components/tabs/editMemberTabs";
 import PageNavigationBar from "@/app/components/navigation/pageNavigationBar"; 
 import { ACTION, MODE } from "@/app/lib/enums";
@@ -8,6 +8,7 @@ import { MemberDescription } from "@/app/types/member/memberDescription";
 import { Metadata } from "next";
 import { isMemberLookups, MemberLookups } from "@/app/types/member/memberLookups";
 import Messages from "@/app/components/controls/messages";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Swansong - Edit Member",
@@ -35,14 +36,14 @@ export default async function EditMemberPage({ params }:{ params: Promise<{ id: 
     member = memberResponse;
     memberDescription = getMemberDescription(member);
     
-    const memberLookupsResponse = await getMemberLookups();
+    const memberLookupsResponse = await getMemberLookupsForm();
     if(isMemberLookups(memberLookupsResponse)) 
     {    
       lookups = memberLookupsResponse; 
   
       return  (    
         <>
-          <PageNavigationBar action={ACTION.EDIT} mode={MODE.ALBUM}></PageNavigationBar>   
+          <PageNavigationBar action={ACTION.EDIT} mode={MODE.MEMBER} id={Number(id)}></PageNavigationBar>   
           <div className="flex flex-col w-full border-gray-100 bg-white h-full flex-1 pl-4 pr-4">
             <EditMemberTabs member={member} memberDescription={memberDescription} birthPlaceItems={lookups.birthPlaces} ></EditMemberTabs>
           </div>      
@@ -55,7 +56,15 @@ export default async function EditMemberPage({ params }:{ params: Promise<{ id: 
       )
   } 
   else 
-    return ( 
-      <Messages messages={memberResponse.messages}></Messages> 
-    )
+  {    
+    if(memberResponse.status == 404)
+    {
+      const notFoundMessage = "Member not found (" + id + ")";
+      return redirect(`/secure/not-found?message=` + notFoundMessage);
+    } 
+    else      
+      return ( 
+        <Messages messages={memberResponse.messages}></Messages> 
+      );
+  } 
 }; 

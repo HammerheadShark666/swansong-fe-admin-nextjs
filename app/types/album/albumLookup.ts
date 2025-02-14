@@ -1,3 +1,5 @@
+import { ErrorResponse } from "@/app/interfaces/errorResponse";
+
 export type AlbumLookup = 
 {
   id: number;
@@ -10,7 +12,7 @@ export function isAlbumLookup(obj: any): obj is AlbumLookup {
   return obj && typeof obj.id === "number" && typeof  obj.name === "string";
 }
 
-export function isAlbumLookupArray(obj: any): obj is AlbumLookup[] {
+export function isAlbumLookupArray(obj: AlbumLookup[] | ErrorResponse): obj is AlbumLookup[] {
   return (
     Array.isArray(obj) && obj.every(item => 
       typeof item.id === "number" && 
