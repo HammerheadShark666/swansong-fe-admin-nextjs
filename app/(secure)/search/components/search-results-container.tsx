@@ -1,5 +1,5 @@
 import { isSearchResults } from "@/app/types/searchResult";
-import SearchResultsHtml from "./search-results";
+import SearchResults from "./search-results";
 import { getSearch } from "../actions/search";
 
 export type IProps = 
@@ -24,9 +24,9 @@ export default async function SearchResultsContainer(params: IProps) {
             <div className="grid-cols-12 pt-5 pl-5"> 
               <span className="text-lg text-white">Search results for &quot;{params.criteria}&quot;</span>
             </div>       
-            <SearchResultsHtml results={albums} type={resultType[0]}></SearchResultsHtml>
-            <SearchResultsHtml results={artists} type={resultType[1]}></SearchResultsHtml>
-            <SearchResultsHtml results={members} type={resultType[2]}></SearchResultsHtml> 
+            <SearchResults results={albums} type={resultType[0]}></SearchResults>
+            <SearchResults results={artists} type={resultType[1]}></SearchResults>
+            <SearchResults results={members} type={resultType[2]}></SearchResults> 
           </div>
         </div>  
       </>
