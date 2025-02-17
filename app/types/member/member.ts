@@ -1,3 +1,5 @@
+import { ArtistLookup } from "../artist/artistLookup";
+
 export type Member = 
 {
   id: number;
@@ -10,6 +12,7 @@ export type Member =
   dateOfDeath: string | undefined;
   photo: string;
   description: string;
+  artists: ArtistLookup[];
 }
 
 export function isMember(obj: any): obj is Member {

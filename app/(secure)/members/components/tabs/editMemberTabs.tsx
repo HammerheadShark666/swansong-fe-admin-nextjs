@@ -1,6 +1,7 @@
 "use client";  
      
 import { HiOutlineBookOpen, HiOutlineIdentification, HiOutlineCamera } from "react-icons/hi"; 
+import { FaPeopleLine } from "react-icons/fa6";
 import { Tabs } from "flowbite-react";  
 import MemberDetailsForm from "@/app/(secure)/members/components/memberDetailsForm";
 import { Member } from "@/app/types/member/member";
@@ -11,14 +12,17 @@ import { MemberDescription } from "@/app/types/member/memberDescription";
 import Spinner from "@/app/components/spinner";
 import { useState } from "react";
 import { ACTION } from "@/app/lib/enums"; 
+import { ArtistLookup } from "@/app/types/artist/artistLookup";
+import MemberArtists from "../MemberArtists";
 
 interface IProps {
   member: Member;
   memberDescription: MemberDescription;
   birthPlaceItems: SelectItem[];
+  artists: ArtistLookup[];
 }
 
-export default function  EditMemberTabs({member, memberDescription, birthPlaceItems}: IProps) {   
+export default function  EditMemberTabs({member, memberDescription, birthPlaceItems, artists}: IProps) {   
 
   const [showSpinner, setShowSpinner] = useState<boolean>(false);
 
@@ -59,6 +63,11 @@ export default function  EditMemberTabs({member, memberDescription, birthPlaceIt
             <Tabs.Item title="Description" icon={HiOutlineBookOpen}>
               <div className="font-medium text-black flex flex-col">  
                 <MemberDescriptionForm setShowSpinner={setShowSpinner} memberDescription={memberDescription}></MemberDescriptionForm>              
+              </div>
+            </Tabs.Item>             
+            <Tabs.Item title="Artists" icon={FaPeopleLine}>
+              <div className="font-medium text-black flex flex-col">  
+                <MemberArtists artists={artists}></MemberArtists>              
               </div>
             </Tabs.Item>             
           </Tabs>

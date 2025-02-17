@@ -11,9 +11,9 @@ export default function getUrl(type: string, id:number) {
     case "albums":
       return "/albums/album/edit/" + id
     case "artists":
-      return "/artists/artist/" + id
+      return "/artists/artist/edit/" + id
     default:
-      return "/members/member/" + id
+      return "/members/member/edit/" + id
   }
 } 
 

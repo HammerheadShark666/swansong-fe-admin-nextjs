@@ -45,7 +45,7 @@ export default async function EditMemberPage({ params }:{ params: Promise<{ id: 
         <>
           <PageNavigationBar action={ACTION.EDIT} mode={MODE.MEMBER} id={Number(id)}></PageNavigationBar>   
           <div className="flex flex-col w-full border-gray-100 bg-white h-full flex-1 pl-4 pr-4">
-            <EditMemberTabs member={member} memberDescription={memberDescription} birthPlaceItems={lookups.birthPlaces} ></EditMemberTabs>
+            <EditMemberTabs member={member} memberDescription={memberDescription} artists={member.artists} birthPlaceItems={lookups.birthPlaces} ></EditMemberTabs>
           </div>      
         </> 
       )
