@@ -6,7 +6,7 @@ import { API_METHOD, CACHE_TYPE } from "@/app/lib/enums";
 import { formatString } from "@/app/lib/stringHelper";
 import { API_DELETE_MEMBER, API_GET_MEMBER, API_MEMBER_ADD, API_MEMBER_UPDATE, API_MEMBER_UPDATE_DESCRIPTION, API_SEARCH_MEMBERS_BY_LETTER, API_SEARCH_MEMBERS_BY_TEXT } from "@/app/lib/urls";
 import { MemberDescriptionSchema } from "../validation/memberDescriptionSchema";
-import { AddEditActionResponse } from "@/app/interfaces/AddEditActionResponse";
+import { AddEditActionResponse } from "@/app/interfaces/addEditActionResponse";
 import { ErrorResponse } from "@/app/interfaces/errorResponse";
 import { mapMember, mapMemberDescription } from "@/app/lib/mappers/memberMapper";
 import { MemberDetailsSchema } from "../validation/memberDetailsSchema";

@@ -14,7 +14,7 @@ import { Member } from "@/app/types/member/member";
 import { selectKeyNumberToString } from "@/app/lib/stringHelper"; 
 import { SelectItem } from "@/app/types/selectItem";
 import { delayAlertRemove } from "@/app/lib/generalHelper"; 
-import { isAddEditActionResponse } from "@/app/interfaces/AddEditActionResponse";  
+import { isAddEditActionResponse } from "@/app/interfaces/addEditActionResponse";  
 import { ACTION, MESSAGE_TYPE } from "@/app/lib/enums";
 import { FE_MEMBER_EDIT } from "@/app/lib/urls";
 import DatePicker from "@/app/components/controls/datepicker";

@@ -1,7 +1,7 @@
-import { MemberDescriptionSchema } from "@/app/members/validation/memberDescriptionSchema"; 
-import { MemberDetailsSchema } from "@/app/members/validation/memberDetailsSchema";
+import { MemberDetailsSchema } from "@/app/(secure)/members/validation/memberDetailsSchema";
 import { Member } from "../../types/member/member";
 import { MemberDescription } from "../../types/member/memberDescription"; 
+import { MemberDescriptionSchema } from "@/app/(secure)/members/validation/memberDescriptionSchema";
 
 export function mapMember(data: MemberDetailsSchema) {
 

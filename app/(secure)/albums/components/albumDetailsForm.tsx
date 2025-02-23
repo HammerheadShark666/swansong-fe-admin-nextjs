@@ -18,7 +18,7 @@ import { Album } from "@/app/types/album/album";
 import { selectKeyNumberToString } from "@/app/lib/stringHelper"; 
 import { SelectItem } from "@/app/types/selectItem";
 import { delayAlertRemove } from "@/app/lib/generalHelper";
-import { isAddEditActionResponse } from "@/app/interfaces/AddEditActionResponse";  
+import { isAddEditActionResponse } from "@/app/interfaces/addEditActionResponse";  
 import { ACTION, MESSAGE_TYPE } from "@/app/lib/enums";
 import { setMessagesValue } from "@/app/lib/messageHelper";
 import { FE_ALBUM_EDIT } from "@/app/lib/urls";
