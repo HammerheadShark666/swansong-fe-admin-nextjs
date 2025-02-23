@@ -15,7 +15,8 @@ export function mapMember(data: MemberDetailsSchema) {
     dateOfBirth: data.dateOfBirth,
     dateOfDeath: data.dateOfDeath,
     photo: "",
-    description: ""
+    description: "",
+    artists: []
   }; 
 
   return member;
