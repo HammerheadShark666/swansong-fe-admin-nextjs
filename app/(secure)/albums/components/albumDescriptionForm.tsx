@@ -11,7 +11,7 @@ import Messages from '@/app/components/controls/messages';
 import { saveExistingAlbumDescriptionDetails } from '@/app/(secure)/albums/actions/album';
 import { delayAlertRemove } from '@/app/lib/generalHelper';
 import dynamic from 'next/dynamic';  
-import { isAddEditActionResponse } from '@/app/interfaces/AddEditActionResponse';
+import { isAddEditActionResponse } from '@/app/interfaces/addEditActionResponse';
 import { MESSAGE_TYPE } from '@/app/lib/enums';
 
 const ReactQuill = dynamic(() => import('react-quill-new'), {

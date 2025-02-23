@@ -1,4 +1,5 @@
-import { LookupItemSchema } from "@/app/lookups/validation/lookupItemSchema";
+
+import { LookupItemSchema } from "@/app/(secure)/lookups/validation/lookupItemSchema";
 import { LookupItem } from "@/app/types/lookups";
 
 export function mapLookupItem(data: LookupItemSchema) {

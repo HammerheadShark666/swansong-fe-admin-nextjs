@@ -1,9 +1,9 @@
-import { AlbumDetailsSchema } from "@/app/albums/validation/albumDetailsSchema";
-import { AlbumDescriptionSchema } from "../../albums/validation/albumDescriptionSchema";
-import { AlbumSongSchema } from "../../albums/validation/albumSongSchema";
+import { AlbumDetailsSchema } from "@/app/(secure)/albums/validation/albumDetailsSchema";
 import { Album } from "../../types/album/album";
 import { AlbumDescription } from "../../types/album/albumDescription";
 import { AlbumSong } from "@/app/types/album/albumSong";
+import { AlbumSongSchema } from "@/app/(secure)/albums/validation/albumSongSchema";
+import { AlbumDescriptionSchema } from "@/app/(secure)/albums/validation/albumDescriptionSchema";
 
 export function mapAlbum(data: AlbumDetailsSchema) {
 
