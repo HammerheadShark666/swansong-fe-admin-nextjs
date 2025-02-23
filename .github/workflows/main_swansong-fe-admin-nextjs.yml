@@ -23,8 +23,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20.x"
-
-      - name: npm install, build, and test
+        
+      - name: npm install, build, and tests
         run: |
           npm install
           npm run build
@@ -38,4 +38,4 @@ jobs:
           app-name: ${{ env.WEBAPP_NAME }}
           slot-name: "Production"
           publish-profile: ${{ env.APPLICATION_PUBLISH_PROFILE }}
-          package: ./build/standalone
+          package: ./build/
