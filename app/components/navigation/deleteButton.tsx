@@ -3,7 +3,7 @@
 import { MODE } from "@/app/lib/enums";
 import { getModeLabel } from "@/app/lib/generalHelper";   
 import { deleteArtist } from "@/app/(secure)/artists/actions/artist";
-import { isAddEditActionResponse } from "@/app/interfaces/addEditActionResponse";
+import { isAddEditActionResponse } from "@/app/interfaces/AddEditActionResponse";
 import { useRouter } from "next/navigation";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import ConfirmationDialog from "../dialogs/confirmationDialog";

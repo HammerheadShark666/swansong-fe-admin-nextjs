@@ -16,7 +16,7 @@ import { Artist } from "@/app/types/artist/artist";
 import { numberToString, selectKeyNumberToString } from "@/app/lib/stringHelper"; 
 import { SelectItem } from "@/app/types/selectItem";
 import { delayAlertRemove } from "@/app/lib/generalHelper";
-import { isAddEditActionResponse } from "@/app/interfaces/addEditActionResponse";  
+import { isAddEditActionResponse } from "@/app/interfaces/AddEditActionResponse";  
 import { ACTION, MESSAGE_TYPE } from "@/app/lib/enums";
 import { FE_ARTIST_EDIT } from "@/app/lib/urls";
 import { setMessagesValue } from "@/app/lib/messageHelper";

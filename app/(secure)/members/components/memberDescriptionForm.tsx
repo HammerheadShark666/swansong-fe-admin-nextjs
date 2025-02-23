@@ -12,7 +12,7 @@ import { saveExistingMemberDescriptionDetails } from '@/app/(secure)/members/act
 import { delayAlertRemove } from '@/app/lib/generalHelper';
 import dynamic from 'next/dynamic';
 import { MESSAGE_TYPE } from '@/app/lib/enums';
-import { isAddEditActionResponse } from '@/app/interfaces/addEditActionResponse';
+import { isAddEditActionResponse } from '@/app/interfaces/AddEditActionResponse';
 
 const ReactQuill = dynamic(() => import('react-quill-new'), {
   ssr: false,
