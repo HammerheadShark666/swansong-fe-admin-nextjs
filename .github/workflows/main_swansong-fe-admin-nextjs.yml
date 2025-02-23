@@ -24,6 +24,9 @@ jobs:
         with:
           node-version: "20.x"
 
+      - name: Debug Files
+        run: ls -R src app
+        
       - name: npm install, build, and tests
         run: |
           npm install
