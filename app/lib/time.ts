@@ -1,3 +1,5 @@
+import { Song } from "../types/album/song";
+
 export default function getAlbumSongsTotalLength(tracks: Song[]) { 
     
   let sum = "";
@@ -9,14 +11,17 @@ export default function getAlbumSongsTotalLength(tracks: Song[]) {
 
       tracks.forEach((column, index: number) => {
 
-          const length = tracks[index].song.length;
-          const hoursMinutes = length.split(":")
+          const length = tracks[index].length;
 
-          if(hoursMinutes.length == 2)
-          {
-              minutes = minutes + Number(hoursMinutes[0]);
-              seconds = seconds + Number(hoursMinutes[1]);
-          }            
+          if(length != undefined) {
+            
+            const hoursMinutes = length.split(":");
+            if(hoursMinutes.length == 2)
+            {
+                minutes = minutes + Number(hoursMinutes[0]);
+                seconds = seconds + Number(hoursMinutes[1]);
+            }    
+          }
       });
 
       const secondsToMinutes = Math.floor(seconds / 60);

@@ -1,6 +1,6 @@
 import { AlbumSearchItem } from "@/app/interfaces/albumSearchItem";
 import Image from "next/image";
-import { openSans } from '@/app/layout';
+import { openSans } from "@/app/fonts";
 import { useRouter } from "next/navigation";
 import Messages from "../controls/messages";
 import { useEffect, useState } from "react";

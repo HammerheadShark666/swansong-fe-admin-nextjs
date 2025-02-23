@@ -1,4 +1,4 @@
-import { openSans } from "@/app/layout";
+import { openSans } from "@/app/fonts";
 import { ACTION, MODE } from "@/app/lib/enums";
 import { LookupItem } from "@/app/types/lookups";
 import { useEffect, useState } from "react";
