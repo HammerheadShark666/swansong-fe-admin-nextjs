@@ -1,6 +1,6 @@
 import SearchSpinner from "@/app/components/searchDrawer/searchSpinner";
 import { MemberSearchItem } from "@/app/interfaces/memberSearchItem";
-import { openSans } from "@/app/layout";
+import { openSans } from "@/app/fonts";
 import { DROP_MODE } from "@/app/lib/enums";
 import { getMemberPhoto } from "@/app/lib/memberHelper";
 import Image from "next/image"; 

@@ -1,6 +1,6 @@
 import Messages from "@/app/components/controls/messages";
-import { MemberSearchItem } from "@/app/interfaces/memberSearchItem";
-import { openSans } from "@/app/layout";
+import { openSans } from "@/app/fonts";
+import { MemberSearchItem } from "@/app/interfaces/memberSearchItem"; 
 import { DROP_MODE } from "@/app/lib/enums"; 
 import { getMemberPhoto } from "@/app/lib/memberHelper";
 import { Message } from "@/app/types/message";
