@@ -7,7 +7,7 @@ import { getArtistImageUrl, getDefaultArtistImageUrl } from "@/app/lib/imageHelp
 import Messages from "@/app/components/controls/messages";
 import { Message } from "@/app/types/message"; 
 import { delayAlertRemove } from "@/app/lib/generalHelper";
-import { isAddPhotoResponse } from "@/app/interfaces/addPhotoResponse";
+import { isAddPhotoResponse } from "@/app/interfaces/AddPhotoResponse";
 import { MESSAGE_TYPE } from "@/app/lib/enums";
 
 interface IProps {

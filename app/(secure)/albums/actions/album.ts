@@ -11,7 +11,7 @@ import { API_METHOD, CACHE_TYPE } from "@/app/lib/enums";
 import { AlbumLookup } from "@/app/types/album/albumLookup";
 import { AlbumDetailsSchema } from "../validation/albumDetailsSchema";
 import { AlbumDescriptionSchema } from "../validation/albumDescriptionSchema"; 
-import { AddEditActionResponse } from "@/app/interfaces/addEditActionResponse";
+import { AddEditActionResponse } from "@/app/interfaces/AddEditActionResponse";
 
 export async function getRandomAlbums(): Promise<AlbumLookup[] | ErrorResponse> { 
   return await apiGetCallAuthenticated<AlbumLookup[]>(API_GET_RANDOM_ALBUMS, CACHE_TYPE.NO_CACHE); 
