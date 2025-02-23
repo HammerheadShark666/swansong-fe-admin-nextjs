@@ -32,8 +32,10 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
+    ".next/interfaces/**/*.ts",
     "next-env.d.ts",
-    "build/types/**/*.ts"
+    "build/types/**/*.ts",
+    "build/interfaces/**/*.ts"
 , "app/types", "__tests__/page.test.jsx"  ],
   "exclude": [
     "node_modules"
