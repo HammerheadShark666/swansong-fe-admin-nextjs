@@ -7,7 +7,7 @@ export type Member =
   firstName: string | undefined;
   middleName: string | undefined;
   surname: string | undefined;
-  birthPlaceId: number; 
+  birthPlaceId: number | null; 
   dateOfBirth: string | undefined;
   dateOfDeath: string | undefined;
   photo: string;
@@ -16,5 +16,5 @@ export type Member =
 }
 
 export function isMember(obj: any): obj is Member {
-  return obj && typeof obj.id === "number" && typeof obj.birthPlaceId === "number" && typeof obj.stageName === "string";
+  return obj && typeof obj.id === "number" && (typeof obj.birthPlaceId === "number" || obj.birthPlaceId === null) && typeof obj.stageName === "string";
 }
