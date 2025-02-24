@@ -88,7 +88,10 @@ export default function MemberDetailsForm({action, memberData, birthPlaceItems, 
     if(isAddEditActionResponse(response)) 
       router.push(FE_MEMBER_EDIT + response.id.toString()); 
     else  
-      setMessages(response.messages);        
+    {
+      console.log(response.messages);
+      setMessages(response.messages);     
+    }
   }
 
   async function updateMember(data: MemberDetailsSchema)
@@ -104,7 +107,11 @@ export default function MemberDetailsForm({action, memberData, birthPlaceItems, 
         });
       }      
       else
+      {
+        console.log(response.messages);
         setMessages(response.messages);     
+      }
+        
   }
 
   const onSubmitForm: SubmitHandler<MemberDetailsSchema> = async (data) => { 
@@ -121,6 +128,7 @@ export default function MemberDetailsForm({action, memberData, birthPlaceItems, 
     } 
     catch(error)
     {
+      console.log(error);
       setMessagesValue(MESSAGE_TYPE.ERROR, error, setMessages);
     }
 

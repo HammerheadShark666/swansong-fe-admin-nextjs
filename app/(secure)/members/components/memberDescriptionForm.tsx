@@ -73,7 +73,7 @@ export default function MemberDescriptionForm({memberDescription, setShowSpinner
       });
     }      
     else
-    setMessages(response.messages); 
+      setMessages(response.messages); 
       
     setShowSpinner(false);
   } 
