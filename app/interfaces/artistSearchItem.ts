@@ -10,7 +10,7 @@ export function isArtistSearchItemArray(obj: any): obj is ArtistSearchItem[] {
     Array.isArray(obj) && obj.every((item: ArtistSearchItem) => 
       typeof item.id === "number" && 
       typeof item.name === "string" &&  
-      typeof item.photo === "string"
+      (typeof item.photo === "string" || item.photo === null)
     )
   );
 }

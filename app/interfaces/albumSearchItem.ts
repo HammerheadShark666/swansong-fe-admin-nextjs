@@ -12,7 +12,7 @@ export function isAlbumSearchItemArray(obj: any): obj is AlbumSearchItem[] {
       typeof item.id === "number" && 
       typeof item.name === "string" && 
       typeof item.artistName === "string" &&
-      typeof item.photo === "string"
+      (typeof item.photo === "string" || item.photo === null)
     )
   );
 }
