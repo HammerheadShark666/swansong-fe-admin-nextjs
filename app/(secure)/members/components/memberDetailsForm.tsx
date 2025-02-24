@@ -88,8 +88,8 @@ export default function MemberDetailsForm({action, memberData, birthPlaceItems, 
     if(isAddEditActionResponse(response)) 
       router.push(FE_MEMBER_EDIT + response.id.toString()); 
     else  
-    {
-      console.log(response.messages);
+    { 
+      console.log("AddNewMember");
       setMessages(response.messages);     
     }
   }
@@ -108,7 +108,7 @@ export default function MemberDetailsForm({action, memberData, birthPlaceItems, 
       }      
       else
       {
-        console.log(response.messages);
+        console.log("UpdateMember");
         setMessages(response.messages);     
       }
         
@@ -128,6 +128,7 @@ export default function MemberDetailsForm({action, memberData, birthPlaceItems, 
     } 
     catch(error)
     {
+      console.log("SubmitHandler");
       console.log(error);
       setMessagesValue(MESSAGE_TYPE.ERROR, error, setMessages);
     }

@@ -24,7 +24,7 @@ export default function Messages({messages, onClearMessages}: IProps) {
 
   return (
     <>
-      {messages.length > 0 && (
+      {messages && messages.length > 0 && (
         <>
           <InformationMessages onClearMessages={handleClick} messages={getMessagesBySeverity(messages, MESSAGE_INFO)}></InformationMessages>
           <ErrorMessages onClearMessages={handleClick} messages={getMessagesBySeverity(messages, MESSAGE_ERROR)}></ErrorMessages>
