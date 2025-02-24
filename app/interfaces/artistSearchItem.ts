@@ -2,7 +2,7 @@ export interface ArtistSearchItem
 {
   id: number;
   name: string;  
-  photo: string;
+  photo: string | null;
 } 
 
 export function isArtistSearchItemArray(obj: any): obj is ArtistSearchItem[] {

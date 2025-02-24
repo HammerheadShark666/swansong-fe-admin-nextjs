@@ -2,7 +2,7 @@ export type ArtistMember =
 {
   id: number; 
   stageName: string;
-  photo: string;
+  photo: string | null;
 }
 
 export function isArtistMember(obj: any): obj is ArtistMember {
@@ -13,7 +13,8 @@ export function isArtistMemberArray(obj: any): obj is ArtistMember[] {
   return (
     Array.isArray(obj) && obj.every(item => 
       typeof item.id === "number" && 
-      typeof item.photo === "string" && 
+      (typeof item.photo === "string" || item.photo === null) && 
+      //typeof item.photo === "string" && 
       typeof item.stageName === "string"
     )
   );
