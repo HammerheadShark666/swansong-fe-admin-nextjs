@@ -3,7 +3,7 @@ export interface AlbumSearchItem
   id: number;
   name: string; 
   artistName: string;  
-  photo: string;
+  photo: string | null;
 }
 
 export function isAlbumSearchItemArray(obj: any): obj is AlbumSearchItem[] {
