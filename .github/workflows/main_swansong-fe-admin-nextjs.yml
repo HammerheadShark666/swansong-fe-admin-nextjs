@@ -11,6 +11,10 @@ env:
   WEBAPP_NAME: "prod-app-swansong-admin-nextjs"
   NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
   NEXT_PUBLIC_AZURE_STORAGE_URL: ${{ secrets.NEXT_PUBLIC_AZURE_STORAGE_URL }}
+  NEXT_PUBLIC_APP_SITE_IMAGES: "site-images"
+  NEXT_PUBLIC_APP_SITE_ALBUMS: "albums"
+  NEXT_PUBLIC_APP_SITE_ARTISTS: "artists"
+  NEXT_PUBLIC_APP_SITE_MEMBERS: "members"
 
 jobs:
   build:
