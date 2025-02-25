@@ -3,6 +3,8 @@ import Footer from "../components/footer";
 import Navigation from "../components/navigation/navigation";
 import "@/app/globals.css";
 
+export const dynamic = 'force-dynamic';
+
 export default function RootLayout({
   children,
 }: Readonly<{
