@@ -29,7 +29,7 @@ export default async function EditAlbumPage({ params }:{ params: Promise<{ id: s
     }
     return albumDescription;
   }
-  
+   
   const albumResponse = await getAlbum(Number(id)); 
   if(isAlbum(albumResponse)) 
   {
