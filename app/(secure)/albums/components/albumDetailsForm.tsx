@@ -96,10 +96,8 @@ export default function AlbumDetailsForm({action, albumData, artistItems, studio
   {
     const response = await saveNewAlbumDetails(data); 
     if(isAddEditActionResponse(response))
-    {
-      router.refresh();
-      router.push(FE_ALBUM_EDIT + response.id.toString()); 
-      router.refresh();
+    { 
+      router.push(FE_ALBUM_EDIT + response.id.toString());  
     }   
     else 
       setMessages(response.messages);   

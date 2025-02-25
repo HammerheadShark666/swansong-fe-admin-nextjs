@@ -79,6 +79,9 @@ export async function apiGetCall<T>(path: string, cacheType: CACHE_TYPE): Promis
     const response = await fetch(path, {
       method: "GET",
       headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0',
         'Content-Type': 'application/json'
       },
       cache: cacheType
@@ -114,6 +117,9 @@ export async function apiGetCallAuthenticated<T>(path: string, cacheType: CACHE_
       const response = await fetch(path, {
         method: "GET",
         headers: {
+          'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0',
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token?.value}`,
         },
