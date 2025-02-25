@@ -95,8 +95,12 @@ export default function AlbumDetailsForm({action, albumData, artistItems, studio
   async function addNewAlbum(data: AlbumDetailsSchema)
   {
     const response = await saveNewAlbumDetails(data); 
-    if(isAddEditActionResponse(response)) 
+    if(isAddEditActionResponse(response))
+    {
+      router.refresh();
       router.push(FE_ALBUM_EDIT + response.id.toString()); 
+      router.refresh();
+    }   
     else 
       setMessages(response.messages);   
   }
