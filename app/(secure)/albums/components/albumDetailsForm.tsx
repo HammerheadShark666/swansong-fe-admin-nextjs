@@ -9,7 +9,7 @@ import StudioSelect  from "@/app/components/controls/select";
 import DatePicker from "@/app/components/controls/datepicker";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import { saveNewAlbumDetails } from "@/app/(secure)/albums/actions/album";
+import { getAlbum, saveNewAlbumDetails } from "@/app/(secure)/albums/actions/album";
 import { saveExistingAlbumDetails } from "@/app/(secure)/albums/actions/album";
 import { useRouter } from "next/navigation";
 import Messages from "@/app/components/controls/messages";
@@ -22,7 +22,6 @@ import { isAddEditActionResponse } from "@/app/interfaces/addEditActionResponse"
 import { ACTION, MESSAGE_TYPE } from "@/app/lib/enums";
 import { setMessagesValue } from "@/app/lib/messageHelper";
 import { FE_ALBUM_EDIT } from "@/app/lib/urls";
-import { revalidatePath } from 'next/cache'
 
 interface IProps {
   action: ACTION;
@@ -96,11 +95,11 @@ export default function AlbumDetailsForm({action, albumData, artistItems, studio
   async function addNewAlbum(data: AlbumDetailsSchema)
   {
     const response = await saveNewAlbumDetails(data); 
-    if(isAddEditActionResponse(response))
-    {       
-      revalidatePath('/albums/album/edit/[id]')
-      router.push(FE_ALBUM_EDIT + response.id.toString());  
-    }   
+    if(isAddEditActionResponse(response)) 
+    {
+      await getAlbum(response.id); 
+      router.push(FE_ALBUM_EDIT + response.id.toString());    
+    }      
     else 
       setMessages(response.messages);   
   }
