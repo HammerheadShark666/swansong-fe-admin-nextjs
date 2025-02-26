@@ -11,10 +11,9 @@ export async function forgottenPasswordFromApi(email: string): Promise<Forgotten
  
   return new Promise(async (resolve)  => {
  
-    const response = await apiCall<ForgottenPasswordActionResponse>(API_FORGOTTEN_PASSWORD, API_METHOD.POST, JSON.stringify({ email: email }));
+    const response = await apiCall<ForgottenPasswordActionResponse>(API_FORGOTTEN_PASSWORD, API_METHOD.POST, JSON.stringify({ email: email, frontEndUrl: process.env.NEXT_PUBLIC_FRONT_END_URL }));
     if(isForgottenPasswordActionResponse(response))  
-    {
-         
+    {         
       resolve({ message: response.message }); 
     } 
     else  
